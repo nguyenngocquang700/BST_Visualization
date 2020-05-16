@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>Icon/about.png</file>
+        <file>Icon/add.png</file>
+        <file>Icon/delete.png</file>
+        <file>Icon/exit.png</file>
+        <file>Icon/search.png</file>
+        <file>Icon/important_property.png</file>
+        <file>Icon/open.png</file>
+        <file>Icon/reset.png</file>
+        <file>Icon/save.png</file>
+        <file>Icon/title.png</file>
+    </qresource>
+</RCC>
