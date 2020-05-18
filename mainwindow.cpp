@@ -29,11 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->bst = this->getBST();
 
     this->createMenu();
+//    this->createToolbar();
 
     // Build buttons and layout for buttons on the left of the window
-    propertyButton = new QPushButton("&Properties", this);
+    propertyButton = new QPushButton("&Information", this);
     deleteButton = new QPushButton("&Delete", this);
-    insertButton = new QPushButton("Insert", this);
+    insertButton = new QPushButton("&Insert", this);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
     insertValueLineEdit = new QLineEdit;
@@ -81,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderArea);
 
+
     // Pass any events that happen on the scroll area to the
     // render area (specifically clicking, so that renderArea
     // can zoom in/out when clicks happen
@@ -90,11 +92,36 @@ MainWindow::MainWindow(QWidget *parent) :
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->addWidget(treeScrollArea);
     mainLayout->addLayout(buttonLayout);
+    // Create the toolbar
+
+    QPixmap loadpix(":/new/prefix1/Icon/add.png");
+    QPixmap delpix(":/new/prefix1/Icon/delete.png");
+    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
+    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
+    QToolBar *toolbar = addToolBar("Main Toolbar");
+    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
+    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
+    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
+    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
+    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
+    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
+    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
+    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
+    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
+    toolbar->addAction(insertAction);
+    toolbar->addAction(deleteAction);
+    toolbar->addAction(zoominAction);
+    toolbar->addAction(zoomoutAction);
+    toolbar->addAction(aboutAction);
+    toolbar->addAction(exitAction);
+    toolbar->addSeparator();
+
     // Build the main window
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
     this->setMinimumHeight(400);
+    this->setMinimumWidth(400);
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/title.png"));
     //this->showMaximized();
@@ -127,7 +154,6 @@ MainWindow::~MainWindow()
     delete prop;
     delete about;
     delete bst;
- //   delete inser;
     delete centralWidget;
 }
 
@@ -146,17 +172,19 @@ void MainWindow::createMenu()
     editMenu->addAction(changeBackgroundColorAction);
     editMenu->addAction(changeTextColorAction);
 
-    this->menuBar()->addAction(aboutAction);
+    aboutmenu = this->menuBar()->addMenu(tr("&Abouts"));
+    aboutmenu->addAction(aboutAction);
 }
+
 
 void MainWindow::createActions()
 {
- //   QPixmap aboutpix(":/new/prefix1/Icon/about.png");
+    QPixmap aboutpix(":/new/prefix1/Icon/about.png");
     QPixmap loadpix(":/new/prefix1/Icon/open.png");
     QPixmap savepix(":/new/prefix1/Icon/save.png");
     QPixmap exitpix(":/new/prefix1/Icon/exit.png");
     QPixmap resetpix(":/new/prefix1/Icon/reset.png");
-    aboutAction = new QAction(tr("&About"), this);
+    aboutAction = new QAction(aboutpix,tr("About"), this);
     aboutAction->setStatusTip("About Binary Search Tree Visualization");
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutMenu);
 

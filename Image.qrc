@@ -10,5 +10,7 @@
         <file>Icon/reset.png</file>
         <file>Icon/save.png</file>
         <file>Icon/title.png</file>
+        <file>Icon/zoom-in.png</file>
+        <file>Icon/zoom-out.png</file>
     </qresource>
 </RCC>

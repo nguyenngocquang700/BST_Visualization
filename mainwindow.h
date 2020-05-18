@@ -14,6 +14,7 @@
 #include <QColor>
 #include "renderarea.h"
 #include <QInputDialog>
+#include <QToolBar>
 /*
  * bst_properties_window.h includes:
  * QMainWindow, QVBoxLayout, QHBoxLayout, QScrollArea, QWidget, QLabel, QLineEdit
@@ -45,6 +46,7 @@ private:
     QLabel *statusLabel;
     QMenu *fileMenu;
     QMenu *editMenu;
+    QMenu *aboutmenu;
     QAction *aboutAction;
     QAction *loadAction;
     QAction *saveAction;
@@ -60,6 +62,7 @@ private:
     void loadSettings();
     void saveSettings();
     void createMenu();
+    void createToolbar();
     void createActions();
 
 
