@@ -5,6 +5,7 @@
 #include <qglobal.h>
 #include <QTime>
 #include <QPen>
+#include <QScrollBar>
 
 RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(parent), bst(),
     scale(1.0)
@@ -25,12 +26,12 @@ RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(pa
 
 QSize RenderArea::sizeHint() const
 {
-    return QSize(50, 50);
+    return QSize(100, 100);
 }
 
 QSize RenderArea::minimumSizeHint() const
 {
-    return QSize(50, 50);
+    return QSize(100, 100);
 }
 
 // What to do when the render area gets repaint() called
@@ -177,3 +178,5 @@ void RenderArea::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
 }
+
+

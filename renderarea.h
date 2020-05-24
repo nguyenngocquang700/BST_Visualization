@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include "binarysearchtree.h"
 #include <QColor>
+#include <QScrollBar>
 
 class RenderArea : public QWidget
 {

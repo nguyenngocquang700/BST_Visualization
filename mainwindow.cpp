@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     insertButton = new QPushButton("&Insert", this);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
+//    searchButton = new QPushButton("Search", this);
     insertValueLineEdit = new QLineEdit;
     deleteValueLineEdit = new QLineEdit;
     statusLabel = new QLabel;
@@ -120,8 +121,8 @@ MainWindow::MainWindow(QWidget *parent) :
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
-    this->setMinimumHeight(400);
-    this->setMinimumWidth(400);
+    this->setMinimumHeight(1000);
+    this->setMinimumWidth(1000);
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/title.png"));
     //this->showMaximized();
@@ -172,7 +173,7 @@ void MainWindow::createMenu()
     editMenu->addAction(changeBackgroundColorAction);
     editMenu->addAction(changeTextColorAction);
 
-    aboutmenu = this->menuBar()->addMenu(tr("&Abouts"));
+    aboutmenu = this->menuBar()->addMenu(tr("&About"));
     aboutmenu->addAction(aboutAction);
 }
 

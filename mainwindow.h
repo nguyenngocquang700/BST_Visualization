@@ -39,6 +39,7 @@ private:
     QPushButton *insertButton;
     QPushButton *zoomInButton;
     QPushButton *zoomOutButton;
+//    QPushButton *searchButton;
     QLineEdit *insertValueLineEdit;
     QLineEdit *deleteValueLineEdit;
     QScrollArea *treeScrollArea;

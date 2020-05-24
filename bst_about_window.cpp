@@ -25,8 +25,8 @@ BST_About_Window::BST_About_Window()
                                       "\nHuynh My Dung"));
 
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
-    QTextEdit *txtEdit = new QTextEdit("");
-    txtEdit->setStyleSheet("background-color: white; color: black;");
+    QTextEdit *txtEdit = new QTextEdit("điền vào đây");
+    txtEdit->setStyleSheet("background-color: #fdf9e0; color: black;");
     txtEdit->setReadOnly(true);
     textAreaLayout->addWidget(txtEdit);
 

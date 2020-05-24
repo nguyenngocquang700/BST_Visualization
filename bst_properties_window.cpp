@@ -58,11 +58,11 @@ BST_Properties_Window::BST_Properties_Window(QWidget *parent) : QMainWindow(pare
     preOrderTraversal = new QTextEdit;
     inOrderTraversal = new QTextEdit;
     postOrderTraversal = new QTextEdit;
-    breadthFirstTraversal = new QTextEdit;
+//    breadthFirstTraversal = new QTextEdit;
     preOrderTraversal->setReadOnly(true);
     inOrderTraversal->setReadOnly(true);
     postOrderTraversal->setReadOnly(true);
-    breadthFirstTraversal->setReadOnly(true);
+//    breadthFirstTraversal->setReadOnly(true);
 
     exitButton = new QPushButton("E&xit", this);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(exitSlot()));
@@ -81,7 +81,7 @@ BST_Properties_Window::BST_Properties_Window(QWidget *parent) : QMainWindow(pare
     mainLayout->addWidget(new QLabel("Postorder Traversal:"));
     mainLayout->addWidget(postOrderTraversal);
     mainLayout->addWidget(new QLabel("Breadthfirst Traversal"));
-    mainLayout->addWidget(breadthFirstTraversal);
+//    mainLayout->addWidget(breadthFirstTraversal);
     mainLayout->addLayout(buttonLayout); // layout for ok/close button
 
     centralWidget = new QWidget(this);
@@ -105,7 +105,7 @@ BST_Properties_Window::~BST_Properties_Window(){
     delete preOrderTraversal;
     delete inOrderTraversal;
     delete postOrderTraversal;
-    delete breadthFirstTraversal;
+//    delete breadthFirstTraversal;
     delete exitButton;
     delete mainLayout;
     delete centralWidget;
@@ -128,7 +128,7 @@ void BST_Properties_Window::update(BinarySearchTree<int> *bst)
     this->preOrderTraversal->setText(bst->getPreOrderTraversal());
     this->inOrderTraversal->setText(bst->getInOrderTraversal());
     this->postOrderTraversal->setText(bst->getPostOrderTraversal());
-    this->breadthFirstTraversal->setText(bst->getBreadthFirstSearch());
+//    this->breadthFirstTraversal->setText(bst->getBreadthFirstSearch());
     return;
 }
 
