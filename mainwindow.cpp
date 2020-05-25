@@ -17,6 +17,7 @@
 #include <QStringList>
 #include <QStringListIterator>
 #include <QIcon>
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -257,15 +258,21 @@ void MainWindow::propertyClicked() const
 // Slot for delete button
 void MainWindow::deleteClicked() const {
 //    QString value = deleteValueLineEdit->text();
+    QWidget *win = new QMessageBox();
     deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
     QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-    if(!this->bst->deleteItem(value.toInt()))
-        this->statusLabel->setText("Value is not in tree...");
-    else
-        this->statusLabel->setText("Value deleted.");
-
-    this->renderArea->repaint(); // repaint to show changes to tree
-    this->deleteValueLineEdit->setText(""); // clear text box
+    int reply = QMessageBox::warning(win,"Remove","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+    if (reply == QMessageBox::Ok)
+    {
+        if(!this->bst->deleteItem(value.toInt()))
+    //        this->statusLabel->setText("Value is not in tree...");
+              QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Ok);
+        else
+    //        this->statusLabel->setText("Value deleted.");
+              QMessageBox::information(win,"Remove","Value deleted.",QMessageBox::Ok);
+        this->renderArea->repaint(); // repaint to show changes to tree
+        this->deleteValueLineEdit->setText(""); // clear text box
+    }
     return;
 }
 
@@ -278,16 +285,18 @@ void MainWindow::insertClicked() const
 //    QString values = insertValueLineEdit->text();
     insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
     QString values = QInputDialog::getText(insertButton, tr("Input"),tr("Add Value:"),QLineEdit::Normal,0);
-
+    QWidget *win = new QMessageBox();
     QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
     QStringListIterator iterator(valueList);
 
     while (iterator.hasNext())
     {
         if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
-            this->statusLabel->setText("Duplicate valaue...");
+//            this->statusLabel->setText("Duplicate valaue...");
+            QMessageBox::information(win,"Confirm Value","Duplicate valaue...",QMessageBox::Ok);
         else
-            this->statusLabel->setText("Value inserted...");
+//            this->statusLabel->setText("Value inserted...");
+            QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
     }
     this->renderArea->repaint(); // repaint to show changes to tree
     insertValueLineEdit->setText(""); // clear text box
@@ -314,12 +323,13 @@ void MainWindow::loadFileMenu()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                  QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer",
                                  tr("Text files (*.txt)"));
-
+    QMessageBox *win = new QMessageBox();
     QString text;
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        this->statusLabel->setText("Could not open file!");
+//        this->statusLabel->setText("Could not open file!");
+        QMessageBox::information(win,"Confirm Open File","Could not open file!",QMessageBox::Ok);
         return;
     }
 
@@ -337,7 +347,8 @@ void MainWindow::loadFileMenu()
 
     this->renderArea->repaint();
 
-    this->statusLabel->setText("File successfully opened!");
+//    this->statusLabel->setText("File successfully opened!");
+    QMessageBox::information(win,"Confirm Open File","File successfully opened!",QMessageBox::Ok);
     return;
 }
 
@@ -348,30 +359,36 @@ void MainWindow::saveMenu()
                                  QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer",
                                  tr("Text files (*.txt);;Images (*.png *.jpg)"));
 
+    QMessageBox *win = new QMessageBox();
+
     if (QFileInfo(fileName).suffix() == "txt")
     {
         QString text = bst->getPreOrderTraversal();
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
-            this->statusLabel->setText("File was not saved!");
+//            this->statusLabel->setText("File was not saved!");
+            QMessageBox::information(win,"Confirm Save File","File was not saved!",QMessageBox::Ok);
             return;
         }
         QTextStream writer(&file);
         writer << text;
         writer.flush();
         file.close();
-        this->statusLabel->setText("File successfully saved!");
+//        this->statusLabel->setText("File successfully saved!");
+        QMessageBox::information(win,"Confirm Save File","File successfully saved!",QMessageBox::Ok);
         return;
     }
 
     // if not txt, save as image
     if(!this->renderArea->grab().save(fileName))
     {
-        this->statusLabel->setText("Image was not saved...");
+//        this->statusLabel->setText("Image was not saved...");
+        QMessageBox::information(win,"Confirm Save File","Image was not saved...",QMessageBox::Ok);
         return;
     }
-    this->statusLabel->setText("Image saved...");
+//    this->statusLabel->setText("Image saved...");
+     QMessageBox::information(win,"Confirm Save File","Image saved...",QMessageBox::Ok);
 
     return;
 }
@@ -386,7 +403,9 @@ void MainWindow::exitMenu()
 // Slot for reset action in menu
 void MainWindow::resetMenu() const
 {
-    this->statusLabel->setText("Reset tree...");
+    QMessageBox *win = new QMessageBox();
+    //this->statusLabel->setText("Reset tree...");
+    QMessageBox::information(win,"Confirm Reset","Reset tree...");
     this->bst->resetTree();
     this->renderArea->repaint();
     return;
@@ -472,7 +491,7 @@ BinarySearchTree<int>* MainWindow::getBST()
 
 void MainWindow::saveSettings()
 {
-    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer/settings.txt";
+    QString fileName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/BSTVisualizer/settings.txt";
     QString text;
     text = "text-color:" + this->renderArea->getTextColor().name() + "\n";
     text += "background-color:" + this->renderArea->getBackgroundColor().name() + "\n";

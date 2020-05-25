@@ -768,7 +768,19 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
         node->x = getPxLocOfAncestor(node) + nodeRadius + xspace;
 
     // Draw the node
+
+    QPen pen;
+    pen.setWidth(nodeRadius/10);
+    painter->setPen(pen);
+
+//    painter->setBrush(Qt::RadialGradientPattern);
+//    painter->setOpacity(0.1);
+
+    painter->setBrush(Qt::red);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius,nodeRadius);
+    painter->setBrush(Qt::white);
+    painter->drawEllipse(QPoint(node->x, y),nodeRadius - nodeRadius/3,nodeRadius - nodeRadius/3);
+
 
     // Adjust the text horizontally depending on how many digits are in it
     int textAdjuster;
