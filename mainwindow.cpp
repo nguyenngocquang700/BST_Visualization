@@ -1,6 +1,7 @@
 
 
 #include "mainwindow.h"
+#include "bst_inorder_window.h"
 #include "bst_about_window.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -18,12 +19,13 @@
 #include <QStringListIterator>
 #include <QIcon>
 #include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
 
     // Create default save directory
-    QString directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer";
+    QString directory = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer";
     if (!QDir(directory).exists())
         QDir().mkdir(directory);
 
@@ -31,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->createMenu();
 //    this->createToolbar();
+
+    inorder = new Bst_inorder_window(this->bst);
+    NLRButton = new QPushButton("NLR",this);
+    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("&Information", this);
@@ -72,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
 //    buttonLayout->addWidget(deleteValueLineEdit);
     buttonLayout->addWidget(insertButton);
 //    buttonLayout->addWidget(insertValueLineEdit);
+    buttonLayout->addWidget(NLRButton);
+
     buttonLayout->addSpacing(25);
     buttonLayout->addWidget(statusLabel);
     buttonLayout->addStretch(0);
@@ -157,6 +166,7 @@ MainWindow::~MainWindow()
     delete about;
     delete bst;
     delete centralWidget;
+    delete inorder;
 }
 
 void MainWindow::createMenu()
@@ -227,7 +237,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
 
     // Save BST before closing
-    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer/last_bst.txt";
+    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer/last_bst.txt";
 
     QString text = bst->getPreOrderTraversal();
     QFile file(fileName);
@@ -247,6 +257,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 }
 
 // Slot for property button
+
+void MainWindow::bst_inorder()
+{
+    inorder->show();
+    return;
+}
+
 void MainWindow::propertyClicked() const
 {
     // show and update the properties gui
@@ -321,7 +338,7 @@ void MainWindow::zoomOutClicked() const {
 void MainWindow::loadFileMenu()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                 QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer",
+                                 QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer",
                                  tr("Text files (*.txt)"));
     QMessageBox *win = new QMessageBox();
     QString text;
@@ -356,7 +373,7 @@ void MainWindow::loadFileMenu()
 void MainWindow::saveMenu()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                 QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer",
+                                 QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer",
                                  tr("Text files (*.txt);;Images (*.png *.jpg)"));
 
     QMessageBox *win = new QMessageBox();

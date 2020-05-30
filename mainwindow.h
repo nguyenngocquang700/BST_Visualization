@@ -15,10 +15,13 @@
 #include "renderarea.h"
 #include <QInputDialog>
 #include <QToolBar>
+
 /*
  * bst_properties_window.h includes:
  * QMainWindow, QVBoxLayout, QHBoxLayout, QScrollArea, QWidget, QLabel, QLineEdit
  */
+
+#include "bst_inorder_window.h"
 #include "bst_properties_window.h"
 #include "bst_about_window.h"
 #include "binarysearchtree.h"
@@ -40,6 +43,7 @@ private:
     QPushButton *zoomInButton;
     QPushButton *zoomOutButton;
 //    QPushButton *searchButton;
+    QPushButton *NLRButton;
     QLineEdit *insertValueLineEdit;
     QLineEdit *deleteValueLineEdit;
     QScrollArea *treeScrollArea;
@@ -60,6 +64,8 @@ private:
     BST_About_Window *about;
     BinarySearchTree<int> *bst;
     BinarySearchTree<int> *getBST();
+    Bst_inorder_window *inorder;
+
     void loadSettings();
     void saveSettings();
     void createMenu();
@@ -85,6 +91,7 @@ private slots:
     void changeNodeColorMenu();
     void changeBackgroundColorMenu();
     void changeTextColorMenu();
+    void bst_inorder();
 };
 
 #endif // MAINWINDOW_H
