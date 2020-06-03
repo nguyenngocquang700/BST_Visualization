@@ -53,6 +53,7 @@ private:
     QAction *saveAction;
     QAction *exitAction;
     QAction *resetAction;
+    QAction *insertAction;
     QAction *changeNodeColorAction;
     QAction *changeBackgroundColorAction;
     QAction *changeTextColorAction;
@@ -65,7 +66,6 @@ private:
     void createMenu();
     void createToolbar();
     void createActions();
-
 
 protected:
     virtual void closeEvent(QCloseEvent *event);

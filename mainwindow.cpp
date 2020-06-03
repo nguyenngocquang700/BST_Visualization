@@ -18,10 +18,17 @@
 #include <QStringListIterator>
 #include <QIcon>
 #include <QMessageBox>
+#include <QMenu>
+#include <QMovie>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-
+    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/76252.jpg)}");
+    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
+    QLabel *processLabel = new QLabel(this);
+    processLabel->setMovie(movie);
+    movie->start();
     // Create default save directory
     QString directory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer";
     if (!QDir(directory).exists())
@@ -33,9 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
 //    this->createToolbar();
 
     // Build buttons and layout for buttons on the left of the window
-    propertyButton = new QPushButton("&Information", this);
-    deleteButton = new QPushButton("&Delete", this);
-    insertButton = new QPushButton("&Insert", this);
+    propertyButton = new QPushButton("", this);
+    deleteButton = new QPushButton("", this);
+    insertButton = new QPushButton("", this);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 //    searchButton = new QPushButton("Search", this);
@@ -44,12 +51,32 @@ MainWindow::MainWindow(QWidget *parent) :
     statusLabel = new QLabel;
 
     // Set properties of buttons
-    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+//    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    propertyButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/properties.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");
+//    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    deleteButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/delete_right.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");
+//    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    insertButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/insert_right.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");
     zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
 
@@ -64,7 +91,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
     connect(deleteValueLineEdit, SIGNAL(returnPressed()), this, SLOT(deleteClicked()));
-
     // Create button layout and add buttons
     QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(propertyButton);
@@ -122,8 +148,8 @@ MainWindow::MainWindow(QWidget *parent) :
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
-    this->setMinimumHeight(1000);
-    this->setMinimumWidth(1000);
+    this->setMinimumHeight(800);
+    this->setMinimumWidth(1300);
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/title.png"));
     //this->showMaximized();
@@ -133,9 +159,10 @@ MainWindow::MainWindow(QWidget *parent) :
     about = new BST_About_Window();
     //inser = new insert();
     // must show window before loading settings
-    this->show();
-    this->loadSettings();
-
+//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
+//    QLabel *processLabel = new QLabel(this);
+//    processLabel->setMovie(movie);
+//    movie->start();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -177,7 +204,6 @@ void MainWindow::createMenu()
     aboutmenu = this->menuBar()->addMenu(tr("&About"));
     aboutmenu->addAction(aboutAction);
 }
-
 
 void MainWindow::createActions()
 {
@@ -261,15 +287,15 @@ void MainWindow::deleteClicked() const {
     QWidget *win = new QMessageBox();
     deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
     QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-    int reply = QMessageBox::warning(win,"Remove","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-    if (reply == QMessageBox::Ok)
+    int reply = QMessageBox::warning(win,"Remove","Are you sure????",QMessageBox::Yes,QMessageBox::No);
+    if (reply == QMessageBox::Yes)
     {
         if(!this->bst->deleteItem(value.toInt()))
     //        this->statusLabel->setText("Value is not in tree...");
-              QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Ok);
+              QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
         else
     //        this->statusLabel->setText("Value deleted.");
-              QMessageBox::information(win,"Remove","Value deleted.",QMessageBox::Ok);
+              QMessageBox::information(win,"Remove","Value deleted.",QMessageBox::Yes);
         this->renderArea->repaint(); // repaint to show changes to tree
         this->deleteValueLineEdit->setText(""); // clear text box
     }
@@ -546,3 +572,4 @@ void MainWindow::loadSettings()
     }
     file.close();
 }
+

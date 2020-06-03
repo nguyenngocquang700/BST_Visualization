@@ -9,6 +9,9 @@
 #include "binarysearchtree.h"
 #include <QColor>
 #include <QScrollBar>
+#include <QMenu>
+#include <QGraphicsView>
+#include <QtWidgets>
 
 class RenderArea : public QWidget
 {
@@ -29,23 +32,22 @@ public:
     QColor getNodeColor() const;
     QColor getBackgroundColor() const;
     QColor getTextColor() const;
+    void ShowContextMenuNode(const QPoint&);
 
 signals:
 
 public slots:
-
-protected:
     void paintEvent(QPaintEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
 private:
     BinarySearchTree<int> *bst;
+    BinarySearchTree<int> *root;
     double scale;
     QPen pen;
     QBrush brush;
     QColor backgroundColor;
     QColor nodeColor;
     QColor textColor;
-
+    QMenu *RightClickedMenu;
 };
 
 #endif // RENDERAREA_H

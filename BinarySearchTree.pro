@@ -23,3 +23,6 @@ FORMS    +=
 
 RESOURCES += \
     Image.qrc
+
+DISTFILES += \
+    Font/FVF Fernando 08.ttf

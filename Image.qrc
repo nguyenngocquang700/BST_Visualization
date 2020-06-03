@@ -12,5 +12,14 @@
         <file>Icon/title.png</file>
         <file>Icon/zoom-in.png</file>
         <file>Icon/zoom-out.png</file>
+        <file>Background/76252.jpg</file>
+        <file>Background/gif.gif</file>
+        <file>Background/gif2.gif</file>
+        <file>Icon/properties.png</file>
+        <file>Icon/delete_right.png</file>
+        <file>Icon/insert_right.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Font/FVF Fernando 08.ttf</file>
     </qresource>
 </RCC>

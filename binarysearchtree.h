@@ -30,7 +30,7 @@ private:
 template<typename T>
 class BinarySearchTree
 {
-public:
+public :
     BinarySearchTree();
     ~BinarySearchTree();
     bool isEmpty() const;
@@ -776,7 +776,7 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
 //    painter->setBrush(Qt::RadialGradientPattern);
 //    painter->setOpacity(0.1);
 
-    painter->setBrush(Qt::red);
+    painter->setBrush(QColor(125, 210, 240));
     painter->drawEllipse(QPoint(node->x, y),nodeRadius,nodeRadius);
     painter->setBrush(Qt::white);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius - nodeRadius/3,nodeRadius - nodeRadius/3);
