@@ -14,7 +14,7 @@
 RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(parent), bst(),
     scale(1.0)
 {
-    setStyleSheet("RenderArea {background-image:url(:/new/prefix1/Background/76252.jpg)}");
+    setStyleSheet("QWidget{background-color: transparent;}");
     this->bst = bst;
     this->scale = 1.3;
 

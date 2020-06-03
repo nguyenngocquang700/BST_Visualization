@@ -25,11 +25,11 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/76252.jpg)}");
-    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
-    QLabel *processLabel = new QLabel(this);
-    processLabel->setMovie(movie);
-    movie->start();
+    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
+//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
+//    QLabel *processLabel = new QLabel(this);
+//    processLabel->setMovie(movie);
+//    movie->start();
     // Create default save directory
     QString directory = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer";
     if (!QDir(directory).exists())
@@ -41,14 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
 //    this->createToolbar();
 
     inorder = new Bst_inorder_window(this->bst);
-    NLRButton = new QPushButton("NLR",this);
-    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("", this);
     deleteButton = new QPushButton("", this);
     insertButton = new QPushButton("", this);
+    NLRButton = new QPushButton("",this);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 //    searchButton = new QPushButton("Search", this);
@@ -60,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     propertyButton->setStyleSheet("QPushButton {border-style: none; "
                                   "font-family: Consolas; "
-                                  "background-image: url(:/new/prefix1/Icon/properties.png)0 0 0 0 stretch stretch;"
+                                  "background-image: url(:/new/prefix1/Icon/propertiesButton.png)0 0 0 0 stretch stretch;"
                                   "width: 125px;"
                                   "height: 60px;"
                                   "font-size: 17px;"
@@ -68,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     deleteButton->setStyleSheet("QPushButton {border-style: none; "
                                   "font-family: Consolas; "
-                                  "background-image: url(:/new/prefix1/Icon/delete_right.png)0 0 0 0 stretch stretch;"
+                                  "background-image: url(:/new/prefix1/Icon/deleteButton.png)0 0 0 0 stretch stretch;"
                                   "width: 125px;"
                                   "height: 60px;"
                                   "font-size: 17px;"
@@ -76,12 +74,18 @@ MainWindow::MainWindow(QWidget *parent) :
 //    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertButton->setStyleSheet("QPushButton {border-style: none; "
                                   "font-family: Consolas; "
-                                  "background-image: url(:/new/prefix1/Icon/insert_right.png)0 0 0 0 stretch stretch;"
+                                  "background-image: url(:/new/prefix1/Icon/insertButton.png)0 0 0 0 stretch stretch;"
                                   "width: 125px;"
                                   "height: 60px;"
                                   "font-size: 17px;"
                                   "}");
-    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    NLRButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
@@ -97,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
     connect(deleteValueLineEdit, SIGNAL(returnPressed()), this, SLOT(deleteClicked()));
+    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
     // Create button layout and add buttons
     QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(propertyButton);

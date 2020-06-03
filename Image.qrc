@@ -15,9 +15,20 @@
         <file>Background/76252.jpg</file>
         <file>Background/gif.gif</file>
         <file>Background/gif2.gif</file>
-        <file>Icon/properties.png</file>
-        <file>Icon/delete_right.png</file>
-        <file>Icon/insert_right.png</file>
+        <file>Background/ezgif.com-gif-maker.gif</file>
+        <file>Background/background.png</file>
+        <file>Icon/deleteButton_hover.png</file>
+        <file>Icon/insertButton_hover.png</file>
+        <file>Icon/propertiesButton_hover.png</file>
+        <file>Icon/deleteButton.png</file>
+        <file>Icon/insertButton.png</file>
+        <file>Icon/propertiesButton.png</file>
+        <file>Icon/inorder_hover.png</file>
+        <file>Icon/inorderButton.png</file>
+        <file>Icon/postorderButton.png</file>
+        <file>Icon/postorderButton_hover.png</file>
+        <file>Icon/preorderButton.png</file>
+        <file>Icon/preorderButton_hover.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>
