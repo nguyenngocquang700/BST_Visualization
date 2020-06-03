@@ -28,8 +28,10 @@ private:
     QLineEdit *stackLineEdit;
     RenderArea *renderarea;
     QScrollArea *treeScrollArea;
+    BinarySearchTree<int> *bst1;
 
 private slots:
+    void recursive_bst_clicked();
     void exitSlot();
 };
 

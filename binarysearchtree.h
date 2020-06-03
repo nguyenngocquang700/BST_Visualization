@@ -24,6 +24,8 @@ private:
     Node<T> *leftChild;
     Node<T> *rightChild;
     Node<T> *parent;
+    QColor nodeColour;
+
 };
 
 // Class BinarySearchTree
@@ -48,6 +50,7 @@ public :
     int getTreeHeight() const;
     bool deleteItem(T);
     bool find(T) const;
+    void findandchange(T item) const;
     void draw(QPainter *painter, double &scale);
     int getTotalY() const;
     int getTotalX() const;
@@ -79,7 +82,7 @@ private:
 // Node constructor
 template<typename T>
 Node<T>::Node(const T &info) :
-        data(info), x(0), leftChild(0), rightChild(0), parent(0)
+        data(info), x(0), leftChild(0), rightChild(0), parent(0),nodeColour(QColor(125, 210, 240))
 {
     // empty constructor
 }
@@ -776,7 +779,7 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
 //    painter->setBrush(Qt::RadialGradientPattern);
 //    painter->setOpacity(0.1);
 
-    painter->setBrush(QColor(125, 210, 240));
+    painter->setBrush(node->nodeColour);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius,nodeRadius);
     painter->setBrush(Qt::white);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius - nodeRadius/3,nodeRadius - nodeRadius/3);
@@ -805,5 +808,26 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
 
     return;
 }
+template<typename T>
+void BinarySearchTree<T>::findandchange(T item) const
+{
+    if (this->isEmpty())
+        return;
 
+    Node<T> *currentNode = root;
+    while (currentNode != 0)
+    {
+        if (currentNode->data == item)
+        {
+            currentNode->nodeColour = Qt::red;
+            return;
+        }
+        else if (currentNode->data < item)
+            currentNode = currentNode->rightChild;
+        else
+            currentNode = currentNode->leftChild;
+    }
+
+    return;
+}
 #endif /* BINARYSEARCHTREE_H_ */
