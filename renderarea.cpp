@@ -14,18 +14,17 @@
 RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(parent), bst(),
     scale(1.0)
 {
-    setStyleSheet("QWidget{background-color: transparent;}");
     this->bst = bst;
-    this->scale = 1.3;
+    this->scale = 1.2;
 
     // Set background to white so that when the RenderArea is
     // saved as an image (or the RenderArea is grabbed) the
     // the background will be white
     //this->setStyleSheet("background-color: white;");
 
-    this->nodeColor = Qt::red;
-    this->backgroundColor = Qt::white;
-    this->textColor = Qt::black;
+//    this->nodeColor = Qt::red;
+//    this->backgroundColor = Qt::black;
+//    this->textColor = Qt::black;
 //    QMovie *movie = new QMovie(":/new/prefix1/Background/76252.jpg");
 //    QLabel *processLabel = new QLabel(this);
 //    processLabel->setMovie(movie);
@@ -59,7 +58,6 @@ void RenderArea::paintEvent(QPaintEvent *  event )
     QPen pen;
     pen.setColor(this->textColor);
 
-    setStyleSheet("background-image: url(:/new/prefix1/Background/76252.jpg)");
     painter.setBrush(brush);
     painter.setPen(pen);
 

@@ -82,7 +82,7 @@ private:
 // Node constructor
 template<typename T>
 Node<T>::Node(const T &info) :
-        data(info), x(0), leftChild(0), rightChild(0), parent(0),nodeColour(QColor(125, 210, 240))
+        data(info), x(0), leftChild(0), rightChild(0), parent(0),nodeColour(QColor(255, 215, 130))
 {
     // empty constructor
 }
@@ -732,7 +732,7 @@ template<typename T>
 int BinarySearchTree<T>::getTotalX() const
 {
     if (this->root == 0)
-        return nodeRadius*3;
+        return nodeRadius*10;
 
     Node<T> *current = root;
     while (current->rightChild != 0)

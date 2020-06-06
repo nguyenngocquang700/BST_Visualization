@@ -155,6 +155,8 @@ MainWindow::MainWindow(QWidget *parent) :
     toolbar->addAction(zoomoutAction);
     toolbar->addAction(aboutAction);
     toolbar->addAction(exitAction);
+    toolbar->setIconSize(QSize(50,50));
+    toolbar->setFixedHeight(200);
     toolbar->addSeparator();
 
     // Build the main window
@@ -308,7 +310,7 @@ void MainWindow::deleteClicked() const {
     QWidget *win = new QMessageBox();
     deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
     QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-    int reply = QMessageBox::warning(win,"Remove","Are you sure????",QMessageBox::Yes,QMessageBox::No);
+    int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
         if(!this->bst->deleteItem(value.toInt()))

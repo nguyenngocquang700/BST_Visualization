@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
     l.setMovie (&movie);
     // On lance la vidÃ©o
     movie.start ();
-
     w.show();
     return a.exec();
 }
