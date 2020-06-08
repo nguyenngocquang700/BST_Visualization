@@ -61,7 +61,7 @@ void RenderArea::paintEvent(QPaintEvent *  event )
     painter.setBrush(brush);
     painter.setPen(pen);
 
-    this->bst->draw(&painter, this->scale);
+    this->bst->draw(&painter, this->scale,brush);
 
     // Autosize the renderArea after the tree has been drawn.
     this->autoSize();
@@ -241,3 +241,8 @@ void RenderArea::autoSize() {
 //}
 
 
+void RenderArea::InitColor()
+{
+    this->bst->getInOrderTraversal();
+    return;
+}

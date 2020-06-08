@@ -33,6 +33,7 @@ public:
     QColor getBackgroundColor() const;
     QColor getTextColor() const;
     void ShowContextMenuNode(const QPoint&);
+    void InitColor();
 
 signals:
 

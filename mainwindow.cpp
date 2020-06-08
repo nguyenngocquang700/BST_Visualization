@@ -40,16 +40,34 @@ MainWindow::MainWindow(QWidget *parent) :
     this->createMenu();
 //    this->createToolbar();
 
+    //NLR
     inorder = new Bst_inorder_window(this->bst);
+    postorder = new Bst_postorder_window(this->bst);
+    preorder = new Bst_preorder_window(this->bst);
+    NLRButton = new QPushButton("NLR",this);
+    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
+
+    //LNR
+    LNRButton = new QPushButton("LNR",this);
+    LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
+
+    //LRN
+
+    LRNButton = new QPushButton("LRN",this);
+    LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("", this);
     deleteButton = new QPushButton("", this);
     insertButton = new QPushButton("", this);
-    NLRButton = new QPushButton("",this);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
+
 //    searchButton = new QPushButton("Search", this);
+
     insertValueLineEdit = new QLineEdit;
     deleteValueLineEdit = new QLineEdit;
     statusLabel = new QLabel;
@@ -85,7 +103,23 @@ MainWindow::MainWindow(QWidget *parent) :
                                   "width: 125px;"
                                   "height: 60px;"
                                   "font-size: 17px;"
-                                  "}");    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+                                  "}");
+    LRNButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");
+    LNRButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 125px;"
+                                  "height: 60px;"
+                                  "font-size: 17px;"
+                                  "}");
+
+    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
@@ -94,6 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
     deleteValueLineEdit->setToolTip("Enter value to delete");
 
     // Connect the slots to the button signals
+
     connect(propertyButton, SIGNAL(clicked()), this, SLOT(propertyClicked()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(insertButton, SIGNAL(clicked()), this, SLOT(insertClicked()));
@@ -101,8 +136,38 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
     connect(deleteValueLineEdit, SIGNAL(returnPressed()), this, SLOT(deleteClicked()));
-    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
+
+
+    // Create the toolbar
+
+    QToolBar *toolbar = addToolBar("Main Toolbar");
+    QPixmap loadpix(":/new/prefix1/Icon/add.png");
+    QPixmap delpix(":/new/prefix1/Icon/delete.png");
+    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
+    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
+    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
+    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
+    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
+    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
+    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
+    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
+    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
+    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
+    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
+
+    toolbar->addAction(insertAction);
+    toolbar->addAction(deleteAction);
+    toolbar->addAction(zoominAction);
+    toolbar->addAction(zoomoutAction);
+    toolbar->addAction(aboutAction);
+    toolbar->addAction(exitAction);
+    toolbar->setIconSize(QSize(50,50));
+    toolbar->setFixedHeight(200);
+    toolbar->addSeparator();
+    addToolBar(Qt::LeftToolBarArea,toolbar);
+
     // Create button layout and add buttons
+
     QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(propertyButton);
     buttonLayout->addWidget(deleteButton);
@@ -110,6 +175,8 @@ MainWindow::MainWindow(QWidget *parent) :
     buttonLayout->addWidget(insertButton);
 //    buttonLayout->addWidget(insertValueLineEdit);
     buttonLayout->addWidget(NLRButton);
+    buttonLayout->addWidget(LRNButton);
+    buttonLayout->addWidget(LNRButton);
 
     buttonLayout->addSpacing(25);
     buttonLayout->addWidget(statusLabel);
@@ -130,34 +197,12 @@ MainWindow::MainWindow(QWidget *parent) :
     treeScrollArea->installEventFilter(renderArea);
 
     // Create the main layout and add all the widgets to it
+
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    mainLayout->addWidget(toolbar);
     mainLayout->addWidget(treeScrollArea);
     mainLayout->addLayout(buttonLayout);
-    // Create the toolbar
 
-    QPixmap loadpix(":/new/prefix1/Icon/add.png");
-    QPixmap delpix(":/new/prefix1/Icon/delete.png");
-    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
-    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
-    QToolBar *toolbar = addToolBar("Main Toolbar");
-    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
-    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
-    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
-    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
-    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
-    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
-    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
-    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
-    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
-    toolbar->addAction(insertAction);
-    toolbar->addAction(deleteAction);
-    toolbar->addAction(zoominAction);
-    toolbar->addAction(zoomoutAction);
-    toolbar->addAction(aboutAction);
-    toolbar->addAction(exitAction);
-    toolbar->setIconSize(QSize(50,50));
-    toolbar->setFixedHeight(200);
-    toolbar->addSeparator();
 
     // Build the main window
     centralWidget = new QWidget(this);
@@ -290,12 +335,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 // Slot for property button
 
+
 void MainWindow::bst_inorder()
 {
     inorder->show();
     return;
 }
 
+void MainWindow::bst_preorder()
+{
+    preorder->show();
+    return;
+}
+
+void MainWindow::bst_postorder()
+{
+    postorder->show();
+    return;
+}
 void MainWindow::propertyClicked() const
 {
     // show and update the properties gui
@@ -514,7 +571,7 @@ BinarySearchTree<int>* MainWindow::getBST()
 
     BinarySearchTree<int> *bst = new BinarySearchTree<int>;
 
-    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer/last_bst.txt";
+    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer/last_bst.txt";
 
     QString text;
     QFile file(fileName);
@@ -540,7 +597,7 @@ BinarySearchTree<int>* MainWindow::getBST()
 
 void MainWindow::saveSettings()
 {
-    QString fileName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/BSTVisualizer/settings.txt";
+    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer/settings.txt";
     QString text;
     text = "text-color:" + this->renderArea->getTextColor().name() + "\n";
     text += "background-color:" + this->renderArea->getBackgroundColor().name() + "\n";
@@ -559,7 +616,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::loadSettings()
 {
-    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/BSTVisualizer/settings.txt";
+    QString fileName = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer/settings.txt";
     QString text;
     QFile file(fileName);
 

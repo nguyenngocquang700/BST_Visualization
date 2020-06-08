@@ -1,4 +1,4 @@
-#include "bst_inorder_window.h"
+#include "bst_postorder_window.h"
 #include <iostream>
 #include <QScrollArea>
 #include <QHBoxLayout>
@@ -7,14 +7,15 @@
 #include <QAction>
 #include <sstream>
 
-Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
+Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("In Order");
+    this->setWindowTitle("Post Order");
     this->setFixedSize(QSize(600,600));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
     stackLineEdit->setReadOnly(true);
+
     stackLineEdit->setStyleSheet("color: black; width: 100px;"
                                  "padding-left: 10px; font-size: 14px;");
 
@@ -25,13 +26,14 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     this->bst1 = bst;
 
     renderarea = new RenderArea(bst1);
+
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderarea);
     treeScrollArea->installEventFilter(renderarea);
     //Create toolbar
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
     QAction *playAction = new QAction(tr("&Play"), this);
-    connect(playAction,&QAction::triggered, this, &Bst_inorder_window::recursive_bst_clicked);
+    connect(playAction,&QAction::triggered, this, &Bst_postorder_window::recursive_bst_clicked);
     toolbar1->addAction(playAction);
     toolbar1->addSeparator();
 
@@ -50,7 +52,7 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
 
     QHBoxLayout *contain = new QHBoxLayout();
     contain->addWidget(treeScrollArea);
- //   contain->addLayout(textAreaLayout);
+//    contain->addLayout(textAreaLayout);
 
     QVBoxLayout *central = new QVBoxLayout();
     central->addWidget(stackLabel);
@@ -64,7 +66,7 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     this->setCentralWidget(centralWidget);
 }
 
-Bst_inorder_window::~Bst_inorder_window()
+Bst_postorder_window::~Bst_postorder_window()
 {
     delete stackLabel;
     delete stackLineEdit;
@@ -72,14 +74,14 @@ Bst_inorder_window::~Bst_inorder_window()
     delete treeScrollArea;
 }
 
-void Bst_inorder_window::recursive_bst_clicked()
+void Bst_postorder_window::recursive_bst_clicked()
 {
     this->recursive_bst(bst1);
 }
-void Bst_inorder_window::recursive_bst(BinarySearchTree<int> *bst)
+void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
 {
 //    bst->rightRorate();
-    QString traversal = bst->getInOrderTraversal();
+    QString traversal = bst->getPostOrderTraversal();
     std::stringstream ss(traversal.toStdString());
  //   ss.str(traversal.toStdString());
     std::string token=" ",token1=" ";
@@ -100,25 +102,10 @@ void Bst_inorder_window::recursive_bst(BinarySearchTree<int> *bst)
     this->renderarea->InitColor();
     this->stackLineEdit->setText("");
 }
-
-void Bst_inorder_window::show()
+void Bst_postorder_window::show()
 {
     this->setVisible(true);
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/important_property.png"));
     this->activateWindow();
     return;
 }
-
-//void Bst_inorder_window::close()
-//{
-//    this->close();
-//    return;
-
-//}
-
-//void Bst_inorder_window::exitSlot()
-//{
-//    this->close();
-//    return;
-//}
-

@@ -9,6 +9,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     bst_inorder_window.cpp \
+    bst_postorder_window.cpp \
+    bst_preorder_window.cpp \
     mainwindow.cpp \
     renderarea.cpp \
     bst_properties_window.cpp \
@@ -17,6 +19,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     binarysearchtree.h \
     bst_inorder_window.h \
+    bst_postorder_window.h \
+    bst_preorder_window.h \
     renderarea.h \
     bst_properties_window.h \
     bst_about_window.h
