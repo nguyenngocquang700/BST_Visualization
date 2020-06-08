@@ -24,7 +24,7 @@ private:
     Node<T> *leftChild;
     Node<T> *rightChild;
     Node<T> *parent;
-    QColor nodeColour;
+    QColor nodeColour,nodeColour1,colourLine;
 
 };
 
@@ -50,8 +50,8 @@ public :
     int getTreeHeight() const;
     bool deleteItem(T);
     bool find(T) const;
-    void findandchange(T item) const;
-    void draw(QPainter *painter, double &scale);
+    bool findandchange(T item) const;
+    void draw(QPainter *painter, double &scale, QBrush brush);
     int getTotalY() const;
     int getTotalX() const;
     bool deleteAtLocation(int x, int y);
@@ -70,7 +70,7 @@ private:
     int recursiveCountLeafNodes(const Node<T> *) const;
     int recursiveComputeHeightOfTree(const Node<T> *) const;
     void recursiveDeleteNodes(const Node<T> *);
-    void recursiveDraw(Node<T> *node);
+    void recursiveDraw(Node<T> *node, QBrush brush);
     Node<T>* getLeftmostNode(Node<T> *node) const;
     int getNodeLevel(Node<T> *node);
     int getPxLocOfLeftTree(const Node<T> *node);
@@ -82,7 +82,7 @@ private:
 // Node constructor
 template<typename T>
 Node<T>::Node(const T &info) :
-        data(info), x(0), leftChild(0), rightChild(0), parent(0),nodeColour(QColor(255, 215, 130))
+        data(info), x(0), leftChild(0), rightChild(0), parent(0),nodeColour(QColor(255, 215, 130)),nodeColour1(Qt::white),colourLine(Qt::black)
 {
     // empty constructor
 }
@@ -461,7 +461,7 @@ QString BinarySearchTree<T>::getPreOrderTraversal() const
     while (true) {
         // Go to the left extreme insert all the elements to stack, add to string as encountered
         while (root != 0) {
-            traversal.append(QString::number(root->data) + " ");
+            traversal.append(QString::number(root->data) + " " + QString::number(root->data) + " ");
             stack.push(root);
             root = root->leftChild;
         }
@@ -480,22 +480,29 @@ template<typename T>
 QString BinarySearchTree<T>::getInOrderTraversal() const
 {
     QStack<Node<T>*> stack;
-    QString traversal;
+    QString traversal,traversal1;
     Node<T> *root = this->root;
     while (true) {
         // Go to the left extreme insert all the elements to stack
         while (root != 0) {
             stack.push(root);
+
+            traversal1.append(QString::number(root->data) + " ");
+
             root = root->leftChild;
         }
         // check if Stack is empty, if yes, exit from everywhere
         if (stack.isEmpty()) {
-            return traversal;
+            return traversal1;
         }
         // pop the element from the stack , print it and add the nodes at
         // the right to the Stack
         root = stack.pop();
+        root->nodeColour = Qt::blue;
+        root->nodeColour1 = Qt::white;
+        root->colourLine = Qt::black;
         traversal.append(QString::number(root->data) + " ");
+        traversal1.append(QString::number(root->data) + " ");
         root = root->rightChild;
     }
 }
@@ -516,7 +523,7 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
         // Take out the root and insert into stack 2
         Node<T> *temp = stack1.pop();
         stack2.push(temp);
-
+        traversal.append(QString::number(temp->data) + " ");
         // now we have the root, push the left and right child of root into the first stack
         if (temp->leftChild != 0)
             stack1.push(temp->leftChild);
@@ -575,7 +582,6 @@ QString BinarySearchTree<T>::getBreadthFirstSearch()
 
     return traversal;
 }
-
 
 template<typename T>
 int BinarySearchTree<T>::recursiveCountNodes(const Node<T> *node) const
@@ -637,7 +643,7 @@ void BinarySearchTree<T>::resetNodePosition(Node<T> *node)
 
 
 template<typename T>
-void BinarySearchTree<T>::draw(QPainter *painter, double &scale)
+void BinarySearchTree<T>::draw(QPainter *painter, double &scale, QBrush brush)
 {
     if(this->root == 0)
         return;
@@ -650,7 +656,6 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale)
     this->nodeRadius = 23 * scale;
     this->xspace = nodeRadius;
     this->yspace = nodeRadius * 5;
-
     // Before drawing, must make sure that all nodes have x = 0 since in recursiveDraw() we check value of x on some nodes.
     resetNodePosition(root);
 
@@ -660,7 +665,7 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale)
     leftmost->x = nodeRadius * 3;
 
     // Draw the tree
-    this->recursiveDraw(root);
+    this->recursiveDraw(root , brush);
 
     return;
 }
@@ -739,16 +744,17 @@ int BinarySearchTree<T>::getTotalX() const
         current = current->rightChild;
     return current->x + nodeRadius * 3;
 }
-
 template<typename T>
-void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
+void BinarySearchTree<T>::recursiveDraw(Node<T> *node,QBrush brush)
 {
     // Base case
     if (node == 0)
         return;
 
     // Draw left subtree
-    this->recursiveDraw(node->leftChild);
+    QPen pen;
+    pen.setWidth(nodeRadius/10);
+    this->recursiveDraw(node->leftChild, brush);
 
     // Set the y position of the node based off of the level of the node and the nodeRadius
     int level = getNodeLevel(node);
@@ -758,9 +764,12 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
     if (node->leftChild != 0)
     {
         node->x = getPxLocOfLeftTree(node->leftChild) + nodeRadius + xspace;
-
+        pen.setBrush(node->leftChild->colourLine);
         // Draw line to left child
+
+        painter->setPen(pen);
         painter->drawLine(QPoint(node->x, y + nodeRadius), QPoint(node->leftChild->x + 2,((level + 1)* nodeRadius * 2 + yspace * level) - nodeRadius));
+        pen.setBrush(Qt::black);
     }
 
     // in case of a node without a left child that is not the leftmost in the tree
@@ -772,18 +781,11 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
 
     // Draw the node
 
-    QPen pen;
-    pen.setWidth(nodeRadius/10);
     painter->setPen(pen);
-
-//    painter->setBrush(Qt::RadialGradientPattern);
-//    painter->setOpacity(0.1);
-
     painter->setBrush(node->nodeColour);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius,nodeRadius);
-    painter->setBrush(Qt::white);
+    painter->setBrush(node->nodeColour1);
     painter->drawEllipse(QPoint(node->x, y),nodeRadius - nodeRadius/3,nodeRadius - nodeRadius/3);
-
 
     // Adjust the text horizontally depending on how many digits are in it
     int textAdjuster;
@@ -799,28 +801,43 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node)
     painter->drawText(QPoint(node->x-(textAdjuster*scale), y+(5*scale)), QString::number(node->data));
 
     // Draw the right subtree
-    this->recursiveDraw(node->rightChild);
+    this->recursiveDraw(node->rightChild,brush);
 
     // Draw the line to the right child (if applicable).
     // Must be done after recursively drawing right child, otherwise x values will still be 0.
-    if (node->rightChild != 0)
-        painter->drawLine(QPoint(node->x, y + nodeRadius), QPoint(node->rightChild->x - 2,((level + 1)* nodeRadius * 2 + yspace * level) - nodeRadius));
 
+    if (node->rightChild != 0)
+    {
+        pen.setBrush(node->rightChild->colourLine);
+        painter->setPen(pen);
+        painter->drawLine(QPoint(node->x, y + nodeRadius), QPoint(node->rightChild->x - 2,((level + 1)* nodeRadius * 2 + yspace * level) - nodeRadius));
+        pen.setBrush(Qt::black);
+    }
     return;
 }
+
 template<typename T>
-void BinarySearchTree<T>::findandchange(T item) const
+bool BinarySearchTree<T>::findandchange(T item) const
 {
     if (this->isEmpty())
-        return;
+        return false;
 
     Node<T> *currentNode = root;
     while (currentNode != 0)
     {
         if (currentNode->data == item)
         {
-            currentNode->nodeColour = Qt::red;
-            return;
+            currentNode->colourLine = Qt::red;
+            if (currentNode->nodeColour == Qt::red)
+            {
+                currentNode->nodeColour1 = Qt::red;
+                return true;
+            }
+            else
+            {
+                currentNode->nodeColour = Qt::red;
+                return false;
+            }
         }
         else if (currentNode->data < item)
             currentNode = currentNode->rightChild;
@@ -828,6 +845,6 @@ void BinarySearchTree<T>::findandchange(T item) const
             currentNode = currentNode->leftChild;
     }
 
-    return;
+    return false;
 }
 #endif /* BINARYSEARCHTREE_H_ */

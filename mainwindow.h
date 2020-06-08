@@ -15,13 +15,13 @@
 #include "renderarea.h"
 #include <QInputDialog>
 #include <QToolBar>
-
 /*
  * bst_properties_window.h includes:
  * QMainWindow, QVBoxLayout, QHBoxLayout, QScrollArea, QWidget, QLabel, QLineEdit
  */
-
 #include "bst_inorder_window.h"
+#include "bst_postorder_window.h"
+#include "bst_preorder_window.h"
 #include "bst_properties_window.h"
 #include "bst_about_window.h"
 #include "binarysearchtree.h"
@@ -42,8 +42,10 @@ private:
     QPushButton *insertButton;
     QPushButton *zoomInButton;
     QPushButton *zoomOutButton;
-//    QPushButton *searchButton;
     QPushButton *NLRButton;
+    QPushButton *LNRButton;
+    QPushButton *LRNButton;
+
     QLineEdit *insertValueLineEdit;
     QLineEdit *deleteValueLineEdit;
     QScrollArea *treeScrollArea;
@@ -52,26 +54,28 @@ private:
     QMenu *fileMenu;
     QMenu *editMenu;
     QMenu *aboutmenu;
+    QMenu *runMenu;
     QAction *aboutAction;
     QAction *loadAction;
     QAction *saveAction;
     QAction *exitAction;
     QAction *resetAction;
-    QAction *insertAction;
     QAction *changeNodeColorAction;
     QAction *changeBackgroundColorAction;
     QAction *changeTextColorAction;
     BST_Properties_Window *prop;
     BST_About_Window *about;
+    Bst_inorder_window *inorder;
+    Bst_preorder_window *preorder;
+    Bst_postorder_window *postorder;
     BinarySearchTree<int> *bst;
     BinarySearchTree<int> *getBST();
-    Bst_inorder_window *inorder;
-
     void loadSettings();
     void saveSettings();
     void createMenu();
     void createToolbar();
     void createActions();
+
 
 protected:
     virtual void closeEvent(QCloseEvent *event);
@@ -92,6 +96,9 @@ private slots:
     void changeBackgroundColorMenu();
     void changeTextColorMenu();
     void bst_inorder();
+    void bst_preorder();
+    void bst_postorder();
+ //   void rightRorateClicked() const;
 };
 
 #endif // MAINWINDOW_H
