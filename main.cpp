@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
     l.setMovie (&movie);
     // On lance la vidÃ©o
     movie.start ();
+    QFont V("FVF Fernando 08", 8);
+    QApplication::setFont(V);
+
     w.show();
     return a.exec();
 }

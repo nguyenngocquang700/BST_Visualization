@@ -643,11 +643,11 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale)
         return;
     // Set properties of the painter for drawing the tree
     this->painter = painter;
-    this->painter->setFont(QFont("Times", 12 * scale, QFont::Normal));
+    this->painter->setFont(QFont("FVF Fernando 08", 11 * scale, QFont::Normal));
 
     // Set variables for drawing the tree
     this->scale = scale;
-    this->nodeRadius = 20 * scale;
+    this->nodeRadius = 23 * scale;
     this->xspace = nodeRadius;
     this->yspace = nodeRadius * 5;
 
@@ -657,7 +657,7 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale)
     // first node drawn (leftmost node) needs to have a static, predefined
     // location for the rest of the tree to be based off.
     Node<T> *leftmost = getLeftmostNode(root);
-    leftmost->x = nodeRadius * 2;
+    leftmost->x = nodeRadius * 3;
 
     // Draw the tree
     this->recursiveDraw(root);

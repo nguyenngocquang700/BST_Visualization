@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QMovie>
+#include <QtCore>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -44,9 +45,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("", this);
+    propertyButton->setToolTip("More information about Binary Search Tree");
+    propertyButton->setCursor(Qt::PointingHandCursor);
     deleteButton = new QPushButton("", this);
+    deleteButton->setToolTip("Delete a Node or more Nodes of Binary Search Tree");
+    deleteButton->setCursor(Qt::PointingHandCursor);
     insertButton = new QPushButton("", this);
+    insertButton->setToolTip("Insert a Node or more Nodes of Binary Search Tree");
+    insertButton->setCursor(Qt::PointingHandCursor);
     NLRButton = new QPushButton("",this);
+    NLRButton->setToolTip("Pre-order (NLR) traversal");
+    NLRButton->setCursor(Qt::PointingHandCursor);
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 //    searchButton = new QPushButton("Search", this);
@@ -57,35 +66,28 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set properties of buttons
 //    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     propertyButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "font-family: Consolas; "
                                   "background-image: url(:/new/prefix1/Icon/propertiesButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 125px;"
-                                  "height: 60px;"
-                                  "font-size: 17px;"
+                                  "width: 173px;"
+                                  "height: 50px;"
                                   "}");
 //    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     deleteButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "font-family: Consolas; "
                                   "background-image: url(:/new/prefix1/Icon/deleteButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 125px;"
-                                  "height: 60px;"
-                                  "font-size: 17px;"
+                                  "width: 173px;"
+                                  "height: 50px;"
                                   "}");
 //    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "font-family: Consolas; "
                                   "background-image: url(:/new/prefix1/Icon/insertButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 125px;"
-                                  "height: 60px;"
-                                  "font-size: 17px;"
+                                  "width: 173px;"
+                                  "height: 50px;"
                                   "}");
     NLRButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "font-family: Consolas; "
                                   "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 125px;"
-                                  "height: 60px;"
-                                  "font-size: 17px;"
-                                  "}");    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
@@ -122,6 +124,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderArea);
+//    renderArea->setMinimumSize(500, 550);
+    treeScrollArea->setMinimumSize(20,20);
+//    treeScrollArea->setMaximumSize(550, 600);
+//    renderArea->setSizeConstraint(QLayout::SetFixedSize);
 
 
     // Pass any events that happen on the scroll area to the
@@ -155,9 +161,11 @@ MainWindow::MainWindow(QWidget *parent) :
     toolbar->addAction(zoomoutAction);
     toolbar->addAction(aboutAction);
     toolbar->addAction(exitAction);
-    toolbar->setIconSize(QSize(50,50));
-    toolbar->setFixedHeight(200);
+    toolbar->setIconSize(QSize(50,70));
+    toolbar->setFixedHeight(475);
+//    toolbar->setOrientation(l)
     toolbar->addSeparator();
+    addToolBar(Qt::LeftToolBarArea, toolbar);
 
     // Build the main window
     centralWidget = new QWidget(this);
@@ -174,10 +182,6 @@ MainWindow::MainWindow(QWidget *parent) :
     about = new BST_About_Window();
     //inser = new insert();
     // must show window before loading settings
-//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
-//    QLabel *processLabel = new QLabel(this);
-//    processLabel->setMovie(movie);
-//    movie->start();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -332,8 +336,9 @@ void MainWindow::insertClicked() const
     // Get entire line of text and iterate through the list of
     // values separated by whitespace - inserting all the values
 //    QString values = insertValueLineEdit->text();
+//    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
     insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
-    QString values = QInputDialog::getText(insertButton, tr("Input"),tr("Add Value:"),QLineEdit::Normal,0);
+    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
     QWidget *win = new QMessageBox();
     QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
     QStringListIterator iterator(valueList);
@@ -342,7 +347,8 @@ void MainWindow::insertClicked() const
     {
         if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
 //            this->statusLabel->setText("Duplicate valaue...");
-            QMessageBox::information(win,"Confirm Value","Duplicate valaue...",QMessageBox::Ok);
+            QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+
         else
 //            this->statusLabel->setText("Value inserted...");
             QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
@@ -351,6 +357,7 @@ void MainWindow::insertClicked() const
     insertValueLineEdit->setText(""); // clear text box
     return;
 }
+
 
 // Slot for zoom in button
 void MainWindow::zoomInClicked() const {

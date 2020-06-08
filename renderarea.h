@@ -34,6 +34,7 @@ public:
     QColor getTextColor() const;
     void ShowContextMenuNode(const QPoint&);
 
+
 signals:
 
 public slots:

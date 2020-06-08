@@ -16,6 +16,7 @@ RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(pa
 {
     this->bst = bst;
     this->scale = 1.2;
+//    QTabWidget* tw = new QTabWidget();
 
     // Set background to white so that when the RenderArea is
     // saved as an image (or the RenderArea is grabbed) the
@@ -52,9 +53,9 @@ void RenderArea::paintEvent(QPaintEvent *  event )
 
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QBrush brush;
-    brush.setColor(this->nodeColor);
-    brush.setStyle(Qt::SolidPattern);
+//    QBrush brush;
+//    brush.setColor(this->nodeColor);
+//    brush.setStyle(Qt::SolidPattern);
     QPen pen;
     pen.setColor(this->textColor);
 

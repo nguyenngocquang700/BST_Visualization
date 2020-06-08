@@ -29,6 +29,7 @@
         <file>Icon/postorderButton_hover.png</file>
         <file>Icon/preorderButton.png</file>
         <file>Icon/preorderButton_hover.png</file>
+        <file>Icon/empty.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>
