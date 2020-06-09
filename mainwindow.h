@@ -75,7 +75,17 @@ private:
     void createMenu();
     void createToolbar();
     void createActions();
-
+    QPushButton *searchButton;
+    QPushButton *searchMinButton;
+    QPushButton *searchMaxButton;
+    QPushButton *inorderButton;
+    QPushButton *preorderButton;
+    QPushButton *postorderButton;
+    QPushButton *leftRorateButton;
+    QPushButton *rightRorateButton;
+    QLineEdit *searchValueLineEdit;
+    QLineEdit *searchMinLineEdit;
+    QLineEdit *searchMaxLineEdit;
 
 protected:
     virtual void closeEvent(QCloseEvent *event);
@@ -98,7 +108,14 @@ private slots:
     void bst_inorder();
     void bst_preorder();
     void bst_postorder();
- //   void rightRorateClicked() const;
+    void searchClicked() const;
+    void searchMinClicked() const;
+    void searchMaxClicked() const;
+//    void inorderClicked() const;
+//    void preorderClicked() const;
+//    void postorderClicked() const;
+//    void leftRorateClicked() const;
+//    void rightRorateClicked() const;
 };
 
 #endif // MAINWINDOW_H

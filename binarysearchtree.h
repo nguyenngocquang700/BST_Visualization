@@ -44,6 +44,9 @@ public :
     QString getPreOrderTraversal() const;
     QString getInOrderTraversal() const;
     QString getPostOrderTraversal() const;
+    QString getLeftMostNode();
+    QString getRightMostNode();
+    QString getNode(T value);
     QString getBreadthFirstSearch();
     int getNodeCount() const;
     int getLeafNodeCount() const;
@@ -55,6 +58,13 @@ public :
     int getTotalY() const;
     int getTotalX() const;
     bool deleteAtLocation(int x, int y);
+    void searchMin(T item);
+    void searchMax(T item);
+    void searchValue(T value,T item);
+    void searchNotValue(T item);
+    T min();
+    T max();
+    bool find(T) ;
 private:
     QPainter *painter;
     Node<T> *root;
@@ -77,6 +87,9 @@ private:
     int getPxLocOfAncestor(const Node<T> *node);
     void resetNodePosition(Node<T> *node);
     bool recursiveDeleteAtLocation(Node<T> *node, int x, int y);
+    bool search(Node<T> *,T item);
+    T minNode(Node<T>* root);
+    T maxNode(Node<T>* root);
 };
 
 // Node constructor
@@ -498,7 +511,8 @@ QString BinarySearchTree<T>::getInOrderTraversal() const
         // pop the element from the stack , print it and add the nodes at
         // the right to the Stack
         root = stack.pop();
-        root->nodeColour = Qt::blue;
+//        root->nodeColour = Qt::blue;
+        root->nodeColour=QColor(255, 215, 130);
         root->nodeColour1 = Qt::white;
         root->colourLine = Qt::black;
         traversal.append(QString::number(root->data) + " ");
@@ -539,6 +553,75 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
  /*
   * Return a string of the breadth first traversal.
   */
+template <typename T>
+QString BinarySearchTree<T>::getLeftMostNode() {
+    QQueue<Node<T>*> stack;
+    QString traversal;
+    Node<T> *root = this->root;
+    while (true) {
+        // Go to the left extreme insert all the elements to stack, add to string as encountered
+        while (root != 0) {
+            traversal.append(QString::number(root->data) + " ");
+            stack.enqueue(root);
+            root = root->leftChild;
+        }
+        // check if Stack is empty, if yes, exit from everywhere
+        if (root==0) {
+            return traversal;
+        }
+        // pop the element from the stack, add the nodes at
+        // the right to the Stack
+    }
+}
+template <typename T>
+QString BinarySearchTree<T>::getRightMostNode() {
+    QQueue<Node<T>*> stack;
+    QString traversal;
+    Node<T> *root = this->root;
+    while (true) {
+        // Go to the left extreme insert all the elements to stack, add to string as encountered
+        while (root != 0) {
+            traversal.append(QString::number(root->data) + " ");
+            stack.enqueue(root);
+            root = root->rightChild;
+        }
+        // check if Stack is empty, if yes, exit from everywhere
+        if (root==0) {
+            return traversal;
+        }
+        // pop the element from the stack, add the nodes at
+        // the right to the Stack
+    }
+}
+template <typename T>
+QString BinarySearchTree<T>::getNode(T value){
+    QString traversal;
+    Node<T> *root = this->root;
+    while (root != 0) {
+        if(root!=0){
+            traversal.append(QString::number(root->data) + " ");
+//            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
+        }
+        if (root->data==value) {
+            return traversal;
+        }
+        if(root->data>value){
+            root = root->leftChild;
+            if(root==0){
+                return  traversal;
+            }
+        }
+        else if(root->data<value){
+            root = root->rightChild;
+            if(root==0){
+                return  traversal;
+            }
+        }
+    }
+}
+
+
+
 template<typename T>
 QString BinarySearchTree<T>::getBreadthFirstSearch()
 {
@@ -847,4 +930,141 @@ bool BinarySearchTree<T>::findandchange(T item) const
 
     return false;
 }
+template<typename T>
+bool BinarySearchTree<T>::search(Node<T>* p,T item){
+    if(p==0){
+        return false;
+    }
+    else{
+        if(p->data==item){
+            return true;
+        }
+        else if(p->data<item){
+            search(p->rightChild,item);
+        }
+        else if(p->data>item){
+            search(p->leftChild,item);
+        }
+    }
+}
+template<typename T>
+T BinarySearchTree<T>::minNode(Node<T>* root){
+    if(root->leftChild==0){
+        return root->data;
+    }
+    return minNode(root->leftChild);
+}
+template<typename T>
+T BinarySearchTree<T>::maxNode(Node<T>* root){
+    if(root->rightChild==0){
+        return root->data;
+    }
+    return maxNode(root->rightChild);
+}
+template<typename T>
+void BinarySearchTree<T>::searchMin(T item)
+{
+   if (this->isEmpty())
+       return;
+
+   Node<T> *currentNode = root;
+   T min = minNode(root);
+   while (currentNode != 0)
+   {
+       if (currentNode->data == item)
+       {
+           currentNode->nodeColour = Qt::red;
+           if (currentNode->data==min){
+               currentNode->nodeColour=Qt::darkGreen;
+               break;
+           }
+           return;
+       }
+       else if (currentNode->data > item){
+           currentNode = currentNode->leftChild;
+       }
+   }
+   return;
+}
+template<typename T>
+ void BinarySearchTree<T>::searchMax(T item)
+{
+   if (this->isEmpty())
+       return;
+
+   Node<T> *currentNode = root;
+   T max=maxNode(root);
+   while (currentNode != 0)
+   {
+       if (currentNode->data == item)
+       {
+           currentNode->nodeColour = Qt::red;
+           if (currentNode->data==max){
+               currentNode->nodeColour=Qt::darkGreen;
+               break;
+           }
+           return;
+       }
+       else if (currentNode->data < item){
+
+           currentNode = currentNode->rightChild;
+       }
+
+   }
+   return;
+}
+ template<typename T>
+ void BinarySearchTree<T>::searchValue(T value,T item){
+     if(this->isEmpty()){
+         return;
+     }
+     Node<T> *currentNode=root;
+     while(currentNode!=0){
+         if(currentNode->data>item){
+             currentNode=currentNode->leftChild;
+         }
+         else if(currentNode->data<item){
+             currentNode=currentNode->rightChild;
+         }
+         else if(currentNode->data==item){
+             currentNode->nodeColour=Qt::red;
+                 if(item==value){
+                    currentNode->nodeColour = Qt::darkGreen;
+                 }
+                 return;
+         }
+     }
+ }
+ template<typename T>
+ void BinarySearchTree<T>::searchNotValue(T item){
+     if(this->isEmpty()){
+         return;
+     }
+     Node<T> *currentNode=root;
+     while(currentNode!=0){
+         if(currentNode->data>item){
+             currentNode=currentNode->leftChild;
+         }
+         else if(currentNode->data<item){
+             currentNode=currentNode->rightChild;
+         }
+         else if(currentNode->data==item){
+             currentNode->nodeColour=Qt::red;
+             return;
+         }
+     }
+ }
+ template<typename T>
+ T BinarySearchTree<T>::min(){
+     return minNode(this->root);
+ }
+ template<typename T>
+ T BinarySearchTree<T>::max(){
+     return maxNode(this->root);
+ }
+ template<typename T>
+ bool BinarySearchTree<T>::find(T item)
+ {
+     return search(root,item);
+ }
 #endif /* BINARYSEARCHTREE_H_ */
