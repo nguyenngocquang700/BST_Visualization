@@ -42,37 +42,49 @@ MainWindow::MainWindow(QWidget *parent) :
 //    this->createToolbar();
 
     //NLR
-    inorder = new Bst_inorder_window(this->bst);
-    postorder = new Bst_postorder_window(this->bst);
-    preorder = new Bst_preorder_window(this->bst);
-    NLRButton = new QPushButton("NLR",this);
-    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
+//    inorder = new Bst_inorder_window(this->bst);
+//    postorder = new Bst_postorder_window(this->bst);
+//    preorder = new Bst_preorder_window(this->bst);
+//    NLRButton = new QPushButton("NLR",this);
+//    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+//    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
 
     //LNR
-    LNRButton = new QPushButton("LNR",this);
-    LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
+//    LNRButton = new QPushButton("LNR",this);
+//    LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+//    connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
 
     //LRN
 
-    LRNButton = new QPushButton("LRN",this);
-    LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
+//    LRNButton = new QPushButton("LRN",this);
+//    LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+//    connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("", this);
     propertyButton->setToolTip("More information about Binary Search Tree");
     propertyButton->setCursor(Qt::PointingHandCursor);
+
     deleteButton = new QPushButton("", this);
     deleteButton->setToolTip("Delete a Node or more Nodes of Binary Search Tree");
     deleteButton->setCursor(Qt::PointingHandCursor);
+
     insertButton = new QPushButton("", this);
     insertButton->setToolTip("Insert a Node or more Nodes of Binary Search Tree");
     insertButton->setCursor(Qt::PointingHandCursor);
+
     NLRButton = new QPushButton("",this);
     NLRButton->setToolTip("Pre-order (NLR) traversal");
     NLRButton->setCursor(Qt::PointingHandCursor);
+
+    LNRButton = new QPushButton("",this);
+    LNRButton->setToolTip("In-order (LNR) traversal");
+    LNRButton->setCursor(Qt::PointingHandCursor);
+
+    LRNButton = new QPushButton("",this);
+    LRNButton->setToolTip("Post-order (LNR) traversal");
+    LRNButton->setCursor(Qt::PointingHandCursor);
+
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 
@@ -106,6 +118,16 @@ MainWindow::MainWindow(QWidget *parent) :
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
+    LNRButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/inorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+    LRNButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/postorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
     zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
@@ -119,6 +141,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(propertyButton, SIGNAL(clicked()), this, SLOT(propertyClicked()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(insertButton, SIGNAL(clicked()), this, SLOT(insertClicked()));
+    connect(NLRButton, SIGNAL(clicked()), this, SLOT(bst_preorder()));
+    connect(LNRButton, SIGNAL(clicked()), this, SLOT(bst_inorder()));
+    connect(LRNButton, SIGNAL(clicked()), this, SLOT(bst_postorder()));
+
     connect(zoomInButton, SIGNAL(clicked()), this, SLOT(zoomInClicked()));
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
@@ -149,7 +175,7 @@ MainWindow::MainWindow(QWidget *parent) :
     toolbar->addAction(aboutAction);
     toolbar->addAction(exitAction);
     toolbar->setIconSize(QSize(50,50));
-    toolbar->setFixedHeight(200);
+    toolbar->setFixedHeight(450);
     toolbar->addSeparator();
     addToolBar(Qt::LeftToolBarArea,toolbar);
 
@@ -194,28 +220,28 @@ MainWindow::MainWindow(QWidget *parent) :
     mainLayout->addWidget(treeScrollArea);
     mainLayout->addLayout(buttonLayout);
 
-    QPixmap loadpix(":/new/prefix1/Icon/add.png");
-    QPixmap delpix(":/new/prefix1/Icon/delete.png");
-    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
-    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
-    QToolBar *toolbar = addToolBar("Main Toolbar");
-    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
-    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
-    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
-    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
-    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
-    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
-    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
-    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
-    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
-    toolbar->addAction(insertAction);
-    toolbar->addAction(deleteAction);
-    toolbar->addAction(zoominAction);
-    toolbar->addAction(zoomoutAction);
-    toolbar->addAction(aboutAction);
-    toolbar->addAction(exitAction);
-    toolbar->setIconSize(QSize(50,70));
-    toolbar->setFixedHeight(475);
+//    QPixmap loadpix(":/new/prefix1/Icon/add.png");
+//    QPixmap delpix(":/new/prefix1/Icon/delete.png");
+//    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
+//    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
+//    QToolBar *toolbar = addToolBar("Main Toolbar");
+//    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
+//    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
+//    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
+//    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
+//    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
+//    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
+//    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
+//    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
+//    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
+//    toolbar->addAction(insertAction);
+//    toolbar->addAction(deleteAction);
+//    toolbar->addAction(zoominAction);
+//    toolbar->addAction(zoomoutAction);
+//    toolbar->addAction(aboutAction);
+//    toolbar->addAction(exitAction);
+//    toolbar->setIconSize(QSize(50,70));
+//    toolbar->setFixedHeight(475);
 //    toolbar->setOrientation(l)
     toolbar->addSeparator();
     addToolBar(Qt::LeftToolBarArea, toolbar);
