@@ -10,7 +10,8 @@
 Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("In Order");
+    setStyleSheet("Bst_inorder_window {background-image:url(:/new/prefix1/Background/76252.jpg)}");
+    this->setWindowTitle("In-order");
     this->setFixedSize(QSize(600,600));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
@@ -30,10 +31,12 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     treeScrollArea->installEventFilter(renderarea);
     //Create toolbar
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
-    QAction *playAction = new QAction(tr("&Play"), this);
+    QPixmap playpix(":/new/prefix1/Icon/play.png");
+    QAction *playAction = new QAction(playpix, tr("&Play"), this);
     connect(playAction,&QAction::triggered, this, &Bst_inorder_window::recursive_bst_clicked);
     toolbar1->addAction(playAction);
-    toolbar1->addSeparator();
+    toolbar1->setIconSize(QSize(40,40));
+    addToolBar(Qt::LeftToolBarArea,toolbar1);
 
     //Demo code
     QVBoxLayout *textAreaLayout = new QVBoxLayout();

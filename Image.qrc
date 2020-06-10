@@ -30,6 +30,16 @@
         <file>Icon/preorderButton.png</file>
         <file>Icon/preorderButton_hover.png</file>
         <file>Icon/empty.png</file>
+        <file>Icon/search_hover.png</file>
+        <file>Icon/searchButton.png</file>
+        <file>Icon/sMax_hover.png</file>
+        <file>Icon/sMaxButton.png</file>
+        <file>Icon/sMin_hover.png</file>
+        <file>Icon/sMinButton.png</file>
+        <file>Icon/pause.png</file>
+        <file>Icon/play.png</file>
+        <file>Icon/stop.png</file>
+        <file>Background/background1.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>

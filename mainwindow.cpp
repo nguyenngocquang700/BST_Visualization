@@ -1,5 +1,3 @@
-
-
 #include "mainwindow.h"
 #include "bst_inorder_window.h"
 #include "bst_about_window.h"
@@ -27,11 +25,11 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
-//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
-//    QLabel *processLabel = new QLabel(this);
-//    processLabel->setMovie(movie);
-//    movie->start();
+    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background1.png)}");
+    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
+    QLabel *processLabel = new QLabel(this);
+    processLabel->setMovie(movie);
+    movie->start();
     // Create default save directory
     QString directory = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer";
     if (!QDir(directory).exists())
@@ -42,24 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->createMenu();
 //    this->createToolbar();
 
-    //NLR
-//    inorder = new Bst_inorder_window(this->bst);
-//    postorder = new Bst_postorder_window(this->bst);
-//    preorder = new Bst_preorder_window(this->bst);
-//    NLRButton = new QPushButton("NLR",this);
-//    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
+    inorder = new Bst_inorder_window(this->bst);
+    postorder = new Bst_postorder_window(this->bst);
+    preorder = new Bst_preorder_window(this->bst);
 
-    //LNR
-//    LNRButton = new QPushButton("LNR",this);
-//    LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
-
-    //LRN
-
-//    LRNButton = new QPushButton("LRN",this);
-//    LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
 
     // Build buttons and layout for buttons on the left of the window
     propertyButton = new QPushButton("", this);
@@ -86,6 +70,18 @@ MainWindow::MainWindow(QWidget *parent) :
     LRNButton->setToolTip("Post-order (LNR) traversal");
     LRNButton->setCursor(Qt::PointingHandCursor);
 
+    searchButton = new QPushButton("", this);
+    searchButton->setToolTip("Search a Node by Value");
+    searchButton->setCursor(Qt::PointingHandCursor);
+
+    searchMinButton = new QPushButton("", this);
+    searchMinButton->setToolTip("Search Minimize Node of Binary Search Tree");
+    searchMinButton->setCursor(Qt::PointingHandCursor);
+
+    searchMaxButton = new QPushButton("", this);
+    searchMaxButton->setToolTip("Search Maximize Node of Binary Search Tree");
+    searchMaxButton->setCursor(Qt::PointingHandCursor);
+
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 
@@ -96,39 +92,62 @@ MainWindow::MainWindow(QWidget *parent) :
     statusLabel = new QLabel;
 
     // Set properties of buttons
-//    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     propertyButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/propertiesButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
-//    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     deleteButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/deleteButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 173px;"
-                                  "height: 50px;"
+                                   "width: 173px;"
+                                   "height: 50px;"
                                   "}");
-//    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/insertButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
+    NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     NLRButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
-    LNRButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "background-image: url(:/new/prefix1/Icon/inorderButton.png)0 0 0 0 stretch stretch;"
-                                  "width: 173px;"
-                                  "height: 50px;"
-                                  "}");
+    LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     LRNButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/postorderButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
+    LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    LNRButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "font-family: Consolas; "
+                                  "background-image: url(:/new/prefix1/Icon/inorderButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+    searchButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    searchButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/searchButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+    searchMinButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    searchMinButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/sMinButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+    searchMaxButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    searchMaxButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/sMaxButton.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                  "}");
+
     zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
@@ -137,55 +156,27 @@ MainWindow::MainWindow(QWidget *parent) :
     deleteValueLineEdit->setFixedWidth(100);
     deleteValueLineEdit->setToolTip("Enter value to delete");
 
-    //==============================================
-
-    searchButton= new QPushButton("&Search",this);
-    searchMinButton= new QPushButton("&SearchMin",this);
-    searchMaxButton= new QPushButton("&SearchMax",this);
-//    inorderButton= new QPushButton("&Inorder", this);
-//    preorderButton= new QPushButton("&Preorder",this);
-//    postorderButton= new QPushButton("&Postorder", this);
-//    leftRorateButton= new QPushButton("&LeftRorate",this);
-//    rightRorateButton= new QPushButton("&RightRorate",this);
     searchValueLineEdit= new QLineEdit;
-
-    searchMinButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    searchMaxButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    searchButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    inorderButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    preorderButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    postorderButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    leftRorateButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//    rightRorateButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     searchValueLineEdit->setFixedWidth(100);
     searchValueLineEdit->setToolTip("Enter value to search");
 
-
-
-    //=========================================
     // Connect the slots to the button signals
 
     connect(propertyButton, SIGNAL(clicked()), this, SLOT(propertyClicked()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(insertButton, SIGNAL(clicked()), this, SLOT(insertClicked()));
-    connect(NLRButton, SIGNAL(clicked()), this, SLOT(bst_preorder()));
-    connect(LNRButton, SIGNAL(clicked()), this, SLOT(bst_inorder()));
-    connect(LRNButton, SIGNAL(clicked()), this, SLOT(bst_postorder()));
-
     connect(zoomInButton, SIGNAL(clicked()), this, SLOT(zoomInClicked()));
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
     connect(deleteValueLineEdit, SIGNAL(returnPressed()), this, SLOT(deleteClicked()));
-
+    connect(searchValueLineEdit,SIGNAL(returnPressed()), this, SLOT(searchClicked()));
+    connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
+    connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
+    connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
     connect(searchButton,SIGNAL(clicked()), this, SLOT(searchClicked()));
     connect(searchMinButton,SIGNAL(clicked()), this, SLOT(searchMinClicked()));
     connect(searchMaxButton,SIGNAL(clicked()), this, SLOT(searchMaxClicked()));
-//    connect(inorderButton,SIGNAL(clicked()), this, SLOT(inorderClicked()));
-//    connect(preorderButton,SIGNAL(clicked()), this, SLOT(preorderClicked()));
-//    connect(postorderButton,SIGNAL(clicked()), this, SLOT(postorderClicked()));
-//    connect(leftRorateButton, SIGNAL(clicked()), this, SLOT(leftRorateClicked()));
-//    connect(rightRorateButton, SIGNAL(clicked()), this, SLOT(rightRorateClicked()));
-    connect(searchValueLineEdit,SIGNAL(returnPressed()), this, SLOT(searchClicked()));
+
     // Create the toolbar
 
     QToolBar *toolbar = addToolBar("Main Toolbar");
@@ -209,9 +200,8 @@ MainWindow::MainWindow(QWidget *parent) :
     toolbar->addAction(zoomoutAction);
     toolbar->addAction(aboutAction);
     toolbar->addAction(exitAction);
-    toolbar->setIconSize(QSize(50,50));
-    toolbar->setFixedHeight(450);
-    toolbar->addSeparator();
+    toolbar->setIconSize(QSize(50,70));
+    toolbar->setFixedHeight(550);
     addToolBar(Qt::LeftToolBarArea,toolbar);
 
     // Create button layout and add buttons
@@ -222,23 +212,18 @@ MainWindow::MainWindow(QWidget *parent) :
 //    buttonLayout->addWidget(deleteValueLineEdit);
     buttonLayout->addWidget(insertButton);
 //    buttonLayout->addWidget(insertValueLineEdit);
+    buttonLayout->addSpacing(40);
     buttonLayout->addWidget(NLRButton);
     buttonLayout->addWidget(LRNButton);
     buttonLayout->addWidget(LNRButton);
-
-    buttonLayout->addSpacing(25);
-    buttonLayout->addWidget(statusLabel);
-    buttonLayout->addStretch(0);
-    buttonLayout->addWidget(zoomInButton);
-    buttonLayout->addWidget(zoomOutButton);
+    buttonLayout->addSpacing(40);
+//    buttonLayout->addWidget(statusLabel);
     buttonLayout->addWidget(searchButton);
     buttonLayout->addWidget(searchMinButton);
     buttonLayout->addWidget(searchMaxButton);
-//    buttonLayout->addWidget(inorderButton);
-//    buttonLayout->addWidget(preorderButton);
-//    buttonLayout->addWidget(postorderButton);
-//    buttonLayout->addWidget(leftRorateButton);
-//    buttonLayout->addWidget(rightRorateButton);
+    buttonLayout->addWidget(zoomInButton);
+    buttonLayout->addWidget(zoomOutButton);
+
 
     // Create the render area (canvas for drawing the BST)
     renderArea = new RenderArea(this->bst);
@@ -246,9 +231,9 @@ MainWindow::MainWindow(QWidget *parent) :
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderArea);
 //    renderArea->setMinimumSize(500, 550);
-    treeScrollArea->setMinimumSize(20,20);
-//    treeScrollArea->setMaximumSize(550, 600);
-//    renderArea->setSizeConstraint(QLayout::SetFixedSize);
+//    treeScrollArea->setMinimumSize(20,20);
+    treeScrollArea->setWidgetResizable(true);
+    renderArea->setGeometry(60, 50, 300, 600);
 
 
     // Pass any events that happen on the scroll area to the
@@ -263,38 +248,14 @@ MainWindow::MainWindow(QWidget *parent) :
     mainLayout->addWidget(treeScrollArea);
     mainLayout->addLayout(buttonLayout);
 
-//    QPixmap loadpix(":/new/prefix1/Icon/add.png");
-//    QPixmap delpix(":/new/prefix1/Icon/delete.png");
-//    QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
-//    QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
-//    QToolBar *toolbar = addToolBar("Main Toolbar");
-//    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
-//    connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
-//    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
-//    connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
-//    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
-//    connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
-//    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
-//    connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
-//    aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
-//    toolbar->addAction(insertAction);
-//    toolbar->addAction(deleteAction);
-//    toolbar->addAction(zoominAction);
-//    toolbar->addAction(zoomoutAction);
-//    toolbar->addAction(aboutAction);
-//    toolbar->addAction(exitAction);
-//    toolbar->setIconSize(QSize(50,70));
-//    toolbar->setFixedHeight(475);
-//    toolbar->setOrientation(l)
-    toolbar->addSeparator();
-    addToolBar(Qt::LeftToolBarArea, toolbar);
 
     // Build the main window
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
-    this->setMinimumHeight(800);
-    this->setMinimumWidth(1300);
+    this->setMinimumHeight(1050);
+    this->setMinimumWidth(1916);
+//    this->setFixedSize(QSize(1916,1017));
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/title.png"));
     //this->showMaximized();
@@ -302,8 +263,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // Create secondary windows (but do not display them)
     prop = new BST_Properties_Window();
     about = new BST_About_Window();
-    //inser = new insert();
+
+
     // must show window before loading settings
+//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
+//    QLabel *processLabel = new QLabel(this);
+//    processLabel->setMovie(movie);
+//    movie->start();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -326,15 +292,6 @@ MainWindow::~MainWindow()
     delete bst;
     delete centralWidget;
     delete inorder;
-
-    delete searchButton;
-    delete searchMaxButton;
-    delete searchMinButton;
-//    delete inorderButton;
-//    delete preorderButton;
-//    delete postorderButton;
-//    delete leftRorateButton;
-//    delete rightRorateButton;
 }
 
 void MainWindow::createMenu()
@@ -529,6 +486,7 @@ void MainWindow::insertClicked() const
     this->renderArea->InitColor();
     return;
 }
+
 // Slot for search
 void MainWindow::searchClicked() const{
 
@@ -611,6 +569,7 @@ void MainWindow::searchMaxClicked() const{
     QThread::sleep(2);
     this->renderArea->InitColor();
 }
+
 
 
 // Slot for zoom in button
@@ -856,4 +815,3 @@ void MainWindow::loadSettings()
     }
     file.close();
 }
-

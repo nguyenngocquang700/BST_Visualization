@@ -10,7 +10,7 @@
 Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("Pre Order");
+    this->setWindowTitle("Pre-order");
     this->setFixedSize(QSize(600,600));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
@@ -32,10 +32,12 @@ Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *par
     treeScrollArea->installEventFilter(renderarea);
     //Create toolbar
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
-    QAction *playAction = new QAction(tr("&Play"), this);
+    QPixmap playpix(":/new/prefix1/Icon/play.png");
+    QAction *playAction = new QAction(playpix, tr(""), this);
     connect(playAction,&QAction::triggered, this, &Bst_preorder_window::recursive_bst_clicked);
     toolbar1->addAction(playAction);
-    toolbar1->addSeparator();
+    toolbar1->setIconSize(QSize(40,40));
+    addToolBar(Qt::LeftToolBarArea,toolbar1);
 
     //Demo code
     QVBoxLayout *textAreaLayout = new QVBoxLayout();

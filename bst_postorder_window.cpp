@@ -10,7 +10,7 @@
 Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("Post Order");
+    this->setWindowTitle("Post-order");
     this->setFixedSize(QSize(600,600));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
@@ -32,10 +32,13 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     treeScrollArea->installEventFilter(renderarea);
     //Create toolbar
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
-    QAction *playAction = new QAction(tr("&Play"), this);
+    QPixmap playpix(":/new/prefix1/Icon/play.png");
+    QAction *playAction = new QAction(playpix, tr(""), this);
     connect(playAction,&QAction::triggered, this, &Bst_postorder_window::recursive_bst_clicked);
     toolbar1->addAction(playAction);
-    toolbar1->addSeparator();
+    toolbar1->setIconSize(QSize(40,40));
+    addToolBar(Qt::LeftToolBarArea,toolbar1);
+
 
     //Demo code
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
@@ -54,15 +57,14 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     contain->addWidget(treeScrollArea);
 //    contain->addLayout(textAreaLayout);
 
-    QVBoxLayout *central = new QVBoxLayout();
-    central->addWidget(stackLabel);
-    central->addWidget(stackLineEdit);
-    central->addLayout(contain);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(stackLabel);
+    mainLayout->addWidget(stackLineEdit);
+    mainLayout->addLayout(contain);
 //    central->addLayout(buttonLayout);
 
     QWidget *centralWidget = new QWidget(this);
-    centralWidget->setLayout(central);
-
+    centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
 }
 
