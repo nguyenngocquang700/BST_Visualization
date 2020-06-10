@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QStack>
 #include <QQueue>
-
+#include <QMessageBox>
 
 
 template<typename T> class BinarySearchTree;
@@ -65,6 +65,9 @@ public :
     T min();
     T max();
     bool find(T) ;
+
+    void leftRorate();
+    void rightRorate();
 private:
     QPainter *painter;
     Node<T> *root;
@@ -90,6 +93,8 @@ private:
     bool search(Node<T> *,T item);
     T minNode(Node<T>* root);
     T maxNode(Node<T>* root);
+    void left_Rorate(Node<T>* &p);
+    void right_Rorate(Node<T>* &p);
 };
 
 // Node constructor
@@ -474,7 +479,8 @@ QString BinarySearchTree<T>::getPreOrderTraversal() const
     while (true) {
         // Go to the left extreme insert all the elements to stack, add to string as encountered
         while (root != 0) {
-            traversal.append(QString::number(root->data) + " " + QString::number(root->data) + " ");
+//            traversal.append(QString::number(root->data) + " " + QString::number(root->data) + " ");
+            traversal.append(QString::number(root->data) + " ");
             stack.push(root);
             root = root->leftChild;
         }
@@ -1067,4 +1073,56 @@ template<typename T>
  {
      return search(root,item);
  }
+ template<typename T>
+ //rorate_right
+ void BinarySearchTree<T>::right_Rorate(Node<T>* &p){
+     Node<T>* q;
+     q = p->leftChild;
+     p->leftChild=q->rightChild;
+     q->rightChild=p;
+     p = q;
+     return;
+ }
+ template<typename T>
+ void BinarySearchTree<T>::rightRorate(){
+     if(this->root==NULL){
+         return;
+     }
+     else{
+         right_Rorate(this->root);
+         return;
+     }
+ }
+
+
+ //rorate_left
+ template<typename T>
+
+ void BinarySearchTree<T>::left_Rorate(Node<T>* &p){
+     Node<T>* q;
+     q = p->rightChild;
+     p->rightChild=q->leftChild;
+     q->leftChild=p;
+     p = q;
+     return;
+ }
+ template<typename T>
+ void BinarySearchTree<T>::leftRorate(){
+     if(this->root==NULL){
+         return;
+     }
+     else{
+         if(root->rightChild==0){
+             return;
+         }
+         else{
+             Node<T>* q;
+             q=root->rightChild;
+             root->rightChild=q->leftChild;
+             q->leftChild=root;
+             root=q;
+         }
+     }
+ }
+
 #endif /* BINARYSEARCHTREE_H_ */
