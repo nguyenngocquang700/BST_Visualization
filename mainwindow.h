@@ -111,11 +111,9 @@ private slots:
     void searchClicked() const;
     void searchMinClicked() const;
     void searchMaxClicked() const;
-//    void inorderClicked() const;
-//    void preorderClicked() const;
-//    void postorderClicked() const;
-//    void leftRorateClicked() const;
-//    void rightRorateClicked() const;
+    void leftRorateClicked() const;
+    void rightRorateClicked() const;
+
 };
 
 #endif // MAINWINDOW_H
