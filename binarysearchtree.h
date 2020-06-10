@@ -65,7 +65,6 @@ public :
     T min();
     T max();
     bool find(T) ;
-
     void leftRorate();
     void rightRorate();
 private:

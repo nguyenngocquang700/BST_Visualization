@@ -40,6 +40,9 @@
         <file>Icon/play.png</file>
         <file>Icon/stop.png</file>
         <file>Background/background1.png</file>
+        <file>Icon/leftRotate_hover.png</file>
+        <file>Icon/rightRotateButton.png</file>
+        <file>Icon/leftRotateButton.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>

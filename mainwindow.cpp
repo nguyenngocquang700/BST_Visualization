@@ -82,6 +82,14 @@ MainWindow::MainWindow(QWidget *parent) :
     searchMaxButton->setToolTip("Search Maximize Node of Binary Search Tree");
     searchMaxButton->setCursor(Qt::PointingHandCursor);
 
+    leftRorateButton = new QPushButton("", this);
+    leftRorateButton->setToolTip("Rotate the Binary Search Tree to Left");
+    leftRorateButton->setCursor(Qt::PointingHandCursor);
+
+    rightRorateButton = new QPushButton("", this);
+    rightRorateButton->setToolTip("Rootate the Binary Search Tree to Right");
+    rightRorateButton->setCursor(Qt::PointingHandCursor);
+
     zoomInButton = new QPushButton("Zoom &In", this);
     zoomOutButton = new QPushButton("Zoom &Out", this);
 
@@ -129,6 +137,18 @@ MainWindow::MainWindow(QWidget *parent) :
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
+    leftRorateButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    leftRorateButton->setStyleSheet("QPushButton {border-style: none; "
+                                    "background-image: url(:/new/prefix1/Icon/leftRotateButton.png)0 0 0 0 stretch stretch;"
+                                    "width: 173px;"
+                                    "height: 50px;"
+                                    "}");
+    rightRorateButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    rightRorateButton->setStyleSheet("QPushButton {border-style: none; "
+                                     "background-image: url(:/new/prefix1/Icon/rightRotateButton.png)0 0 0 0 stretch stretch;"
+                                     "width: 173px;"
+                                     "height: 50px;"
+                                     "}");
     searchButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     searchButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/searchButton.png)0 0 0 0 stretch stretch;"
@@ -173,9 +193,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(NLRButton,SIGNAL(clicked()),this,SLOT(bst_preorder()));
     connect(LNRButton,SIGNAL(clicked()),this,SLOT(bst_inorder()));
     connect(LRNButton,SIGNAL(clicked()),this,SLOT(bst_postorder()));
+    connect(leftRorateButton, SIGNAL(clicked()), this, SLOT(leftRorateClicked()));
+    connect(rightRorateButton, SIGNAL(clicked()), this, SLOT(rightRorateClicked()));
     connect(searchButton,SIGNAL(clicked()), this, SLOT(searchClicked()));
     connect(searchMinButton,SIGNAL(clicked()), this, SLOT(searchMinClicked()));
     connect(searchMaxButton,SIGNAL(clicked()), this, SLOT(searchMaxClicked()));
+
     // Create the toolbar
 
     QToolBar *toolbar = addToolBar("Main Toolbar");
@@ -217,6 +240,9 @@ MainWindow::MainWindow(QWidget *parent) :
     buttonLayout->addWidget(LNRButton);
     buttonLayout->addSpacing(40);
 //    buttonLayout->addWidget(statusLabel);
+    buttonLayout->addWidget(leftRorateButton);
+    buttonLayout->addWidget(rightRorateButton);
+    buttonLayout->addSpacing(40);
     buttonLayout->addWidget(searchButton);
     buttonLayout->addWidget(searchMinButton);
     buttonLayout->addWidget(searchMaxButton);
@@ -291,6 +317,11 @@ MainWindow::~MainWindow()
     delete bst;
     delete centralWidget;
     delete inorder;
+    delete searchButton;
+    delete searchMaxButton;
+    delete searchMinButton;
+    delete leftRorateButton;
+    delete rightRorateButton;
 }
 
 void MainWindow::createMenu()
@@ -409,57 +440,36 @@ void MainWindow::propertyClicked() const
 
 // Slot for delete button
 void MainWindow::deleteClicked() const {
-
-    QString value;
-    do
-    {
-        deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
-        value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-        if(value.toInt()<-2147483647||value.toInt()>2147483646)
-        {
-             QMessageBox::information(NULL,"Remove","gia tri nam ngoai vung qui dinh");
-        }
-    }
-    while(value.toInt()<-2147483647||value.toInt()>2147483646);
-
-    QString traversal = this->bst->getNode(value.toInt());
-    std::stringstream ss(traversal.toStdString());
-    std::string token=" ";
+//    QString value = deleteValueLineEdit->text();
     QWidget *win = new QMessageBox();
+    deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
+    QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
     int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
+    QString traversal = this->bst->getNode(value.toInt());
+//            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
+    std::stringstream ss(traversal.toStdString());
+    std::string token=" ",token1=" ";
+    while (ss >> token)
+    {
+        bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
+        this->renderArea->repaint();
+        QThread::sleep(2);
+    }
     if (reply == QMessageBox::Yes)
     {
-        // traversal
-        if(!bst->isEmpty())
-        {
-            QString traversal = this->bst->getNode(value.toInt());;
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ";
-            while (ss >> token)
-            {
-                bst->searchNotValue(QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
-            }
-        }
-        //delete
         if(!this->bst->deleteItem(value.toInt()))
+    //        this->statusLabel->setText("Value is not in tree...");
         {
             QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
             this->renderArea->InitColor();
-            this->renderArea->repaint();
-
         }
         else
-        {
-            this->renderArea->InitColor();
-            this->renderArea->repaint(); // repaint to show changes to tree
-
-        }
+    //        this->statusLabel->setText("Value deleted.");
+              QMessageBox::information(win,"Remove","Value deleted.",QMessageBox::Yes);
+        this->renderArea->repaint(); // repaint to show changes to tree
         this->deleteValueLineEdit->setText(""); // clear text box
-
     }
-
+    this->renderArea->InitColor();
     return;
 }
 
@@ -467,77 +477,60 @@ void MainWindow::deleteClicked() const {
 
 void MainWindow::insertClicked() const
 {
-
-    QString values;
-    do{
-        insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
-        values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
-        if(values.toInt()<-2147483647||values.toInt()>2147483646){
-             QMessageBox::information(NULL,"insert","gia tri nam ngoai vung qui dinh");
-        }
-    }
-    while(values.toInt()<-2147483647||values.toInt()>2147483646);
-
+    // Get entire line of text and iterate through the list of
+    // values separated by whitespace - inserting all the values
+//    QString values = insertValueLineEdit->text();
+//    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
+    insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
+    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
     QWidget *win = new QMessageBox();
-    int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-    if (reply == QMessageBox::Ok){
-        //traversal
-        if(!bst->isEmpty()){
-            QString traversal = this->bst->getNode(values.toInt());;
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ";
-            while (ss >> token)
-            {
-                bst->searchNotValue(QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
-            }
-        }
-        //insert
-        QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
-        QStringListIterator iterator(valueList);
-        while (iterator.hasNext())
-        {
-            if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
-            {
-                QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
-                this->renderArea->InitColor();
-                this->renderArea->repaint();
-            }
-            else
-            {
-                this->renderArea->InitColor();
-                this->renderArea->repaint();
-                this->statusLabel->setText("Value inserted...");
-                QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
-
-            }
-        }
-        insertValueLineEdit->setText(""); // clear text box
-        return;
+    QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+    QStringListIterator iterator(valueList);
+    //=========================
+    QString traversal = this->bst->getNode(values.toInt());;
+    std::stringstream ss(traversal.toStdString());
+    std::string token=" ",token1=" ";
+    while (ss >> token)
+    {
+        bst->searchNotValue(QString::fromStdString(token).toInt());
+        this->renderArea->repaint();
+        QThread::sleep(2);
     }
+    //=========================
 
+    while (iterator.hasNext())
+    {
+        if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
+//            this->statusLabel->setText("Duplicate valaue...");
+           {
+            QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+        this->renderArea->InitColor();
+        }
+
+//        else
+//            this->statusLabel->setText("Value inserted...");
+//            QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
+    }
+    this->renderArea->repaint(); // repaint to show changes to tree
+    insertValueLineEdit->setText(""); // clear text box
+    this->renderArea->InitColor();
+    return;
 }
 
 // Slot for search
 void MainWindow::searchClicked() const{
 
-    QString value;
-    do{
-        value = QInputDialog::getText(searchButton, tr("Search"),tr("Search Value:"),QLineEdit::Normal,0);
-        if(value.toInt()<-2147483647||value.toInt()>2147483646){
-             QMessageBox::information(NULL,"search","gia tri nam ngoai vung qui dinh");
-        }
-    }
-    while(value.toInt()<-2147483647||value.toInt()>2147483646);
+    QString value = QInputDialog::getText(searchButton, tr("Search"),tr("Search Value:"),QLineEdit::Normal,0);
     QWidget *win = new QMessageBox();
     int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
     if (reply == QMessageBox::Ok)
     {
+
         if(bst->find(value.toInt())){
             QString traversal = this->bst->getNode(value.toInt());
+//            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
             std::stringstream ss(traversal.toStdString());
-            std::string token=" ";
+            std::string token=" ",token1=" ";
             while (ss >> token)
             {
                 bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
@@ -549,6 +542,7 @@ void MainWindow::searchClicked() const{
 }
         else{
             QString traversal = this->bst->getNode(value.toInt());
+//            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
             std::stringstream ss(traversal.toStdString());
             std::string token=" ",token1=" ";
             while (ss >> token)
@@ -557,13 +551,12 @@ void MainWindow::searchClicked() const{
                 this->renderArea->repaint();
                 QThread::sleep(2);
             }
-            this->searchValueLineEdit->setText(""); // clear text box
+              this->searchValueLineEdit->setText(""); // clear text box
             QMessageBox::information(win,"Search","Not Found.",QMessageBox::Ok);
         }
     }
     QThread::sleep(2);
     this->renderArea->InitColor();
-    this->renderArea->repaint();
 }
 //Slot for searchMin
 void MainWindow::searchMinClicked() const{
@@ -573,7 +566,7 @@ void MainWindow::searchMinClicked() const{
     {
         QString traversal = this->bst->getLeftMostNode();
         std::stringstream ss(traversal.toStdString());
-        std::string token=" ";
+        std::string token=" ",token1=" ";
         while (ss >> token)
         {
             bst->searchMin((QString::fromStdString(token).toInt()));
@@ -584,7 +577,6 @@ void MainWindow::searchMinClicked() const{
     }
     QThread::sleep(2);
     this->renderArea->InitColor();
-    this->renderArea->repaint();
 }
 //Slot for searchMax
 void MainWindow::searchMaxClicked() const{
@@ -595,7 +587,7 @@ void MainWindow::searchMaxClicked() const{
         QString traversal = this->bst->getRightMostNode();
         std::stringstream ss(traversal.toStdString());
 
-        std::string token=" ";
+        std::string token=" ",token1=" ";
         while (ss >> token)
         {
             bst->searchMax((QString::fromStdString(token).toInt()));
@@ -606,8 +598,8 @@ void MainWindow::searchMaxClicked() const{
     }
     QThread::sleep(2);
     this->renderArea->InitColor();
-    this->renderArea->repaint();
 }
+
 // SLot for left rorate()
 void MainWindow::leftRorateClicked() const{
     this->bst->leftRorate();
@@ -636,11 +628,38 @@ void MainWindow::leftRorateClicked() const{
     this->renderArea->repaint();
 
 }
+
 //Slot for right roarte()
 
 void MainWindow::rightRorateClicked() const{
 
 
+    this->bst->rightRorate();
+    QString traversal =this->bst->getPreOrderTraversal();
+    this->bst->resetTree();
+    this->renderArea->repaint();
+    std::stringstream ss(traversal.toStdString());
+    std::stringstream ss1(traversal.toStdString());
+    std::string token=" ",token1=" ";
+
+    while (ss1 >> token1)
+    {
+        if(!bst->isEmpty()){
+            std::stringstream ss(traversal.toStdString());
+            while (ss >> token)
+            {
+                bst->searchNotValue(QString::fromStdString(token).toInt());
+                this->renderArea->repaint();
+                QThread::msleep(400);
+            }
+        }
+        bst->insert((QString::fromStdString(token1).toInt()));
+        this->renderArea->repaint();
+    }
+    this->renderArea->InitColor();
+    this->renderArea->repaint();
+
+}
 
 // Slot for zoom in button
 void MainWindow::zoomInClicked() const {
