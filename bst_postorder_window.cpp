@@ -10,8 +10,8 @@
 Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("Post-order");
-    this->setFixedSize(QSize(600,600));
+    this->setWindowTitle("Post-order Traversal");
+    this->setFixedSize(QSize(600,750));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
     stackLineEdit->setReadOnly(true);

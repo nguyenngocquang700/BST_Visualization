@@ -10,9 +10,8 @@
 Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    setStyleSheet("Bst_inorder_window {background-image:url(:/new/prefix1/Background/76252.jpg)}");
-    this->setWindowTitle("In-order");
-    this->setFixedSize(QSize(600,600));
+    this->setWindowTitle("In-order Traversal");
+    this->setFixedSize(QSize(600,750));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
     stackLineEdit->setReadOnly(true);

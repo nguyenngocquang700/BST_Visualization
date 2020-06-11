@@ -25,7 +25,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background1.png)}");
+    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
     QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
     QLabel *processLabel = new QLabel(this);
     processLabel->setMovie(movie);
@@ -90,8 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
     rightRorateButton->setToolTip("Rootate the Binary Search Tree to Right");
     rightRorateButton->setCursor(Qt::PointingHandCursor);
 
-    zoomInButton = new QPushButton("Zoom &In", this);
-    zoomOutButton = new QPushButton("Zoom &Out", this);
 
 //    searchButton = new QPushButton("Search", this);
 
@@ -168,8 +166,6 @@ MainWindow::MainWindow(QWidget *parent) :
                                   "height: 50px;"
                                   "}");
 
-    zoomInButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    zoomOutButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
 
@@ -185,8 +181,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(propertyButton, SIGNAL(clicked()), this, SLOT(propertyClicked()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(insertButton, SIGNAL(clicked()), this, SLOT(insertClicked()));
-    connect(zoomInButton, SIGNAL(clicked()), this, SLOT(zoomInClicked()));
-    connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOutClicked()));
     connect(insertValueLineEdit, SIGNAL(returnPressed()), this, SLOT(insertClicked()));
     connect(deleteValueLineEdit, SIGNAL(returnPressed()), this, SLOT(deleteClicked()));
     connect(searchValueLineEdit,SIGNAL(returnPressed()), this, SLOT(searchClicked()));
@@ -246,8 +240,7 @@ MainWindow::MainWindow(QWidget *parent) :
     buttonLayout->addWidget(searchButton);
     buttonLayout->addWidget(searchMinButton);
     buttonLayout->addWidget(searchMaxButton);
-    buttonLayout->addWidget(zoomInButton);
-    buttonLayout->addWidget(zoomOutButton);
+
 
 
     // Create the render area (canvas for drawing the BST)
@@ -257,8 +250,8 @@ MainWindow::MainWindow(QWidget *parent) :
     treeScrollArea->setWidget(renderArea);
 //    renderArea->setMinimumSize(500, 550);
 //    treeScrollArea->setMinimumSize(20,20);
-    treeScrollArea->setWidgetResizable(true);
-    renderArea->setGeometry(60, 50, 300, 600);
+    treeScrollArea->setGeometry(200,200,200,200);
+//    treeScrollArea->setWidgetResizable(true);
 
 
     // Pass any events that happen on the scroll area to the
@@ -278,11 +271,11 @@ MainWindow::MainWindow(QWidget *parent) :
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
-    this->setMinimumHeight(1050);
-    this->setMinimumWidth(1916);
-//    this->setFixedSize(QSize(1916,1017));
+    //    this->setMinimumHeight(800);
+    //    this->setMinimumWidth(1300);
+    this->setFixedSize(QSize(1300,800));
     this->setWindowTitle("Binary Search Tree Visualization");
-    this->setWindowIcon(QIcon(":/new/prefix1/Icon/title.png"));
+    this->setWindowIcon(QIcon(":/new/prefix1/Icon/logo.png"));
     //this->showMaximized();
 
     // Create secondary windows (but do not display them)
@@ -440,81 +433,115 @@ void MainWindow::propertyClicked() const
 
 // Slot for delete button
 void MainWindow::deleteClicked() const {
-//    QString value = deleteValueLineEdit->text();
-    QWidget *win = new QMessageBox();
-    deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
-    QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-    int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
-    QString traversal = this->bst->getNode(value.toInt());
-//            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
-    std::stringstream ss(traversal.toStdString());
-    std::string token=" ",token1=" ";
-    while (ss >> token)
+
+    QString value;
+    do
     {
-        bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
-        this->renderArea->repaint();
-        QThread::sleep(2);
+        deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
+        value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
+        if(value.toInt()<-2147483647||value.toInt()>2147483646)
+        {
+             QMessageBox::information(NULL,"Remove","gia tri nam ngoai vung qui dinh");
+        }
     }
+    while(value.toInt()<-2147483647||value.toInt()>2147483646);
+
+    QString traversal = this->bst->getNode(value.toInt());
+    std::stringstream ss(traversal.toStdString());
+    std::string token=" ";
+    QWidget *win = new QMessageBox();
+    int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
+        // traversal
+        if(!bst->isEmpty())
+        {
+            QString traversal = this->bst->getNode(value.toInt());;
+            std::stringstream ss(traversal.toStdString());
+            std::string token=" ";
+            while (ss >> token)
+            {
+                bst->searchNotValue(QString::fromStdString(token).toInt());
+                this->renderArea->repaint();
+                QThread::sleep(2);
+            }
+        }
+        //delete
         if(!this->bst->deleteItem(value.toInt()))
-    //        this->statusLabel->setText("Value is not in tree...");
         {
             QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
             this->renderArea->InitColor();
+            this->renderArea->repaint();
+
         }
         else
-    //        this->statusLabel->setText("Value deleted.");
-              QMessageBox::information(win,"Remove","Value deleted.",QMessageBox::Yes);
-        this->renderArea->repaint(); // repaint to show changes to tree
+        {
+            this->renderArea->InitColor();
+            this->renderArea->repaint(); // repaint to show changes to tree
+
+        }
         this->deleteValueLineEdit->setText(""); // clear text box
+
     }
-    this->renderArea->InitColor();
+
     return;
 }
+
 
 // Slot for insert button
 
 void MainWindow::insertClicked() const
 {
-    // Get entire line of text and iterate through the list of
-    // values separated by whitespace - inserting all the values
-//    QString values = insertValueLineEdit->text();
-//    setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
-    insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
-    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
-    QWidget *win = new QMessageBox();
-    QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
-    QStringListIterator iterator(valueList);
-    //=========================
-    QString traversal = this->bst->getNode(values.toInt());;
-    std::stringstream ss(traversal.toStdString());
-    std::string token=" ",token1=" ";
-    while (ss >> token)
-    {
-        bst->searchNotValue(QString::fromStdString(token).toInt());
-        this->renderArea->repaint();
-        QThread::sleep(2);
-    }
-    //=========================
 
-    while (iterator.hasNext())
-    {
-        if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
-//            this->statusLabel->setText("Duplicate valaue...");
-           {
-            QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
-        this->renderArea->InitColor();
+    QString values;
+    do{
+        insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
+        values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
+        if(values.toInt()<-2147483647||values.toInt()>2147483646){
+             QMessageBox::information(NULL,"insert","gia tri nam ngoai vung qui dinh");
         }
-
-//        else
-//            this->statusLabel->setText("Value inserted...");
-//            QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
     }
-    this->renderArea->repaint(); // repaint to show changes to tree
-    insertValueLineEdit->setText(""); // clear text box
-    this->renderArea->InitColor();
-    return;
+    while(values.toInt()<-2147483647||values.toInt()>2147483646);
+
+    QWidget *win = new QMessageBox();
+    int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+    if (reply == QMessageBox::Ok){
+        //traversal
+        if(!bst->isEmpty()){
+            QString traversal = this->bst->getNode(values.toInt());;
+            std::stringstream ss(traversal.toStdString());
+            std::string token=" ";
+            while (ss >> token)
+            {
+                bst->searchNotValue(QString::fromStdString(token).toInt());
+                this->renderArea->repaint();
+                QThread::sleep(2);
+            }
+        }
+        //insert
+        QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        QStringListIterator iterator(valueList);
+        while (iterator.hasNext())
+        {
+            if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
+            {
+                QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
+            }
+            else
+            {
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
+                this->statusLabel->setText("Value inserted...");
+                QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
+
+            }
+        }
+        insertValueLineEdit->setText(""); // clear text box
+        return;
+    }
+
 }
 
 // Slot for search

@@ -741,9 +741,9 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale, QBrush brush)
 
     // Set variables for drawing the tree
     this->scale = scale;
-    this->nodeRadius = 23 * scale;
+    this->nodeRadius = 20 * scale;
     this->xspace = nodeRadius;
-    this->yspace = nodeRadius * 5;
+    this->yspace = nodeRadius * 3;
     // Before drawing, must make sure that all nodes have x = 0 since in recursiveDraw() we check value of x on some nodes.
     resetNodePosition(root);
 

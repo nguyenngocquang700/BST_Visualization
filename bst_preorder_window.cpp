@@ -10,8 +10,8 @@
 Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
     //Stack
-    this->setWindowTitle("Pre-order");
-    this->setFixedSize(QSize(600,600));
+    this->setWindowTitle("Pre-order Traversal");
+    this->setFixedSize(QSize(600,750));
     stackLabel = new QLabel("Stack");
     stackLineEdit = new QLineEdit("");
     stackLineEdit->setReadOnly(true);

@@ -9,7 +9,6 @@
         <file>Icon/open.png</file>
         <file>Icon/reset.png</file>
         <file>Icon/save.png</file>
-        <file>Icon/title.png</file>
         <file>Icon/zoom-in.png</file>
         <file>Icon/zoom-out.png</file>
         <file>Background/76252.jpg</file>
@@ -39,10 +38,10 @@
         <file>Icon/pause.png</file>
         <file>Icon/play.png</file>
         <file>Icon/stop.png</file>
-        <file>Background/background1.png</file>
         <file>Icon/leftRotate_hover.png</file>
         <file>Icon/rightRotateButton.png</file>
         <file>Icon/leftRotateButton.png</file>
+        <file>Icon/logo.png</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>
