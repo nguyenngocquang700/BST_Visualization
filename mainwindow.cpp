@@ -255,7 +255,9 @@ MainWindow::MainWindow(QWidget *parent) :
 //    treeScrollArea->setGeometry(200,200,200,200);
 //    treeScrollArea->setFixedWidth(900);
     treeScrollArea->setFixedSize(950, 700);
-    renderArea->setContentsMargins(10,10,10,10);
+//    treeScrollArea->setFixedSize(100, 100);
+//    treeScrollArea->update(10,10,10,10);
+
     treeScrollArea->setAlignment(Qt::AlignTop);
     treeScrollArea->setAlignment(Qt::AlignHCenter);
 
