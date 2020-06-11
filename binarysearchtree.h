@@ -350,10 +350,9 @@ bool BinarySearchTree<T>::deleteItem(T item)
         if (currentNode == root)
         {
             Node<T> *tempPtr = root;
-            root->leftChild->parent=0;
             root = root->leftChild;
+            root->parent = 0;
             delete tempPtr;
-            return found;
         }
         if (trailCurrentNode->data < item)
         {
@@ -364,8 +363,8 @@ bool BinarySearchTree<T>::deleteItem(T item)
         }
         else
         {
-            Node<T> *tempPtr = trailCurrentNode->rightChild;
-            trailCurrentNode->rightChild = currentNode->leftChild;
+            Node<T> *tempPtr = trailCurrentNode->leftChild;
+            trailCurrentNode->leftChild = currentNode->leftChild;
             currentNode->leftChild->parent = trailCurrentNode;
             delete tempPtr;
         }
@@ -479,7 +478,8 @@ QString BinarySearchTree<T>::getPreOrderTraversal() const
     while (true) {
         // Go to the left extreme insert all the elements to stack, add to string as encountered
         while (root != 0) {
-            traversal.append(QString::number(root->data) + " " +QString::number(root->data) + " ");
+//            traversal.append(QString::number(root->data) + " " + QString::number(root->data) + " ");
+            traversal.append(QString::number(root->data) + " ");
             stack.push(root);
             root = root->leftChild;
         }
@@ -504,7 +504,9 @@ QString BinarySearchTree<T>::getInOrderTraversal() const
         // Go to the left extreme insert all the elements to stack
         while (root != 0) {
             stack.push(root);
+
             traversal1.append(QString::number(root->data) + " ");
+
             root = root->leftChild;
         }
         // check if Stack is empty, if yes, exit from everywhere
@@ -1090,13 +1092,8 @@ template<typename T>
          return;
      }
      else{
-          if(root->leftChild==0){
-              return;
-          }
-          else{
-              right_Rorate(this->root);
-              return;
-          }
+         right_Rorate(this->root);
+         return;
      }
  }
 
@@ -1122,7 +1119,11 @@ template<typename T>
              return;
          }
          else{
-               left_Rorate(root);
+             Node<T>* q;
+             q=root->rightChild;
+             root->rightChild=q->leftChild;
+             q->leftChild=root;
+             root=q;
          }
      }
  }
