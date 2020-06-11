@@ -82,10 +82,9 @@ void Bst_preorder_window::recursive_bst_clicked()
 }
 void Bst_preorder_window::recursive_bst(BinarySearchTree<int> *bst)
 {
-//    bst->rightRorate();
+
     QString traversal = bst->getPreOrderTraversal();
     std::stringstream ss(traversal.toStdString());
- //   ss.str(traversal.toStdString());
     std::string token=" ",token1=" ";
     while (ss >> token)
     {
@@ -98,10 +97,10 @@ void Bst_preorder_window::recursive_bst(BinarySearchTree<int> *bst)
         }
         this->renderarea->repaint();
         QThread::sleep(2);
-
     }
     QThread::sleep(2);
     this->renderarea->InitColor();
+    this->renderarea->repaint();
     this->stackLineEdit->setText("");
 }
 void Bst_preorder_window::show()
