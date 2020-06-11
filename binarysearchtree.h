@@ -47,6 +47,7 @@ public :
     QString getRightMostNode();
     QString getNode(T value);
     QString getBreadthFirstSearch();
+    QString getPreOrderRorate();
     int getNodeCount() const;
     int getLeafNodeCount() const;
     int getTreeHeight() const;
@@ -492,7 +493,29 @@ QString BinarySearchTree<T>::getPreOrderTraversal() const
         root = root->rightChild;
     }
 }
-
+template<typename T>
+QString BinarySearchTree<T>::getPreOrderRorate()
+{
+    QStack<Node<T>*> stack;
+    QString traversal;
+    Node<T> *root = this->root;
+    while (true) {
+        // Go to the left extreme insert all the elements to stack, add to string as encountered
+        while (root != 0) {
+            traversal.append(QString::number(root->data) + " ");
+            stack.push(root);
+            root = root->leftChild;
+        }
+        // check if Stack is empty, if yes, exit from everywhere
+        if (stack.isEmpty()) {
+            return traversal;
+        }
+        // pop the element from the stack, add the nodes at
+        // the right to the Stack
+        root = stack.pop();
+        root = root->rightChild;
+    }
+}
 template<typename T>
 QString BinarySearchTree<T>::getInOrderTraversal() const
 {
@@ -1122,6 +1145,7 @@ template<typename T>
          }
          else{
                left_Rorate(root);
+               return;
          }
      }
  }
