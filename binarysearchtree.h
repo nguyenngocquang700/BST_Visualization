@@ -350,9 +350,10 @@ bool BinarySearchTree<T>::deleteItem(T item)
         if (currentNode == root)
         {
             Node<T> *tempPtr = root;
+            root->leftChild->parent=0;
             root = root->leftChild;
-            root->parent = 0;
             delete tempPtr;
+            return found;
         }
         if (trailCurrentNode->data < item)
         {
@@ -363,8 +364,8 @@ bool BinarySearchTree<T>::deleteItem(T item)
         }
         else
         {
-            Node<T> *tempPtr = trailCurrentNode->leftChild;
-            trailCurrentNode->leftChild = currentNode->leftChild;
+            Node<T> *tempPtr = trailCurrentNode->rightChild;
+            trailCurrentNode->rightChild = currentNode->leftChild;
             currentNode->leftChild->parent = trailCurrentNode;
             delete tempPtr;
         }
