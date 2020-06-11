@@ -658,7 +658,7 @@ void MainWindow::leftRorateClicked() const{
             {
                 bst->searchNotValue(QString::fromStdString(token).toInt());
                 this->renderArea->repaint();
-                QThread::msleep(400);
+                QThread::msleep(300);
             }
         }
         bst->insert((QString::fromStdString(token1).toInt()));
@@ -690,7 +690,7 @@ void MainWindow::rightRorateClicked() const{
             {
                 bst->searchNotValue(QString::fromStdString(token).toInt());
                 this->renderArea->repaint();
-                QThread::msleep(400);
+                QThread::msleep(300);
             }
         }
         bst->insert((QString::fromStdString(token1).toInt()));

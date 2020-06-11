@@ -737,7 +737,7 @@ void BinarySearchTree<T>::draw(QPainter *painter, double &scale, QBrush brush)
         return;
     // Set properties of the painter for drawing the tree
     this->painter = painter;
-    this->painter->setFont(QFont("FVF Fernando 08", 11 * scale, QFont::Normal));
+    this->painter->setFont(QFont("FVF Fernando 08", 10 * scale, QFont::Normal));
 
     // Set variables for drawing the tree
     this->scale = scale;
@@ -811,7 +811,7 @@ int BinarySearchTree<T>::getPxLocOfAncestor(const Node<T> *node)
     while(currentNode->x == 0)
         currentNode = currentNode->parent;
 
-    return currentNode->x;
+    return (currentNode->x);
 }
 
 template<typename T>
@@ -851,7 +851,7 @@ void BinarySearchTree<T>::recursiveDraw(Node<T> *node,QBrush brush)
     // if there is a left child, we need to draw this parent relative to it
     if (node->leftChild != 0)
     {
-        node->x = getPxLocOfLeftTree(node->leftChild) + nodeRadius + xspace;
+        node->x = getPxLocOfLeftTree(node->leftChild) + nodeRadius + xspace + 5;
         pen.setBrush(node->leftChild->colourLine);
         // Draw line to left child
 
@@ -959,6 +959,7 @@ T BinarySearchTree<T>::minNode(Node<T>* root){
     }
     return minNode(root->leftChild);
 }
+
 template<typename T>
 T BinarySearchTree<T>::maxNode(Node<T>* root){
     if(root->rightChild==0){
@@ -966,6 +967,7 @@ T BinarySearchTree<T>::maxNode(Node<T>* root){
     }
     return maxNode(root->rightChild);
 }
+
 template<typename T>
 void BinarySearchTree<T>::searchMin(T item)
 {
@@ -991,6 +993,7 @@ void BinarySearchTree<T>::searchMin(T item)
    }
    return;
 }
+
 template<typename T>
  void BinarySearchTree<T>::searchMax(T item)
 {
@@ -1018,6 +1021,7 @@ template<typename T>
    }
    return;
 }
+
  template<typename T>
  void BinarySearchTree<T>::searchValue(T value,T item){
      if(this->isEmpty()){
