@@ -478,7 +478,7 @@ QString BinarySearchTree<T>::getPreOrderTraversal() const
     while (true) {
         // Go to the left extreme insert all the elements to stack, add to string as encountered
         while (root != 0) {
-            traversal.append(QString::number(root->data) + " ");
+            traversal.append(QString::number(root->data) + " " +QString::number(root->data) + " ");
             stack.push(root);
             root = root->leftChild;
         }
