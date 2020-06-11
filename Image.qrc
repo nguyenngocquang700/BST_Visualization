@@ -42,6 +42,7 @@
         <file>Icon/rightRotateButton.png</file>
         <file>Icon/leftRotateButton.png</file>
         <file>Icon/logo.png</file>
+        <file>Background/gif_cat.gif</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/FVF Fernando 08.ttf</file>

@@ -26,10 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     setStyleSheet("MainWindow {background-image:url(:/new/prefix1/Background/background.png)}");
-    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
-    QLabel *processLabel = new QLabel(this);
-    processLabel->setMovie(movie);
-    movie->start();
     // Create default save directory
     QString directory = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer";
     if (!QDir(directory).exists())
@@ -240,8 +236,14 @@ MainWindow::MainWindow(QWidget *parent) :
     buttonLayout->addWidget(searchButton);
     buttonLayout->addWidget(searchMinButton);
     buttonLayout->addWidget(searchMaxButton);
-
-
+    QMovie *movie=new QMovie(":/new/prefix1/Background/gif_cat.gif");
+    // Play GIF
+    label=new QLabel(this);
+    label->setGeometry(20,650,500,492);
+    label->resize(200,192);
+    label->setMovie(movie);
+    movie->start();
+//    QPixmap movie = QPixmap::grabWidget()
 
     // Create the render area (canvas for drawing the BST)
     renderArea = new RenderArea(this->bst);
@@ -250,9 +252,12 @@ MainWindow::MainWindow(QWidget *parent) :
     treeScrollArea->setWidget(renderArea);
 //    renderArea->setMinimumSize(500, 550);
 //    treeScrollArea->setMinimumSize(20,20);
-    treeScrollArea->setGeometry(200,200,200,200);
-//    treeScrollArea->setWidgetResizable(true);
-
+//    treeScrollArea->setGeometry(200,200,200,200);
+//    treeScrollArea->setFixedWidth(900);
+    treeScrollArea->setFixedSize(500, 500);
+    renderArea->setContentsMargins(10,10,10,10);
+    treeScrollArea->setAlignment(Qt::AlignTop);
+    treeScrollArea->setAlignment(Qt::AlignHCenter);
 
     // Pass any events that happen on the scroll area to the
     // render area (specifically clicking, so that renderArea
@@ -273,8 +278,6 @@ MainWindow::MainWindow(QWidget *parent) :
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
-    //    this->setMinimumHeight(800);
-    //    this->setMinimumWidth(1300);
     this->setFixedSize(QSize(1300,800));
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/logo.png"));
@@ -284,12 +287,6 @@ MainWindow::MainWindow(QWidget *parent) :
     prop = new BST_Properties_Window();
     about = new BST_About_Window();
 
-
-    // must show window before loading settings
-//    QMovie *movie = new QMovie(":/new/prefix1/Background/gif.gif");
-//    QLabel *processLabel = new QLabel(this);
-//    processLabel->setMovie(movie);
-//    movie->start();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -330,9 +327,6 @@ void MainWindow::createMenu()
 
     editMenu = this->menuBar()->addMenu(tr("&Edit"));
     editMenu->addAction(resetAction);
-    editMenu->addAction(changeNodeColorAction);
-    editMenu->addAction(changeBackgroundColorAction);
-    editMenu->addAction(changeTextColorAction);
 
     aboutmenu = this->menuBar()->addMenu(tr("&About"));
     aboutmenu->addAction(aboutAction);

@@ -90,6 +90,7 @@ private:
     QLineEdit *searchValueLineEdit;
     QLineEdit *searchMinLineEdit;
     QLineEdit *searchMaxLineEdit;
+    QLabel *label;
 
 protected:
     virtual void closeEvent(QCloseEvent *event);
