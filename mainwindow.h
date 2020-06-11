@@ -60,6 +60,10 @@ private:
     QAction *saveAction;
     QAction *exitAction;
     QAction *resetAction;
+    QAction *insertAction;
+    QAction *deleteAction;
+    QAction *zoominAction;
+    QAction *zoomoutAction;
     QAction *changeNodeColorAction;
     QAction *changeBackgroundColorAction;
     QAction *changeTextColorAction;
@@ -113,6 +117,7 @@ private slots:
     void searchMaxClicked() const;
     void leftRorateClicked() const;
     void rightRorateClicked() const;
+    void slotCustomMenuRequested(QPoint pos);
 
 };
 

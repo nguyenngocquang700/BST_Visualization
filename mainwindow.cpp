@@ -206,13 +206,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QPixmap delpix(":/new/prefix1/Icon/delete.png");
     QPixmap zoominpix(":/new/prefix1/Icon/zoom-in.png");
     QPixmap zoomoutpix(":/new/prefix1/Icon/zoom-out.png");
-    QAction *insertAction = new QAction(loadpix,tr("&Insert"), this);
+    insertAction = new QAction(loadpix,tr("&Insert"), this);
     connect(insertAction,&QAction::triggered, this, &MainWindow::insertClicked);
-    QAction *deleteAction = new QAction(delpix,tr("&Delete"), this);
+    deleteAction = new QAction(delpix,tr("&Delete"), this);
     connect(deleteAction,&QAction::triggered, this, &MainWindow::deleteClicked);
-    QAction *zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
+    zoominAction = new QAction(zoominpix,tr("Zoom &In"), this);
     connect(zoominAction,&QAction::triggered, this, &MainWindow::zoomInClicked);
-    QAction *zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
+    zoomoutAction = new QAction(zoomoutpix,tr("Zoom &Out"), this);
     connect(zoomoutAction,&QAction::triggered, this, &MainWindow::zoomOutClicked);
     aboutAction->setIcon(QIcon(":/new/prefix1/Icon/about.png"));
 
@@ -265,6 +265,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // render area (specifically clicking, so that renderArea
     // can zoom in/out when clicks happen
     treeScrollArea->installEventFilter(renderArea);
+    treeScrollArea->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(treeScrollArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
     // Create the main layout and add all the widgets to it
 
@@ -341,6 +343,17 @@ void MainWindow::createMenu()
 
     aboutmenu = this->menuBar()->addMenu(tr("&About"));
     aboutmenu->addAction(aboutAction);
+}
+
+void MainWindow::slotCustomMenuRequested(QPoint pos)
+{
+        /* Create an object context menu */
+        QMenu * menu = new QMenu(this);
+        /* Set the actions to the menu */
+        menu->addAction(insertAction);
+        menu->addAction(deleteAction);
+        /* Call the context menu */
+        menu->popup(this->renderArea->mapToGlobal(pos));
 }
 
 void MainWindow::createActions()
