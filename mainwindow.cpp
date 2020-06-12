@@ -417,18 +417,30 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::bst_inorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"inorder","Tree is empty");
+        return;
+    }
     inorder->show();
     return;
 }
 
 void MainWindow::bst_preorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"preorder","Tree is empty");
+        return;
+    }
     preorder->show();
     return;
 }
 
 void MainWindow::bst_postorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"postorder","Tree is empty");
+        return;
+    }
     postorder->show();
     return;
 }
@@ -442,6 +454,10 @@ void MainWindow::propertyClicked() const
 
 // Slot for delete button
 void MainWindow::deleteClicked() const {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"delete","Tree is empty");
+        return;
+    }
     deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
     QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
     bool check=true;
@@ -508,7 +524,7 @@ void MainWindow::deleteClicked() const {
         }
     }
     else{
-        QMessageBox::information(NULL,"insert","Input is number");
+        QMessageBox::information(NULL,"delete","Input is number");
     }
 
 }
@@ -591,7 +607,10 @@ void MainWindow::insertClicked() const
 
 // Slot for search
 void MainWindow::searchClicked() const{
-
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QString value = QInputDialog::getText(searchButton, tr("Search"),tr("Search Value:"),QLineEdit::Normal,0);
     bool check=true;
     int n=value.length();
@@ -654,11 +673,15 @@ void MainWindow::searchClicked() const{
         }
     }
     else{
-        QMessageBox::information(NULL,"insert","Input is number");
+        QMessageBox::information(NULL,"search","Input is number");
     }
 }
 //Slot for searchMin
 void MainWindow::searchMinClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QWidget *win = new QMessageBox();
     int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
     if (reply == QMessageBox::Ok)
@@ -680,6 +703,10 @@ void MainWindow::searchMinClicked() const{
 }
 //Slot for searchMax
 void MainWindow::searchMaxClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QWidget *win = new QMessageBox();
     int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
     if (reply == QMessageBox::Ok)
@@ -702,6 +729,10 @@ void MainWindow::searchMaxClicked() const{
 }
 
 void MainWindow::leftRorateClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"leftrorate","Tree is empty");
+        return;
+    }
     this->bst->leftRorate();
     QString traversal =this->bst->getPreOrderRorate();
     this->bst->resetTree();
@@ -732,7 +763,10 @@ void MainWindow::leftRorateClicked() const{
 
 void MainWindow::rightRorateClicked() const{
 
-
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"rightrorate","Tree is empty");
+        return;
+    }
     this->bst->rightRorate();
     QString traversal =this->bst->getPreOrderRorate();
     this->bst->resetTree();
