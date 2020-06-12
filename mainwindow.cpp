@@ -444,76 +444,38 @@ void MainWindow::propertyClicked() const
 void MainWindow::deleteClicked() const {
     deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
     QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-    if(value.toInt()<-999||value.toInt()>999){
-         QMessageBox::information(NULL,"Remove","Out of range value.(-999->999)");
-    }
-    else{
-        QString traversal = this->bst->getNode(value.toInt());
-        std::stringstream ss(traversal.toStdString());
-        std::string token=" ";
-        QWidget *win = new QMessageBox();
-        int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
-        if (reply == QMessageBox::Yes)
-        {
-            // traversal
-            if(!bst->isEmpty())
-            {
-                QString traversal = this->bst->getNode(value.toInt());;
-                std::stringstream ss(traversal.toStdString());
-                std::string token=" ";
-                while (ss >> token)
-                {
-                    bst->searchNotValue(QString::fromStdString(token).toInt());
-                    this->renderArea->repaint();
-                    QThread::msleep(500);
-                }
+    bool check=true;
+    int n=value.length();
+    if(value[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
             }
-            //delete
-            if(!this->bst->deleteItem(value.toInt()))
-            {
-                QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
-                this->renderArea->InitColor();
-                this->renderArea->repaint();
-
-            }
-            else
-            {
-                this->renderArea->InitColor();
-                this->renderArea->repaint(); // repaint to show changes to tree
-
-            }
-            this->deleteValueLineEdit->setText(""); // clear text box
-            this->renderArea->InitColor();
-            this->renderArea->repaint();
         }
-
-        return;
-    }
-}
-
-
-// Slot for insert button
-
-void MainWindow::insertClicked() const
-{
-    insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
-    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
-    if(values.toInt()<-999||values.toInt()>999){
-         QMessageBox::information(NULL,"insert","Out of range value.(-999->999)");
     }
     else{
-        QWidget *win = new QMessageBox();
-        int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-        if (reply == QMessageBox::Ok){
-
-            //insert
-            QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
-            QStringListIterator iterator(valueList);
-            while (iterator.hasNext())
+        for(int i=0;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
+            }
+        }
+    }
+    if(check==true&&!value.isEmpty()){
+        if(value.toInt()<-999||value.toInt()>999){
+             QMessageBox::information(NULL,"Remove","Out of range value.(-999->999)");
+        }
+        else{
+            QString traversal = this->bst->getNode(value.toInt());
+            std::stringstream ss(traversal.toStdString());
+            std::string token=" ";
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
+            if (reply == QMessageBox::Yes)
             {
-                //traversal
-                if(!bst->isEmpty()){
-                    QString traversal = this->bst->getNode(values.toInt());;
+                // traversal
+                if(!bst->isEmpty())
+                {
+                    QString traversal = this->bst->getNode(value.toInt());;
                     std::stringstream ss(traversal.toStdString());
                     std::string token=" ";
                     while (ss >> token)
@@ -523,26 +485,107 @@ void MainWindow::insertClicked() const
                         QThread::msleep(500);
                     }
                 }
-                if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
+                //delete
+                if(!this->bst->deleteItem(value.toInt()))
                 {
-                    QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+                    QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
                     this->renderArea->InitColor();
                     this->renderArea->repaint();
+
                 }
                 else
                 {
                     this->renderArea->InitColor();
-                    this->renderArea->repaint();
-                    this->statusLabel->setText("Value inserted...");
-                    QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
+                    this->renderArea->repaint(); // repaint to show changes to tree
 
                 }
+                this->deleteValueLineEdit->setText(""); // clear text box
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
             }
-            insertValueLineEdit->setText(""); // clear text box
-            this->renderArea->InitColor();
-            this->renderArea->repaint();
+
             return;
         }
+    }
+    else{
+        QMessageBox::information(NULL,"insert","Input is number");
+    }
+
+}
+
+
+// Slot for insert button
+
+void MainWindow::insertClicked() const
+{
+    insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
+    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
+    bool check=true;
+    int n=values.length();
+    if(values[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(values[i]<'0'||values[i]>'9'){
+               check=false;
+            }
+        }
+    }
+    else{
+        for(int i=0;i<n;i++){
+            if(values[i]<'0'||values[i]>'9'){
+               check=false;
+            }
+        }
+    }
+    if(check==true&&!values.isEmpty()){
+        if(values.toInt()<-999||values.toInt()>999){
+             QMessageBox::information(NULL,"insert","Out of range value.(-999->999)");
+        }
+        else{
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+            if (reply == QMessageBox::Ok){
+
+                //insert
+                QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+                QStringListIterator iterator(valueList);
+                while (iterator.hasNext())
+                {
+                    //traversal
+                    if(!bst->isEmpty()){
+                        QString traversal = this->bst->getNode(values.toInt());;
+                        std::stringstream ss(traversal.toStdString());
+                        std::string token=" ";
+                        while (ss >> token)
+                        {
+                            bst->searchNotValue(QString::fromStdString(token).toInt());
+                            this->renderArea->repaint();
+                            QThread::msleep(500);
+                        }
+                    }
+                    if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
+                    {
+                        QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+                        this->renderArea->InitColor();
+                        this->renderArea->repaint();
+                    }
+                    else
+                    {
+                        this->renderArea->InitColor();
+                        this->renderArea->repaint();
+                        this->statusLabel->setText("Value inserted...");
+                        QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
+
+                    }
+                }
+                insertValueLineEdit->setText(""); // clear text box
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
+                return;
+            }
+        }
+    }
+    else{
+        QMessageBox::information(NULL,"insert","Input is number");
     }
 }
 
@@ -550,47 +593,68 @@ void MainWindow::insertClicked() const
 void MainWindow::searchClicked() const{
 
     QString value = QInputDialog::getText(searchButton, tr("Search"),tr("Search Value:"),QLineEdit::Normal,0);
-    if(value.toInt()<-999||value.toInt()>999){
-             QMessageBox::information(NULL,"search","Out of range value.(-999->999)");
-    }
-    else{
-        QWidget *win = new QMessageBox();
-        int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-        if (reply == QMessageBox::Ok)
-        {
-
-            if(bst->find(value.toInt())){
-                QString traversal = this->bst->getNode(value.toInt());
-    //            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
-                std::stringstream ss(traversal.toStdString());
-                std::string token=" ",token1=" ";
-                while (ss >> token)
-                {
-                    bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
-                    this->renderArea->repaint();
-                    QThread::msleep(500);
-                }
-                QMessageBox::information(win,"Search","Found.",QMessageBox::Ok);
-                  this->searchValueLineEdit->setText(""); // clear text box
-    }
-            else{
-                QString traversal = this->bst->getNode(value.toInt());
-    //            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
-                std::stringstream ss(traversal.toStdString());
-                std::string token=" ",token1=" ";
-                while (ss >> token)
-                {
-                    bst->searchNotValue(QString::fromStdString(token).toInt());
-                    this->renderArea->repaint();
-                    QThread::msleep(500);
-                }
-                  this->searchValueLineEdit->setText(""); // clear text box
-                QMessageBox::information(win,"Search","Not Found.",QMessageBox::Ok);
+    bool check=true;
+    int n=value.length();
+    if(value[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
             }
         }
-        QThread::msleep(500);
-        this->renderArea->InitColor();
-        this->renderArea->repaint();
+    }
+    else{
+        for(int i=0;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
+            }
+        }
+    }
+    if(check==true&&!value.isEmpty()){
+        if(value.toInt()<-999||value.toInt()>999){
+                 QMessageBox::information(NULL,"search","Out of range value.(-999->999)");
+        }
+        else{
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+            if (reply == QMessageBox::Ok)
+            {
+
+                if(bst->find(value.toInt())){
+                    QString traversal = this->bst->getNode(value.toInt());
+        //            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
+                    std::stringstream ss(traversal.toStdString());
+                    std::string token=" ",token1=" ";
+                    while (ss >> token)
+                    {
+                        bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
+                        this->renderArea->repaint();
+                        QThread::msleep(500);
+                    }
+                    QMessageBox::information(win,"Search","Found.",QMessageBox::Ok);
+                      this->searchValueLineEdit->setText(""); // clear text box
+        }
+                else{
+                    QString traversal = this->bst->getNode(value.toInt());
+        //            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
+                    std::stringstream ss(traversal.toStdString());
+                    std::string token=" ",token1=" ";
+                    while (ss >> token)
+                    {
+                        bst->searchNotValue(QString::fromStdString(token).toInt());
+                        this->renderArea->repaint();
+                        QThread::msleep(500);
+                    }
+                      this->searchValueLineEdit->setText(""); // clear text box
+                    QMessageBox::information(win,"Search","Not Found.",QMessageBox::Ok);
+                }
+            }
+            QThread::msleep(500);
+            this->renderArea->InitColor();
+            this->renderArea->repaint();
+        }
+    }
+    else{
+        QMessageBox::information(NULL,"insert","Input is number");
     }
 }
 //Slot for searchMin
