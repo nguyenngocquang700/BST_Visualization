@@ -46,11 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     propertyButton->setToolTip("More information about Binary Search Tree");
     propertyButton->setCursor(Qt::PointingHandCursor);
 
-    deleteButton = new QPushButton("", this);
+    deleteButton = new QPushButton("  Delete Node", this);
     deleteButton->setToolTip("Delete a Node or more Nodes of Binary Search Tree");
     deleteButton->setCursor(Qt::PointingHandCursor);
 
-    insertButton = new QPushButton("", this);
+    insertButton = new QPushButton("  Insert Node", this);
     insertButton->setToolTip("Insert a Node or more Nodes of Binary Search Tree");
     insertButton->setCursor(Qt::PointingHandCursor);
 
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     LRNButton->setToolTip("Post-order (LNR) traversal");
     LRNButton->setCursor(Qt::PointingHandCursor);
 
-    searchButton = new QPushButton("", this);
+    searchButton = new QPushButton("  Search Node", this);
     searchButton->setToolTip("Search a Node by Value");
     searchButton->setCursor(Qt::PointingHandCursor);
 
@@ -99,41 +99,82 @@ MainWindow::MainWindow(QWidget *parent) :
                                   "background-image: url(:/new/prefix1/Icon/propertiesButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
-    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    deleteButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "background-image: url(:/new/prefix1/Icon/deleteButton.png)0 0 0 0 stretch stretch;"
-                                   "width: 173px;"
-                                   "height: 50px;"
-                                  "}");
-    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    insertButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "background-image: url(:/new/prefix1/Icon/insertButton.png)0 0 0 0 stretch stretch;"
+                                  "}"
+                                  "QPushButton:hover {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/propertiesButton_hover.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
                                   "}");
+    deleteButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    deleteButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/empty.png)0 0 0 0 stretch stretch;"
+                                   "width: 173px;"
+                                   "height: 50px;"
+                                "font: bold;"
+                                "font-size: 14px;"
+                                "padding-top: -3px;"
+                                  "}"
+                                "QPushButton:hover {border-style: none; "
+                                "background-image: url(:/new/prefix1/Icon/empty_hover.png)0 0 0 0 stretch stretch;"
+                                "width: 173px;"
+                                "height: 50px;"
+                                "}");
+    insertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    insertButton->setStyleSheet("QPushButton {border-style: none; "
+                                  "background-image: url(:/new/prefix1/Icon/empty.png)0 0 0 0 stretch stretch;"
+                                  "width: 173px;"
+                                  "height: 50px;"
+                                "font: bold;"
+                                "font-size: 14px;"
+                                "padding-top: -3px;"
+                                  "}"
+                                "QPushButton:hover {border-style: none; "
+                                "background-image: url(:/new/prefix1/Icon/empty_hover.png)0 0 0 0 stretch stretch;"
+                                "width: 173px;"
+                                "height: 50px;"
+                                "}");
     NLRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     NLRButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/preorderButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                  "}"
+                             "QPushButton:hover {border-style: none; "
+                             "background-image: url(:/new/prefix1/Icon/preorderButton_hover.png)0 0 0 0 stretch stretch;"
+                             "width: 173px;"
+                             "height: 50px;"
+                             "}");
     LRNButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     LRNButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/postorderButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                  "}"
+                             "QPushButton:hover {border-style: none; "
+                             "background-image: url(:/new/prefix1/Icon/postorderButton_hover.png)0 0 0 0 stretch stretch;"
+                             "width: 173px;"
+                             "height: 50px;"
+                             "}");
     LNRButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     LNRButton->setStyleSheet("QPushButton {border-style: none; "
                                   "font-family: Consolas; "
                                   "background-image: url(:/new/prefix1/Icon/inorderButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                  "}"
+                             "QPushButton:hover {border-style: none; "
+                             "background-image: url(:/new/prefix1/Icon/inorder_hover.png)0 0 0 0 stretch stretch;"
+                             "width: 173px;"
+                             "height: 50px;"
+                             "}");
     leftRorateButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     leftRorateButton->setStyleSheet("QPushButton {border-style: none; "
                                     "background-image: url(:/new/prefix1/Icon/leftRotateButton.png)0 0 0 0 stretch stretch;"
+                                    "width: 173px;"
+                                    "height: 50px;"
+                                    "}"
+                                    "QPushButton:hover {border-style: none; "
+                                    "background-image: url(:/new/prefix1/Icon/leftRotate_hover.png)0 0 0 0 stretch stretch;"
                                     "width: 173px;"
                                     "height: 50px;"
                                     "}");
@@ -142,25 +183,48 @@ MainWindow::MainWindow(QWidget *parent) :
                                      "background-image: url(:/new/prefix1/Icon/rightRotateButton.png)0 0 0 0 stretch stretch;"
                                      "width: 173px;"
                                      "height: 50px;"
+                                     "}"
+                                     "QPushButton:hover {border-style: none; "
+                                     "background-image: url(:/new/prefix1/Icon/rightRotate_hover.png)0 0 0 0 stretch stretch;"
+                                     "width: 173px;"
+                                     "height: 50px;"
                                      "}");
     searchButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     searchButton->setStyleSheet("QPushButton {border-style: none; "
-                                  "background-image: url(:/new/prefix1/Icon/searchButton.png)0 0 0 0 stretch stretch;"
+                                  "background-image: url(:/new/prefix1/Icon/empty.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                "font: bold;"
+                                "font-size: 14px;"
+                                "padding-top: -3px;"
+                                  "}"
+                                "QPushButton:hover {border-style: none; "
+                                "background-image: url(:/new/prefix1/Icon/empty_hover.png)0 0 0 0 stretch stretch;"
+                                "width: 173px;"
+                                "height: 50px;"
+                                "}");
     searchMinButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     searchMinButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/sMinButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                  "}"
+                                   "QPushButton:hover {border-style: none; "
+                                   "background-image: url(:/new/prefix1/Icon/sMin_hover.png)0 0 0 0 stretch stretch;"
+                                   "width: 173px;"
+                                   "height: 50px;"
+                                   "}");
     searchMaxButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     searchMaxButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/sMaxButton.png)0 0 0 0 stretch stretch;"
                                   "width: 173px;"
                                   "height: 50px;"
-                                  "}");
+                                  "}"
+                                   "QPushButton:hover {border-style: none; "
+                                   "background-image: url(:/new/prefix1/Icon/sMax_hover.png)0 0 0 0 stretch stretch;"
+                                   "width: 173px;"
+                                   "height: 50px;"
+                                   "}");
 
     insertValueLineEdit->setFixedWidth(100);
     insertValueLineEdit->setToolTip("Enter single value or multiple values separated by space");
@@ -256,9 +320,9 @@ MainWindow::MainWindow(QWidget *parent) :
 //    treeScrollArea->setFixedWidth(900);
     treeScrollArea->setFixedSize(950, 700);
 //    treeScrollArea->setFixedSize(100, 100);
-//    treeScrollArea->update(10,10,10,10);
-
-    treeScrollArea->setAlignment(Qt::AlignTop);
+//    renderArea->setStyleSheet(RenderArea{opacity:50});
+//    treeScrollArea->setStyleSheet(treeScrollArea{opacity:223});
+//    treeScrollArea->setAlignment(Qt::AlignTop);
     treeScrollArea->setAlignment(Qt::AlignHCenter);
 
     // Pass any events that happen on the scroll area to the
@@ -442,58 +506,79 @@ void MainWindow::propertyClicked() const
 
 // Slot for delete button
 void MainWindow::deleteClicked() const {
-
-    QString value;
-    do
-    {
-        deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
-        value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
-        if(value.toInt()<-2147483647||value.toInt()>2147483646)
-        {
-             QMessageBox::information(NULL,"Remove","gia tri nam ngoai vung qui dinh");
-        }
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"delete","Tree is empty");
+        return;
     }
-    while(value.toInt()<-2147483647||value.toInt()>2147483646);
-
-    QString traversal = this->bst->getNode(value.toInt());
-    std::stringstream ss(traversal.toStdString());
-    std::string token=" ";
-    QWidget *win = new QMessageBox();
-    int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
-    if (reply == QMessageBox::Yes)
-    {
-        // traversal
-        if(!bst->isEmpty())
-        {
-            QString traversal = this->bst->getNode(value.toInt());;
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ";
-            while (ss >> token)
-            {
-                bst->searchNotValue(QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
+    deleteButton->setWindowIcon(QIcon(":/new/prefix1/Icon/delete.png"));
+    QString value = QInputDialog::getText(deleteButton, tr("Delete"),tr("Remove Value:"),QLineEdit::Normal,0);
+    bool check=true;
+    int n=value.length();
+    if(value[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
             }
         }
-        //delete
-        if(!this->bst->deleteItem(value.toInt()))
-        {
-            QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
-            this->renderArea->InitColor();
-            this->renderArea->repaint();
-
+    }
+    else{
+        for(int i=0;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
+            }
         }
-        else
-        {
-            this->renderArea->InitColor();
-            this->renderArea->repaint(); // repaint to show changes to tree
-
+    }
+    if(check==true&&!value.isEmpty()){
+        if(value.toInt()<-999||value.toInt()>999){
+             QMessageBox::information(NULL,"Remove","Out of range value.(-999->999)");
         }
-        this->deleteValueLineEdit->setText(""); // clear text box
+        else{
+            QString traversal = this->bst->getNode(value.toInt());
+            std::stringstream ss(traversal.toStdString());
+            std::string token=" ";
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Remove","Are you sure to delete this Node?",QMessageBox::Yes,QMessageBox::No);
+            if (reply == QMessageBox::Yes)
+            {
+                // traversal
+                if(!bst->isEmpty())
+                {
+                    QString traversal = this->bst->getNode(value.toInt());;
+                    std::stringstream ss(traversal.toStdString());
+                    std::string token=" ";
+                    while (ss >> token)
+                    {
+                        bst->searchNotValue(QString::fromStdString(token).toInt());
+                        this->renderArea->repaint();
+                        QThread::msleep(500);
+                    }
+                }
+                //delete
+                if(!this->bst->deleteItem(value.toInt()))
+                {
+                    QMessageBox::information(win,"Remove","Value is not in tree...",QMessageBox::Yes);
+                    this->renderArea->InitColor();
+                    this->renderArea->repaint();
 
+                }
+                else
+                {
+                    this->renderArea->InitColor();
+                    this->renderArea->repaint(); // repaint to show changes to tree
+
+                }
+                this->deleteValueLineEdit->setText(""); // clear text box
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
+            }
+
+            return;
+        }
+    }
+    else{
+        QMessageBox::information(NULL,"delete","Input is number");
     }
 
-    return;
 }
 
 
@@ -501,101 +586,154 @@ void MainWindow::deleteClicked() const {
 
 void MainWindow::insertClicked() const
 {
-
-    QString values;
-    do{
-        insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
-        values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
-        if(values.toInt()<-2147483647||values.toInt()>2147483646){
-             QMessageBox::information(NULL,"insert","gia tri nam ngoai vung qui dinh");
+    insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
+    QString values = QInputDialog::getText(insertButton, tr("Insert Node"),tr("Add Value:"),QLineEdit::Normal,0);
+    bool check=true;
+    int n=values.length();
+    if(values[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(values[i]<'0'||values[i]>'9'){
+               check=false;
+            }
         }
     }
-    while(values.toInt()<-2147483647||values.toInt()>2147483646);
-
-    QWidget *win = new QMessageBox();
-    int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-    if (reply == QMessageBox::Ok){
-        //traversal
-        if(!bst->isEmpty()){
-            QString traversal = this->bst->getNode(values.toInt());;
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ";
-            while (ss >> token)
-            {
-                bst->searchNotValue(QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
+    else{
+        for(int i=0;i<n;i++){
+            if(values[i]<'0'||values[i]>'9'){
+               check=false;
             }
         }
-        //insert
-        QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
-        QStringListIterator iterator(valueList);
-        while (iterator.hasNext())
-        {
-            if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
-            {
-                QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
-                this->renderArea->InitColor();
-                this->renderArea->repaint();
-            }
-            else
-            {
-                this->renderArea->InitColor();
-                this->renderArea->repaint();
-                this->statusLabel->setText("Value inserted...");
-                QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
-
-            }
-        }
-        insertValueLineEdit->setText(""); // clear text box
-        return;
     }
+    if(check==true&&!values.isEmpty()){
+        if(values.toInt()<-999||values.toInt()>999){
+             QMessageBox::information(NULL,"insert","Out of range value.(-999->999)");
+        }
+        else{
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Insert","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+            if (reply == QMessageBox::Ok){
 
+                //insert
+                QStringList valueList = values.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+                QStringListIterator iterator(valueList);
+                while (iterator.hasNext())
+                {
+                    //traversal
+                    if(!bst->isEmpty()){
+                        QString traversal = this->bst->getNode(values.toInt());;
+                        std::stringstream ss(traversal.toStdString());
+                        std::string token=" ";
+                        while (ss >> token)
+                        {
+                            bst->searchNotValue(QString::fromStdString(token).toInt());
+                            this->renderArea->repaint();
+                            QThread::msleep(500);
+                        }
+                    }
+                    if(!this->bst->insert(iterator.next().toInt())) // inserts 0 if text isn't an int
+                    {
+                        QMessageBox::information(win,"Confirm Value","Duplicate value...",QMessageBox::Ok);
+                        this->renderArea->InitColor();
+                        this->renderArea->repaint();
+                    }
+                    else
+                    {
+                        this->renderArea->InitColor();
+                        this->renderArea->repaint();
+                        this->statusLabel->setText("Value inserted...");
+                        QMessageBox::information(win,"Confirm Value","Value inserted...",QMessageBox::Ok);
+
+                    }
+                }
+                insertValueLineEdit->setText(""); // clear text box
+                this->renderArea->InitColor();
+                this->renderArea->repaint();
+                return;
+            }
+        }
+    }
+    else{
+        QMessageBox::information(NULL,"Insert Node","");
+    }
 }
 
 // Slot for search
 void MainWindow::searchClicked() const{
-
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QString value = QInputDialog::getText(searchButton, tr("Search"),tr("Search Value:"),QLineEdit::Normal,0);
-    QWidget *win = new QMessageBox();
-    int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
-    if (reply == QMessageBox::Ok)
-    {
-
-        if(bst->find(value.toInt())){
-            QString traversal = this->bst->getNode(value.toInt());
-//            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ",token1=" ";
-            while (ss >> token)
-            {
-                bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
+    bool check=true;
+    int n=value.length();
+    if(value[0]=='-'&&n>1){
+        for(int i=1;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
             }
-            QMessageBox::information(win,"Search","Found.",QMessageBox::Ok);
-              this->searchValueLineEdit->setText(""); // clear text box
-}
-        else{
-            QString traversal = this->bst->getNode(value.toInt());
-//            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
-            std::stringstream ss(traversal.toStdString());
-            std::string token=" ",token1=" ";
-            while (ss >> token)
-            {
-                bst->searchNotValue(QString::fromStdString(token).toInt());
-                this->renderArea->repaint();
-                QThread::sleep(2);
-            }
-              this->searchValueLineEdit->setText(""); // clear text box
-            QMessageBox::information(win,"Search","Not Found.",QMessageBox::Ok);
         }
     }
-    QThread::sleep(2);
-    this->renderArea->InitColor();
+    else{
+        for(int i=0;i<n;i++){
+            if(value[i]<'0'||value[i]>'9'){
+               check=false;
+            }
+        }
+    }
+    if(check==true&&!value.isEmpty()){
+        if(value.toInt()<-999||value.toInt()>999){
+                 QMessageBox::information(NULL,"search","Out of range value.(-999->999)");
+        }
+        else{
+            QWidget *win = new QMessageBox();
+            int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
+            if (reply == QMessageBox::Ok)
+            {
+
+                if(bst->find(value.toInt())){
+                    QString traversal = this->bst->getNode(value.toInt());
+        //            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
+                    std::stringstream ss(traversal.toStdString());
+                    std::string token=" ",token1=" ";
+                    while (ss >> token)
+                    {
+                        bst->searchValue(value.toInt(),QString::fromStdString(token).toInt());
+                        this->renderArea->repaint();
+                        QThread::msleep(500);
+                    }
+                    QMessageBox::information(win,"Search","Found.",QMessageBox::Ok);
+                      this->searchValueLineEdit->setText(""); // clear text box
+        }
+                else{
+                    QString traversal = this->bst->getNode(value.toInt());
+        //            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
+                    std::stringstream ss(traversal.toStdString());
+                    std::string token=" ",token1=" ";
+                    while (ss >> token)
+                    {
+                        bst->searchNotValue(QString::fromStdString(token).toInt());
+                        this->renderArea->repaint();
+                        QThread::msleep(500);
+                    }
+                      this->searchValueLineEdit->setText(""); // clear text box
+                    QMessageBox::information(win,"Search","Not Found.",QMessageBox::Ok);
+                }
+            }
+            QThread::msleep(500);
+            this->renderArea->InitColor();
+            this->renderArea->repaint();
+        }
+    }
+    else{
+        QMessageBox::information(NULL,"search","Input is number");
+    }
 }
 //Slot for searchMin
 void MainWindow::searchMinClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QWidget *win = new QMessageBox();
     int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
     if (reply == QMessageBox::Ok)
@@ -607,15 +745,20 @@ void MainWindow::searchMinClicked() const{
         {
             bst->searchMin((QString::fromStdString(token).toInt()));
             this->renderArea->repaint();
-            QThread::sleep(2);
+             QThread::msleep(500);
         }
         QMessageBox::information(NULL,"Search", QString("min: "+QString::number(this->bst->min())));
     }
-    QThread::sleep(2);
+     QThread::msleep(500);
     this->renderArea->InitColor();
+    this->renderArea->repaint();
 }
 //Slot for searchMax
 void MainWindow::searchMaxClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"search","Tree is empty");
+        return;
+    }
     QWidget *win = new QMessageBox();
     int reply = QMessageBox::warning(win,"Search","Are you sure????",QMessageBox::Ok,QMessageBox::No);
     if (reply == QMessageBox::Ok)
@@ -628,18 +771,22 @@ void MainWindow::searchMaxClicked() const{
         {
             bst->searchMax((QString::fromStdString(token).toInt()));
             this->renderArea->repaint();
-            QThread::sleep(2);
+             QThread::msleep(500);
         }
               QMessageBox::information(NULL,"Search", QString("max: "+QString::number(this->bst->max())));
     }
-    QThread::sleep(2);
+     QThread::msleep(500);
     this->renderArea->InitColor();
+    this->renderArea->repaint();
 }
 
-// SLot for left rorate()
 void MainWindow::leftRorateClicked() const{
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"leftrorate","Tree is empty");
+        return;
+    }
     this->bst->leftRorate();
-    QString traversal =this->bst->getPreOrderTraversal();
+    QString traversal =this->bst->getPreOrderRorate();
     this->bst->resetTree();
     this->renderArea->repaint();
     std::stringstream ss(traversal.toStdString());
@@ -654,7 +801,7 @@ void MainWindow::leftRorateClicked() const{
             {
                 bst->searchNotValue(QString::fromStdString(token).toInt());
                 this->renderArea->repaint();
-                QThread::msleep(300);
+                QThread::msleep(200);
             }
         }
         bst->insert((QString::fromStdString(token1).toInt()));
@@ -664,14 +811,16 @@ void MainWindow::leftRorateClicked() const{
     this->renderArea->repaint();
 
 }
-
 //Slot for right roarte()
 
 void MainWindow::rightRorateClicked() const{
 
-
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"rightrorate","Tree is empty");
+        return;
+    }
     this->bst->rightRorate();
-    QString traversal =this->bst->getPreOrderTraversal();
+    QString traversal =this->bst->getPreOrderRorate();
     this->bst->resetTree();
     this->renderArea->repaint();
     std::stringstream ss(traversal.toStdString());
@@ -686,7 +835,7 @@ void MainWindow::rightRorateClicked() const{
             {
                 bst->searchNotValue(QString::fromStdString(token).toInt());
                 this->renderArea->repaint();
-                QThread::msleep(300);
+                QThread::msleep(200);
             }
         }
         bst->insert((QString::fromStdString(token1).toInt()));
@@ -696,6 +845,7 @@ void MainWindow::rightRorateClicked() const{
     this->renderArea->repaint();
 
 }
+
 
 // Slot for zoom in button
 void MainWindow::zoomInClicked() const {
