@@ -481,18 +481,30 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::bst_inorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"inorder","Tree is empty");
+        return;
+    }
     inorder->show();
     return;
 }
 
 void MainWindow::bst_preorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"preorder","Tree is empty");
+        return;
+    }
     preorder->show();
     return;
 }
 
 void MainWindow::bst_postorder()
 {
+    if(bst->isEmpty()){
+        QMessageBox::information(NULL,"postorder","Tree is empty");
+        return;
+    }
     postorder->show();
     return;
 }
