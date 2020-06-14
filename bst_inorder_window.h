@@ -23,6 +23,10 @@ public:
     void show();
     void close();
 //    void getbst(BinarySearchTree<int> *bst);
+    QLineEdit *code1;
+    QLineEdit *code2;
+    QLineEdit *code3;
+    QLineEdit *code4;
 private:
     QLabel *stackLabel;
     QLineEdit *stackLineEdit;

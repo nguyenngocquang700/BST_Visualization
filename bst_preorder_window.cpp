@@ -41,11 +41,28 @@ Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *par
 
     //Demo code
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
-    QTextEdit *txtEdit = new QTextEdit("");
-    txtEdit->setStyleSheet("background-color: white; color: black;");
-    txtEdit->setFixedWidth(100);
-    txtEdit->setReadOnly(true);
-    textAreaLayout->addWidget(txtEdit);
+    code1 = new QLineEdit("If this is null" );
+//    code1->setStyleSheet("background-color: white; color: black;");
+    code1->setFixedWidth(100);
+    code1->setReadOnly(true);
+    code2 = new QLineEdit("return");
+//    code2->setStyleSheet("background-color: white; color: black;");
+    code2->setFixedWidth(100);
+    code2->setReadOnly(true);
+    code3 = new QLineEdit("visit this, then preOrder (left)");
+//    code2->setStyleSheet("background-color: white; color: black;");
+    code3->setFixedWidth(100);
+    code3->setReadOnly(true);
+    code4 = new QLineEdit("preOrder (right)");
+//    code3->setStyleSheet("background-color: white; color: black;");
+    code4->setFixedWidth(100);
+    code4->setReadOnly(true);
+
+    textAreaLayout->addWidget(code1);
+    textAreaLayout->addWidget(code2);
+    textAreaLayout->addWidget(code3);
+    textAreaLayout->addWidget(code4);
+    textAreaLayout->setAlignment(Qt::AlignTop);
 
 //    QHBoxLayout *buttonLayout = new QHBoxLayout;
 //    buttonLayout->addStretch(0);
@@ -54,7 +71,7 @@ Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *par
 
     QHBoxLayout *contain = new QHBoxLayout();
     contain->addWidget(treeScrollArea);
-//    contain->addLayout(textAreaLayout);
+    contain->addLayout(textAreaLayout);
 
     QVBoxLayout *central = new QVBoxLayout();
     central->addWidget(stackLabel);
@@ -85,20 +102,43 @@ void Bst_preorder_window::recursive_bst(BinarySearchTree<int> *bst)
 
     QString traversal = bst->getPreOrderTraversal();
     std::stringstream ss(traversal.toStdString());
-    std::string token=" ",token1=" ";
-    while (ss >> token)
+    std::string token=" ";
+    QString ss1 = " ";
+    while (!ss.eof())
     {
-        bool t = bst->findandchange((QString::fromStdString(token).toInt()));
-        if ( t == true)
+        ss >> token;
+        QString test = QString::fromStdString(token);
+
+        if (test == "a" || test == "b" || test == "c"||test == "d")
         {
-            token1.append(token + " ");
-            QString ss1 = QString::fromStdString(token1);
-            this->stackLineEdit->setText(ss1);
+            this->code1->setStyleSheet("background-color: white; color: black;");
+            this->code2->setStyleSheet("background-color: white; color: black;");
+            this->code3->setStyleSheet("background-color: white; color: black;");
+            this->code4->setStyleSheet("background-color: white; color: black;");
+            if (test == "a")
+                this->code1->setStyleSheet("background-color: pink; color: black;");
+            else
+            if (test == "c")
+                this->code3->setStyleSheet("background-color: pink; color: black;");
+             else
+            if (test == "d")
+                this->code4->setStyleSheet("background-color: pink; color: black;");
+             else
+                this->code2->setStyleSheet("background-color: pink; color: black;");
+        } else
+        {
+            bool t = bst->findandchange(test.toInt());
+            if ( t == true)
+             {
+                 ss1.append(test + " ");
+                 this->stackLineEdit->setText(ss1);
+             }
         }
         this->renderarea->repaint();
         QThread::sleep(2);
+
     }
-    QThread::sleep(2);
+    QMessageBox::information(NULL,"Note","In-order traversal is complete!");
     this->renderarea->InitColor();
     this->renderarea->repaint();
     this->stackLineEdit->setText("");

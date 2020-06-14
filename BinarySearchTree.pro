@@ -14,7 +14,8 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     renderarea.cpp \
     bst_properties_window.cpp \
-    bst_about_window.cpp
+    bst_about_window.cpp \
+    renderbaby.cpp
 
 HEADERS  += mainwindow.h \
     binarysearchtree.h \
@@ -23,7 +24,8 @@ HEADERS  += mainwindow.h \
     bst_preorder_window.h \
     renderarea.h \
     bst_properties_window.h \
-    bst_about_window.h
+    bst_about_window.h \
+    renderbaby.h
 
 FORMS    +=
 

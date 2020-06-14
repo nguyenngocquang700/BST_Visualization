@@ -311,24 +311,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Create the render area (canvas for drawing the BST)
     renderArea = new RenderArea(this->bst);
-
-    treeScrollArea = new QScrollArea;
-    treeScrollArea->setWidget(renderArea);
-//    renderArea->setMinimumSize(500, 550);
-//    treeScrollArea->setMinimumSize(20,20);
-//    treeScrollArea->setGeometry(200,200,200,200);
-//    treeScrollArea->setFixedWidth(900);
+    treeScrollArea = new Renderbaby(renderArea);
     treeScrollArea->setFixedSize(950, 700);
-//    treeScrollArea->setFixedSize(100, 100);
-//    renderArea->setStyleSheet(RenderArea{opacity:50});
-//    treeScrollArea->setStyleSheet(treeScrollArea{opacity:223});
-//    treeScrollArea->setAlignment(Qt::AlignTop);
-    treeScrollArea->setAlignment(Qt::AlignHCenter);
-
-    // Pass any events that happen on the scroll area to the
-    // render area (specifically clicking, so that renderArea
-    // can zoom in/out when clicks happen
-    treeScrollArea->installEventFilter(renderArea);
     treeScrollArea->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeScrollArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
@@ -459,7 +443,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     // Save BST before closing
     QString fileName = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/BSTVisualizer/last_bst.txt";
 
-    QString text = bst->getPreOrderTraversal();
+    QString text = bst->getPreOrderRorate();
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -919,7 +903,7 @@ void MainWindow::saveMenu()
 
     if (QFileInfo(fileName).suffix() == "txt")
     {
-        QString text = bst->getPreOrderTraversal();
+        QString text = bst->getPreOrderRorate();
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         {

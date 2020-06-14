@@ -19,6 +19,7 @@
  * bst_properties_window.h includes:
  * QMainWindow, QVBoxLayout, QHBoxLayout, QScrollArea, QWidget, QLabel, QLineEdit
  */
+#include "renderbaby.h"
 #include "bst_inorder_window.h"
 #include "bst_postorder_window.h"
 #include "bst_preorder_window.h"
@@ -48,7 +49,7 @@ private:
 
     QLineEdit *insertValueLineEdit;
     QLineEdit *deleteValueLineEdit;
-    QScrollArea *treeScrollArea;
+    Renderbaby *treeScrollArea;
     QVBoxLayout *mainLayout;
     QLabel *statusLabel;
     QMenu *fileMenu;

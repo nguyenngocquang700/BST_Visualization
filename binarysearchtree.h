@@ -94,6 +94,7 @@ private:
     T maxNode(Node<T>* root);
     void left_Rorate(Node<T>* &p);
     void right_Rorate(Node<T>* &p);
+    int findParent(T val, T parent) const;
 };
 
 // Node constructor
@@ -472,24 +473,29 @@ void BinarySearchTree<T>::recursivePostOrder(const Node<T> *node) const
 
 template<typename T>
 QString BinarySearchTree<T>::getPreOrderTraversal() const
-{
+{ 
     QStack<Node<T>*> stack;
     QString traversal;
     Node<T> *root = this->root;
     while (true) {
         // Go to the left extreme insert all the elements to stack, add to string as encountered
+        traversal.append("a ");
         while (root != 0) {
             traversal.append(QString::number(root->data) + " " +QString::number(root->data) + " ");
+            traversal.append("c ");
             stack.push(root);
             root = root->leftChild;
+            if (root !=0 ) traversal.append("a ");
         }
         // check if Stack is empty, if yes, exit from everywhere
         if (stack.isEmpty()) {
+            traversal.append("b ");
             return traversal;
         }
         // pop the element from the stack, add the nodes at
         // the right to the Stack
         root = stack.pop();
+        traversal.append("d ");
         root = root->rightChild;
     }
 }
@@ -524,13 +530,17 @@ QString BinarySearchTree<T>::getInOrderTraversal() const
     Node<T> *root = this->root;
     while (true) {
         // Go to the left extreme insert all the elements to stack
+        traversal1.append("a ");
         while (root != 0) {
             stack.push(root);
             traversal1.append(QString::number(root->data) + " ");
+            traversal1.append("c ");
             root = root->leftChild;
+            if (root != 0) traversal1.append("a ");
         }
         // check if Stack is empty, if yes, exit from everywhere
         if (stack.isEmpty()) {
+            traversal1.append("b ");
             return traversal1;
         }
         // pop the element from the stack , print it and add the nodes at
@@ -542,18 +552,42 @@ QString BinarySearchTree<T>::getInOrderTraversal() const
         root->colourLine = Qt::black;
         traversal.append(QString::number(root->data) + " ");
         traversal1.append(QString::number(root->data) + " ");
+        traversal1.append("d ");
         root = root->rightChild;
     }
 }
 
 template<typename T>
+int BinarySearchTree<T>::findParent(T val, T parent) const
+{
+
+    if (this->isEmpty())
+        return -1;
+    Node<T> *currentNode = root;
+//    // If current node is the required node
+    while (currentNode != 0)
+    {
+        if (currentNode->data == val)
+            return parent;
+        else
+        {
+            parent = currentNode->data;
+            if (currentNode->data < val)
+                currentNode = currentNode->rightChild;
+            else
+                currentNode = currentNode->leftChild;
+        }
+    }
+
+}
+template<typename T>
 QString BinarySearchTree<T>::getPostOrderTraversal() const
 {
 
     if (this->isEmpty())
-            return QString("");
+       return QString("");
     QStack<Node<T>*> stack1;
-    QStack<Node<T>*> stack2;
+    QStack<QString> stack2;
     QString traversal;
     Node<T> *root = this->root;
     stack1.push(root);
@@ -561,18 +595,30 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
     {
         // Take out the root and insert into stack 2
         Node<T> *temp = stack1.pop();
-        stack2.push(temp);
-        traversal.append(QString::number(temp->data) + " ");
+        stack2.push(QString::number(temp->data));
         // now we have the root, push the left and right child of root into the first stack
         if (temp->leftChild != 0)
             stack1.push(temp->leftChild);
         if (temp->rightChild != 0)
             stack1.push(temp->rightChild);
+        if (temp->leftChild == 0 && temp->rightChild == 0)
+        {
+            stack2.push(QString::number(temp->data));
+            int t = findParent(temp->data,-1);
+            int t2 = temp->data;
+            while (t > t2)
+            {
+                stack2.push(QString::number(t));
+                int tg = findParent(t,-1);
+                t2 = t;
+                t = tg;
+            }
+        }
+
     }
 
     while(!stack2.isEmpty())
-        traversal.append(QString::number(stack2.pop()->data) + " ");
-
+        traversal.append(stack2.pop() + " ");
     return traversal;
 }
  /*

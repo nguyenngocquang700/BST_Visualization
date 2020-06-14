@@ -24,6 +24,10 @@ public:
     void show();
     void close();
     void recursive_bst(BinarySearchTree<int> *bst);
+    QLineEdit *code1;
+    QLineEdit *code2;
+    QLineEdit *code3;
+    QLineEdit *code4;
 
 private:
     QLabel *stackLabel;
