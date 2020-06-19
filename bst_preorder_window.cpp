@@ -49,7 +49,11 @@ Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *par
 //    code2->setStyleSheet("background-color: white; color: black;");
     code2->setFixedWidth(100);
     code2->setReadOnly(true);
-    code3 = new QLineEdit("visit this, then preOrder (left)");
+    code5 = new QLineEdit("visit this");
+//    code3->setStyleSheet("background-color: white; color: black;");
+    code5->setFixedWidth(100);
+    code5->setReadOnly(true);
+    code3 = new QLineEdit("preOrder (left)");
 //    code2->setStyleSheet("background-color: white; color: black;");
     code3->setFixedWidth(100);
     code3->setReadOnly(true);
@@ -60,6 +64,7 @@ Bst_preorder_window::Bst_preorder_window(BinarySearchTree<int> *bst,QWidget *par
 
     textAreaLayout->addWidget(code1);
     textAreaLayout->addWidget(code2);
+    textAreaLayout->addWidget(code5);
     textAreaLayout->addWidget(code3);
     textAreaLayout->addWidget(code4);
     textAreaLayout->setAlignment(Qt::AlignTop);
@@ -115,6 +120,7 @@ void Bst_preorder_window::recursive_bst(BinarySearchTree<int> *bst)
             this->code2->setStyleSheet("background-color: white; color: black;");
             this->code3->setStyleSheet("background-color: white; color: black;");
             this->code4->setStyleSheet("background-color: white; color: black;");
+            this->code5->setStyleSheet("background-color: white; color: black;");
             if (test == "a")
                 this->code1->setStyleSheet("background-color: pink; color: black;");
             else
@@ -131,6 +137,7 @@ void Bst_preorder_window::recursive_bst(BinarySearchTree<int> *bst)
             if ( t == true)
              {
                  ss1.append(test + " ");
+                 this->code5->setStyleSheet("background-color: pink; color: black;");
                  this->stackLineEdit->setText(ss1);
              }
         }
