@@ -95,6 +95,7 @@ private:
     void left_Rorate(Node<T>* &p);
     void right_Rorate(Node<T>* &p);
     int findParent(T val, T parent) const;
+    bool findcheckleftParent(T val) const;
 };
 
 // Node constructor
@@ -581,6 +582,29 @@ int BinarySearchTree<T>::findParent(T val, T parent) const
 
 }
 template<typename T>
+bool BinarySearchTree<T>::findcheckleftParent(T val) const
+{
+
+    if (this->isEmpty())
+        return false;
+    Node<T> *currentNode = root;
+//    // If current node is the required node
+    while (currentNode != 0)
+    {
+        if (currentNode->data == val && currentNode->leftChild == NULL)
+            return true;
+        else
+        {
+            if (currentNode->data < val)
+                currentNode = currentNode->rightChild;
+            else
+                currentNode = currentNode->leftChild;
+        }
+    }
+    return false;
+
+}
+template<typename T>
 QString BinarySearchTree<T>::getPostOrderTraversal() const
 {
 
@@ -595,7 +619,7 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
     {
         // Take out the root and insert into stack 2
         Node<T> *temp = stack1.pop();
-        stack2.push(QString::number(temp->data));
+        stack2.push("d "+QString::number(temp->data)+" a ");
         // now we have the root, push the left and right child of root into the first stack
         if (temp->leftChild != 0)
             stack1.push(temp->leftChild);
@@ -603,12 +627,12 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
             stack1.push(temp->rightChild);
         if (temp->leftChild == 0 && temp->rightChild == 0)
         {
-            stack2.push(QString::number(temp->data));
+            stack2.push(QString::number(temp->data) +" a c d ");
             int t = findParent(temp->data,-1);
             int t2 = temp->data;
-            while (t > t2)
+            while (t > t2 || (t < t2 && findcheckleftParent(t)))
             {
-                stack2.push(QString::number(t));
+                stack2.push(QString::number(t)+" a c ");
                 int tg = findParent(t,-1);
                 t2 = t;
                 t = tg;
@@ -619,6 +643,7 @@ QString BinarySearchTree<T>::getPostOrderTraversal() const
 
     while(!stack2.isEmpty())
         traversal.append(stack2.pop() + " ");
+    traversal.append("b");
     return traversal;
 }
  /*
