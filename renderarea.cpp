@@ -172,32 +172,32 @@ bool RenderArea::eventFilter(QObject *, QEvent *event)
     if (event->type() == QEvent::MouseButtonRelease)
     {
         QMouseEvent *mb = static_cast<QMouseEvent *>(event);
-        if(mb->button() == Qt::RightButton){
-            QMenu *menu = new QMenu(this);
+//        if(mb->button() == Qt::RightButton){
+//            QMenu *menu = new QMenu(this);
 //            QAction *DeleteNodeActon = new QAction(tr("Delete this Node"));
 //            connect(DeleteNodeActon, SIGNAL(triggered()), this, SLOT(&BinarySearchTree::deleteAtLocation(mb->x(), mb->y())));
 //            menu->addAction(insertAction);
 //            menu->addAction(insertActions());
 //            this->repaint();
 
-        }
-        if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::BackButton){
-            this->zoomIn();
-        }
-        else if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::RightButton){
-            this->zoomOut();
-        }
-        else return true;
-//        switch(mb->button()){
-//        case Qt::LeftButton:
-//            this->zoomIn();
-//            break;
-//        case Qt::RightButton:
-//            this->zoomOut();
-//            break;
-//        default:
-//            return true;
 //        }
+//        if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::BackButton){
+//            this->zoomIn();
+//        }
+//        else if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::RightButton){
+//            this->zoomOut();
+//        }
+//        else return true;
+        switch(mb->button()){
+        case Qt::LeftButton:
+            this->zoomIn();
+            break;
+        case Qt::RightButton:
+            this->zoomOut();
+            break;
+        default:
+            return true;
+        }
     }
 
     return true;

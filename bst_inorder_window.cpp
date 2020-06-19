@@ -137,8 +137,9 @@ void Bst_inorder_window::recursive_bst(BinarySearchTree<int> *bst)
         QThread::sleep(2);
 
     }
-    QMessageBox::information(NULL,"Note","Pre-order traversal is complete!");
+    QMessageBox::information(NULL,"Note","In-order traversal is complete!");
     this->renderarea->InitColor();
+    this->code2->setStyleSheet("background-color: white; color: black;");
     this->renderarea->repaint();
     this->stackLineEdit->setText("");
 }

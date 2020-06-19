@@ -139,6 +139,7 @@ void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
     }
     QMessageBox::information(NULL,"Note","Post-order traversal is complete!");
     this->renderarea->InitColor();
+    this->code2->setStyleSheet("background-color: white; color: black;");
     this->renderarea->repaint();
     this->stackLineEdit->setText("");
 }
