@@ -25,7 +25,9 @@ BST_About_Window::BST_About_Window()
                                       "\nHuynh My Dung"));
 
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
-    QTextEdit *txtEdit = new QTextEdit("điền vào đây");
+    QTextEdit *txtEdit = new QTextEdit("Binary Search Tree Visualization v1.0.0"
+                                       "\nBuilt on Jun 19 2020\n"
+                                       "\nCopyright 2020.All rights reserved.\n\n");
     txtEdit->setStyleSheet("background-color: #fdf9e0; color: black;");
     txtEdit->setReadOnly(true);
     textAreaLayout->addWidget(txtEdit);

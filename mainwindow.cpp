@@ -312,15 +312,18 @@ MainWindow::MainWindow(QWidget *parent) :
     // Create the render area (canvas for drawing the BST)
     renderArea = new RenderArea(this->bst);
     treeScrollArea = new Renderbaby(renderArea);
-    treeScrollArea->setFixedSize(950, 700);
+//    treeScrollArea->setFixedSize(950, 700);
+    treeScrollArea->setAlignment(Qt::AlignCenter);
     treeScrollArea->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeScrollArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
-
+    QVBoxLayout *treeScrollLayout = new QVBoxLayout;
+    treeScrollLayout->addWidget(treeScrollArea);
+    treeScrollLayout->addSpacing(190);
     // Create the main layout and add all the widgets to it
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->addWidget(toolbar);
-    mainLayout->addWidget(treeScrollArea);
+    mainLayout->addLayout(treeScrollLayout);
     mainLayout->addLayout(buttonLayout);
 
 
@@ -979,9 +982,9 @@ void MainWindow::changeBackgroundColorMenu()
     {
         // change color
         QPalette pal(this->treeScrollArea->palette());
-        pal.setColor(QPalette::Window, color);
+        pal.setColor(QPalette::Window, QColor(127, 185, 210));
         this->treeScrollArea->setPalette(pal);
-        this->renderArea->changeBackgroundColor(color);
+        this->renderArea->changeBackgroundColor(QColor(127, 185, 210));
     }
     return;
 }

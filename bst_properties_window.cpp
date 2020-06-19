@@ -7,8 +7,7 @@
 BST_Properties_Window::BST_Properties_Window(QWidget *parent) : QMainWindow(parent)
 {
     this->setWindowTitle("Properties");
-    this->setFixedSize(QSize(400, 525)); // 236 width
-
+    this->setFixedSize(QSize(400, 525));
     // labelLayout is on the left side - says what the property is
     labelLayout = new QVBoxLayout;\
     heightLabel = new QLabel("Height:");

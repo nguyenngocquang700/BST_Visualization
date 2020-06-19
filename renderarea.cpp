@@ -44,7 +44,7 @@ QSize RenderArea::minimumSizeHint() const
 }
 
 // What to do when the render area gets repaint() called
-void RenderArea::paintEvent(QPaintEvent *  event )
+void RenderArea::paintEvent(QPaintEvent *  event)
 {
     // Only repaint the tree if it's not empty
     if (this->bst->isEmpty())
@@ -77,11 +77,11 @@ void RenderArea::changeBackgroundColor(QColor c)
 {
 
     // change color
-//    this->backgroundColor = c;
-//    QString style("background-color: ");
-//    style.append(c.name());
-//    style.append(";");
-//    this->setStyleSheet(style);
+    this->backgroundColor = c;
+    QString style("background-color: ");
+    style.append(c.name());
+    style.append(";");
+    this->setStyleSheet("background-color: #fdf9e0; color: black;");
 //    QPainter* pPainter = new QPainter();
 //    pPainter->drawPixmap(rect(), QPixmap(":/new/prefix1/Background/76252.jpg"));
 //    delete pPainter;
