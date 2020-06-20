@@ -982,9 +982,9 @@ void MainWindow::changeBackgroundColorMenu()
     {
         // change color
         QPalette pal(this->treeScrollArea->palette());
-        pal.setColor(QPalette::Window, QColor(127, 185, 210));
+        pal.setColor(QPalette::Window, Qt::black);
         this->treeScrollArea->setPalette(pal);
-        this->renderArea->changeBackgroundColor(QColor(127, 185, 210));
+        this->renderArea->changeBackgroundColor(Qt::black);
     }
     return;
 }

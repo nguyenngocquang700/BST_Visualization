@@ -21,7 +21,7 @@ RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(pa
     // Set background to white so that when the RenderArea is
     // saved as an image (or the RenderArea is grabbed) the
     // the background will be white
-    //this->setStyleSheet("background-color: white;");
+//    this->setStyleSheet("background-color: black;");
 
 //    this->nodeColor = Qt::red;
 //    this->backgroundColor = Qt::black;

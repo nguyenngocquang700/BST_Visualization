@@ -44,19 +44,19 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
     code1 = new QLineEdit("If this is null" );
 //    code1->setStyleSheet("background-color: white; color: black;");
-    code1->setFixedWidth(100);
+    code1->setFixedWidth(150);
     code1->setReadOnly(true);
     code2 = new QLineEdit("return");
 //    code2->setStyleSheet("background-color: white; color: black;");
-    code2->setFixedWidth(100);
+    code2->setFixedWidth(150);
     code2->setReadOnly(true);
     code3 = new QLineEdit("postOrder (left)");
 //    code2->setStyleSheet("background-color: white; color: black;");
-    code3->setFixedWidth(100);
+    code3->setFixedWidth(150);
     code3->setReadOnly(true);
     code4 = new QLineEdit("visit this, then postOrder (right)");
 //    code3->setStyleSheet("background-color: white; color: black;");
-    code4->setFixedWidth(100);
+    code4->setFixedWidth(220);
     code4->setReadOnly(true);
 
     textAreaLayout->addWidget(code1);
