@@ -28,6 +28,7 @@ public:
     QLineEdit *code2;
     QLineEdit *code3;
     QLineEdit *code4;
+    QLineEdit *code5;
 
 //    void getbst(BinarySearchTree<int> *bst);
 private:

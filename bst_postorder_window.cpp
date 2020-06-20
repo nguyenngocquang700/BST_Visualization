@@ -54,15 +54,19 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
 //    code2->setStyleSheet("background-color: white; color: black;");
     code3->setFixedWidth(150);
     code3->setReadOnly(true);
-    code4 = new QLineEdit("visit this, then postOrder (right)");
+    code4 = new QLineEdit("postOrder (right)");
 //    code3->setStyleSheet("background-color: white; color: black;");
     code4->setFixedWidth(220);
     code4->setReadOnly(true);
-
+    code5 = new QLineEdit("visit this");
+//    code3->setStyleSheet("background-color: white; color: black;");
+    code5->setFixedWidth(100);
+    code5->setReadOnly(true);
     textAreaLayout->addWidget(code1);
     textAreaLayout->addWidget(code2);
     textAreaLayout->addWidget(code3);
     textAreaLayout->addWidget(code4);
+    textAreaLayout->addWidget(code5);
     textAreaLayout->setAlignment(Qt::AlignTop);
 
 //    QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -103,7 +107,7 @@ void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
     std::stringstream ss(traversal.toStdString());
     std::string token=" ";
     QString ss1 = " ";
-    while (!ss.eof())
+    while (!ss.eof() )
     {
         ss >> token;
         QString test = QString::fromStdString(token);
@@ -114,6 +118,7 @@ void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
             this->code2->setStyleSheet("background-color: white; color: black;");
             this->code3->setStyleSheet("background-color: white; color: black;");
             this->code4->setStyleSheet("background-color: white; color: black;");
+            this->code5->setStyleSheet("background-color: white; color: black;");
             if (test == "a")
                 this->code1->setStyleSheet("background-color: pink; color: black;");
             else
@@ -130,6 +135,7 @@ void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
             if ( t == true)
              {
                  ss1.append(test + " ");
+                 this->code5->setStyleSheet("background-color: pink; color: black;");
                  this->stackLineEdit->setText(ss1);
              }
         }
@@ -139,6 +145,7 @@ void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
     }
     QMessageBox::information(NULL,"Note","Post-order traversal is complete!");
     this->renderarea->InitColor();
+    this->code2->setStyleSheet("background-color: white; color: black;");
     this->renderarea->repaint();
     this->stackLineEdit->setText("");
 }
