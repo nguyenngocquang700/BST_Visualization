@@ -23,5 +23,5 @@ Chương trình được build hoàn toàn trên Qt Creator bằng thư viện �
 ## Lưu ý khi sử dụng
 Khi bạn sử dụng Project này, vui lòng tôn trọng quyền tác giả:  
 * Không copy, chỉnh sửa source
-* Project chỉ mang tính tham khảo
+* Project chỉ mang tính tham khảo  
 Copyright © 2020 
