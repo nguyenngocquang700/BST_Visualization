@@ -9,7 +9,7 @@
 
 Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
-    //Stack
+    //Stack text box
     this->setWindowTitle("Post-order Traversal");
     this->setFixedSize(QSize(600,750));
     stackLabel = new QLabel("Stack");
@@ -19,18 +19,17 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     stackLineEdit->setStyleSheet("color: black; width: 100px;"
                                  "padding-left: 10px; font-size: 14px;");
 
-//    exitButton = new QPushButton("E&xit", this);
-//    connect(exitButton, SIGNAL(clicked()), this, SLOT(exitSlot()));
-
     //Renderarea
     this->bst1 = bst;
-
     renderarea = new RenderArea(bst1);
 
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderarea);
     treeScrollArea->installEventFilter(renderarea);
-    //Create toolbar
+
+
+    //===========================Create toolbar of play button=========================
+
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
     QPixmap playpix(":/new/prefix1/Icon/play.png");
     QAction *playAction = new QAction(playpix, tr(""), this);
@@ -40,26 +39,21 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     addToolBar(Qt::LeftToolBarArea,toolbar1);
 
 
-    //Demo code
+    //=============================Demo code======================================
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
     code1 = new QLineEdit("If this is null" );
-//    code1->setStyleSheet("background-color: white; color: black;");
     code1->setFixedWidth(150);
     code1->setReadOnly(true);
     code2 = new QLineEdit("return");
-//    code2->setStyleSheet("background-color: white; color: black;");
     code2->setFixedWidth(150);
     code2->setReadOnly(true);
     code3 = new QLineEdit("postOrder (left)");
-//    code2->setStyleSheet("background-color: white; color: black;");
     code3->setFixedWidth(150);
     code3->setReadOnly(true);
     code4 = new QLineEdit("postOrder (right)");
-//    code3->setStyleSheet("background-color: white; color: black;");
     code4->setFixedWidth(220);
     code4->setReadOnly(true);
     code5 = new QLineEdit("visit this");
-//    code3->setStyleSheet("background-color: white; color: black;");
     code5->setFixedWidth(100);
     code5->setReadOnly(true);
     textAreaLayout->addWidget(code1);
@@ -69,11 +63,6 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     textAreaLayout->addWidget(code5);
     textAreaLayout->setAlignment(Qt::AlignTop);
 
-//    QHBoxLayout *buttonLayout = new QHBoxLayout;
-//    buttonLayout->addStretch(0);
-//    buttonLayout->addWidget(exitButton);
-
-
     QHBoxLayout *contain = new QHBoxLayout();
     contain->addWidget(treeScrollArea);
     contain->addLayout(textAreaLayout);
@@ -82,7 +71,6 @@ Bst_postorder_window::Bst_postorder_window(BinarySearchTree<int> *bst,QWidget *p
     mainLayout->addWidget(stackLabel);
     mainLayout->addWidget(stackLineEdit);
     mainLayout->addLayout(contain);
-//    central->addLayout(buttonLayout);
 
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
@@ -101,6 +89,8 @@ void Bst_postorder_window::recursive_bst_clicked()
 {
     this->recursive_bst(bst1);
 }
+
+//========================CHANGE COLOR OF CODE TEXT BOX WHEN TREE IS RUNNING===========================
 void Bst_postorder_window::recursive_bst(BinarySearchTree<int> *bst)
 {
     QString traversal = bst->getPostOrderTraversal();

@@ -16,21 +16,6 @@ RenderArea::RenderArea(BinarySearchTree<int> *bst, QWidget *parent) : QWidget(pa
 {
     this->bst = bst;
     this->scale = 1.2;
-//    QTabWidget* tw = new QTabWidget();
-
-    // Set background to white so that when the RenderArea is
-    // saved as an image (or the RenderArea is grabbed) the
-    // the background will be white
-//    this->setStyleSheet("background-color: black;");
-
-//    this->nodeColor = Qt::red;
-//    this->backgroundColor = Qt::black;
-//    this->textColor = Qt::black;
-//    QMovie *movie = new QMovie(":/new/prefix1/Background/76252.jpg");
-//    QLabel *processLabel = new QLabel(this);
-//    processLabel->setMovie(movie);
-//    movie->start();
-
 }
 
 QSize RenderArea::sizeHint() const
@@ -53,9 +38,6 @@ void RenderArea::paintEvent(QPaintEvent *  event)
 
     painter.setRenderHint(QPainter::Antialiasing);
 
-//    QBrush brush;
-//    brush.setColor(this->nodeColor);
-//    brush.setStyle(Qt::SolidPattern);
     QPen pen;
     pen.setColor(this->textColor);
 
@@ -82,11 +64,6 @@ void RenderArea::changeBackgroundColor(QColor c)
     style.append(c.name());
     style.append(";");
     this->setStyleSheet("background-color: #fdf9e0; color: black;");
-//    QPainter* pPainter = new QPainter();
-//    pPainter->drawPixmap(rect(), QPixmap(":/new/prefix1/Background/76252.jpg"));
-//    delete pPainter;
-//    QWidget::paintEvent(pe);
-//    setStyleSheet("background-image: url(:/images/bg.png)");
 }
 
 void RenderArea::changeTextColor(QColor c)
@@ -141,53 +118,12 @@ void RenderArea::zoomOut() {
     }
 }
 
-//void MyWidget::wheelEvent(QWheelEvent *event)
-//{
-//    QPoint numPixels = event->pixelDelta();
-//    QPoint numDegrees = event->angleDelta() / 8;
-
-//    if (!numPixels.isNull()) {
-//        scrollWithPixels(numPixels);
-//    } else if (!numDegrees.isNull()) {
-//        QPoint numSteps = numDegrees / 15;
-//        scrollWithDegrees(numSteps);
-//    }
-
-//    event->accept();
-//}
-// Handle mouse clicking that is done on the QScrollArea that should
-// be handled by the RenderArea (for zooming)
-
-//void RenderArea::ShowContextMenuNode(QContextMenuEvent *event){
-//    QMenu *menu = new QMenu(this);
-//    QAction *DeleteNodeAction = new QAction(tr("Delete this node"));
-//    connect(DeleteNodeAction, SIGNAL(triggered()), this, SLOT(this->bst->deleteAtLocation(QMouseEvent::x(), QMouseEvent::y())));
-//    menu->addAction(DeleteNodeAction);
-//    menu->exec(event->globalPos());
-//    this->repaint();
-//}
 
 bool RenderArea::eventFilter(QObject *, QEvent *event)
 {
     if (event->type() == QEvent::MouseButtonRelease)
     {
         QMouseEvent *mb = static_cast<QMouseEvent *>(event);
-//        if(mb->button() == Qt::RightButton){
-//            QMenu *menu = new QMenu(this);
-//            QAction *DeleteNodeActon = new QAction(tr("Delete this Node"));
-//            connect(DeleteNodeActon, SIGNAL(triggered()), this, SLOT(&BinarySearchTree::deleteAtLocation(mb->x(), mb->y())));
-//            menu->addAction(insertAction);
-//            menu->addAction(insertActions());
-//            this->repaint();
-
-//        }
-//        if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::BackButton){
-//            this->zoomIn();
-//        }
-//        else if(mb->modifiers() == Qt::ControlModifier && mb->button() == Qt::RightButton){
-//            this->zoomOut();
-//        }
-//        else return true;
         switch(mb->button()){
         case Qt::LeftButton:
             this->zoomIn();
@@ -209,38 +145,6 @@ void RenderArea::autoSize() {
     this->setMinimumSize(size);
     this->resize(size);
 }
-
-// Detect mouse release on render area
-//void RenderArea::mouseReleaseEvent(QMouseEvent *event)
-//{
-//    if(event->modifiers() == Qt::ControlModifier && event->button() == Qt::LeftButton){
-//        this->zoomOut();
-//    }
-//    else if(event->modifiers() == Qt::ControlModifier && event->button() == Qt::RightButton){
-//        this->zoomIn();
-//    }
-//    else return;
-//    switch(event->button()){
-//    case Qt::LeftButton:
-//        if ( event->modifiers() & Qt::ControlModifier )
-//        {
-//            // search for a node at the provided location and delete it. Returns false if no node was found.
-//            this->zoomIn();
-//            break;
-//        }
-//        break;
-//    case Qt::RightButton:
-//       if( event->modifiers() & Qt::ControlModifier)
-//        this->zoomOut();
-//        break;
-//    default:
-//        return;
-//    }
-
-//    this->bst->deleteAtLocation(event->x(), event->y());
-//    this->repaint();
-//    if(event->button() == Qt::ControlModifier && event->button() == Qt::LeftButton)
-//}
 
 
 void RenderArea::InitColor()

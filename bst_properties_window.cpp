@@ -73,14 +73,7 @@ BST_Properties_Window::BST_Properties_Window(QWidget *parent) : QMainWindow(pare
     // Create the main layout and add all the widgets to it
     mainLayout = new QVBoxLayout;
     mainLayout->addLayout(containerLayout);
-//    mainLayout->addWidget(new QLabel("Preorder Traversal:"));
-//    mainLayout->addWidget(preOrderTraversal);
-//    mainLayout->addWidget(new QLabel("Inorder Traversal:"));
-//    mainLayout->addWidget(inOrderTraversal);
-//    mainLayout->addWidget(new QLabel("Postorder Traversal:"));
-//    mainLayout->addWidget(postOrderTraversal);
-//    mainLayout->addWidget(new QLabel("Breadthfirst Traversal"));
-//    mainLayout->addWidget(breadthFirstTraversal);
+
     mainLayout->addLayout(buttonLayout); // layout for ok/close button
 
     centralWidget = new QWidget(this);
@@ -104,7 +97,6 @@ BST_Properties_Window::~BST_Properties_Window(){
     delete preOrderTraversal;
     delete inOrderTraversal;
     delete postOrderTraversal;
-//    delete breadthFirstTraversal;
     delete exitButton;
     delete mainLayout;
     delete centralWidget;
@@ -127,10 +119,8 @@ void BST_Properties_Window::update(BinarySearchTree<int> *bst)
     this->preOrderTraversal->setText(bst->getPreOrderTraversal());
     this->inOrderTraversal->setText(bst->getInOrderTraversal());
     this->postOrderTraversal->setText(bst->getPostOrderTraversal());
-//    this->breadthFirstTraversal->setText(bst->getBreadthFirstSearch());
     return;
 }
-
 
 // Set window to visible and bring it to the front.
 void BST_Properties_Window::show()

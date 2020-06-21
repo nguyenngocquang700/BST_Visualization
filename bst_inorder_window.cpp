@@ -9,7 +9,7 @@
 
 Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *parent) : QMainWindow(parent)
 {
-    //Stack
+    //Stack text box
     this->setWindowTitle("In-order Traversal");
     this->setFixedSize(QSize(600,750));
     stackLabel = new QLabel("Stack");
@@ -18,9 +18,6 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     stackLineEdit->setStyleSheet("color: black; width: 100px;"
                                  "padding-left: 10px; font-size: 14px;");
 
-//    exitButton = new QPushButton("E&xit", this);
-//    connect(exitButton, SIGNAL(clicked()), this, SLOT(exitSlot()));
-
     //Renderarea
     this->bst1 = bst;
 
@@ -28,7 +25,7 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     treeScrollArea = new QScrollArea;
     treeScrollArea->setWidget(renderarea);
     treeScrollArea->installEventFilter(renderarea);
-    //Create toolbar
+    //===========================Create toolbar of play button=========================
     QToolBar *toolbar1 = addToolBar("Main Toolbar");
     QPixmap playpix(":/new/prefix1/Icon/play.png");
     QAction *playAction = new QAction(playpix, tr("&Play"), this);
@@ -37,26 +34,26 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     toolbar1->setIconSize(QSize(40,40));
     addToolBar(Qt::LeftToolBarArea,toolbar1);
 
-    //Demo code
+    //=============================Demo code======================================
     QVBoxLayout *textAreaLayout = new QVBoxLayout;
+
     code1 = new QLineEdit("If this is null" );
-//    code1->setStyleSheet("background-color: white; color: black;");
     code1->setFixedWidth(150);
     code1->setReadOnly(true);
+
     code2 = new QLineEdit("return");
-//    code2->setStyleSheet("background-color: white; color: black;");
     code2->setFixedWidth(150);
     code2->setReadOnly(true);
+
     code3 = new QLineEdit("inOrder (left)");
-//    code2->setStyleSheet("background-color: white; color: black;");
     code3->setFixedWidth(150);
     code3->setReadOnly(true);
+
     code5 = new QLineEdit("visit this");
-//    code3->setStyleSheet("background-color: white; color: black;");
     code5->setFixedWidth(100);
     code5->setReadOnly(true);
+
     code4 = new QLineEdit("inOrder (right)");
-//    code3->setStyleSheet("background-color: white; color: black;");
     code4->setFixedWidth(220);
     code4->setReadOnly(true);
 
@@ -68,11 +65,6 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
 
     textAreaLayout->setAlignment(Qt::AlignTop);
 
-//    QHBoxLayout *buttonLayout = new QHBoxLayout;
-//    buttonLayout->addStretch(0);
-//    buttonLayout->addWidget(exitButton);
-
-
     QHBoxLayout *contain = new QHBoxLayout();
     contain->addWidget(treeScrollArea);
     contain->addLayout(textAreaLayout);
@@ -81,7 +73,6 @@ Bst_inorder_window :: Bst_inorder_window(BinarySearchTree<int> *bst,QWidget *par
     central->addWidget(stackLabel);
     central->addWidget(stackLineEdit);
     central->addLayout(contain);
-//    central->addLayout(buttonLayout);
 
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(central);
@@ -101,6 +92,8 @@ void Bst_inorder_window::recursive_bst_clicked()
 {
     this->recursive_bst(bst1);
 }
+
+//========================CHANGE COLOR OF CODE TEXT BOX WHEN TREE IS RUNNING============================
 void Bst_inorder_window::recursive_bst(BinarySearchTree<int> *bst)
 {
 
@@ -144,6 +137,10 @@ void Bst_inorder_window::recursive_bst(BinarySearchTree<int> *bst)
         QThread::sleep(2);
 
     }
+
+
+    //========================SHOW MESSAGE BOX WHEN TRAVERSAL WAS COMPLATED========================
+
     QMessageBox::information(NULL,"Note","In-order traversal is complete!");
     this->renderarea->InitColor();
     this->code2->setStyleSheet("background-color: white; color: black;");
@@ -158,17 +155,4 @@ void Bst_inorder_window::show()
     this->activateWindow();
     return;
 }
-
-//void Bst_inorder_window::close()
-//{
-//    this->close();
-//    return;
-
-//}
-
-//void Bst_inorder_window::exitSlot()
-//{
-//    this->close();
-//    return;
-//}
 

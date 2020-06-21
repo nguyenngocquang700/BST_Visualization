@@ -37,12 +37,14 @@ public :
     bool isEmpty() const;
     bool insert(const T &); // return false if duplicate...
     void resetTree();
+    //============================TRAVERSAL======================================
     void preOrderTraversal() const;
     void inOrderTraversal() const;
     void postOrderTraversal() const;
     QString getPreOrderTraversal() const;
     QString getInOrderTraversal() const;
     QString getPostOrderTraversal() const;
+    //===========================GET NODE INFORMATION============================
     QString getLeftMostNode();
     QString getRightMostNode();
     QString getNode(T value);
@@ -52,12 +54,15 @@ public :
     int getLeafNodeCount() const;
     int getTreeHeight() const;
     bool deleteItem(T);
+    //=========================FIND AND CHANGE COLOR NODE TO RED=================
     bool find(T) const;
     bool findandchange(T item) const;
+    //=========================DRAW NODE========================================
     void draw(QPainter *painter, double &scale, QBrush brush);
     int getTotalY() const;
     int getTotalX() const;
     bool deleteAtLocation(int x, int y);
+    //========================SEARCH AND RORATE=================================
     void searchMin(T item);
     void searchMax(T item);
     void searchValue(T value,T item);
@@ -75,6 +80,7 @@ private:
     int nodeRadius;
     double scale;
     int max(int a, int b) const;
+    //=======================RECURSIVE FUNCTION===============================
     void recursivePreOrder(const Node<T> *) const;
     void recursiveInOrder(const Node<T> *) const;
     void recursivePostOrder(const Node<T> *) const;
@@ -83,6 +89,7 @@ private:
     int recursiveComputeHeightOfTree(const Node<T> *) const;
     void recursiveDeleteNodes(const Node<T> *);
     void recursiveDraw(Node<T> *node, QBrush brush);
+    //===============================GET NODE INFORMATION=====================
     Node<T>* getLeftmostNode(Node<T> *node) const;
     int getNodeLevel(Node<T> *node);
     int getPxLocOfLeftTree(const Node<T> *node);
@@ -92,6 +99,7 @@ private:
     bool search(Node<T> *,T item);
     T minNode(Node<T>* root);
     T maxNode(Node<T>* root);
+    //=====================================ROTATE TREE===========================
     void left_Rorate(Node<T>* &p);
     void right_Rorate(Node<T>* &p);
     int findParent(T val, T parent) const;

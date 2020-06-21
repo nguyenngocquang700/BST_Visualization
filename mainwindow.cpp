@@ -34,14 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->bst = this->getBST();
 
     this->createMenu();
-//    this->createToolbar();
 
     inorder = new Bst_inorder_window(this->bst);
     postorder = new Bst_postorder_window(this->bst);
     preorder = new Bst_preorder_window(this->bst);
 
 
-    // Build buttons and layout for buttons on the left of the window
+    // Build buttons and layout for buttons on the RIGHT of the window
     propertyButton = new QPushButton("", this);
     propertyButton->setToolTip("More information about Binary Search Tree");
     propertyButton->setCursor(Qt::PointingHandCursor);
@@ -87,13 +86,11 @@ MainWindow::MainWindow(QWidget *parent) :
     rightRorateButton->setCursor(Qt::PointingHandCursor);
 
 
-//    searchButton = new QPushButton("Search", this);
-
     insertValueLineEdit = new QLineEdit;
     deleteValueLineEdit = new QLineEdit;
     statusLabel = new QLabel;
 
-    // Set properties of buttons
+    // Set stylesheet of buttons right widget: include when hover and show
     propertyButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     propertyButton->setStyleSheet("QPushButton {border-style: none; "
                                   "background-image: url(:/new/prefix1/Icon/propertiesButton.png)0 0 0 0 stretch stretch;"
@@ -253,7 +250,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(searchMinButton,SIGNAL(clicked()), this, SLOT(searchMinClicked()));
     connect(searchMaxButton,SIGNAL(clicked()), this, SLOT(searchMaxClicked()));
 
-    // Create the toolbar
+    // Create the left toolbar
 
     QToolBar *toolbar = addToolBar("Main Toolbar");
     QPixmap loadpix(":/new/prefix1/Icon/add.png");
@@ -285,34 +282,30 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(propertyButton);
     buttonLayout->addWidget(deleteButton);
-//    buttonLayout->addWidget(deleteValueLineEdit);
     buttonLayout->addWidget(insertButton);
-//    buttonLayout->addWidget(insertValueLineEdit);
     buttonLayout->addSpacing(40);
     buttonLayout->addWidget(NLRButton);
     buttonLayout->addWidget(LRNButton);
     buttonLayout->addWidget(LNRButton);
     buttonLayout->addSpacing(40);
-//    buttonLayout->addWidget(statusLabel);
     buttonLayout->addWidget(leftRorateButton);
     buttonLayout->addWidget(rightRorateButton);
     buttonLayout->addSpacing(40);
     buttonLayout->addWidget(searchButton);
     buttonLayout->addWidget(searchMinButton);
     buttonLayout->addWidget(searchMaxButton);
+
+    // Play GIF animation
     QMovie *movie=new QMovie(":/new/prefix1/Background/gif_cat.gif");
-    // Play GIF
     label=new QLabel(this);
     label->setGeometry(20,650,500,492);
     label->resize(200,192);
     label->setMovie(movie);
     movie->start();
-//    QPixmap movie = QPixmap::grabWidget()
 
     // Create the render area (canvas for drawing the BST)
     renderArea = new RenderArea(this->bst);
     treeScrollArea = new Renderbaby(renderArea);
-//    treeScrollArea->setFixedSize(950, 700);
     treeScrollArea->setAlignment(Qt::AlignCenter);
     treeScrollArea->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(treeScrollArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
@@ -334,7 +327,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setFixedSize(QSize(1300,800));
     this->setWindowTitle("Binary Search Tree Visualization");
     this->setWindowIcon(QIcon(":/new/prefix1/Icon/logo.png"));
-    //this->showMaximized();
 
     // Create secondary windows (but do not display them)
     prop = new BST_Properties_Window();
@@ -462,10 +454,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->setAccepted(true); // set whether to close application or not
     return;
 }
-
-// Slot for property button
-
-
+/*
+------------------------------------------------------------------------------
+                            Show INORDER TRAVERSAL WINDOWS
+------------------------------------------------------------------------------
+*/
 void MainWindow::bst_inorder()
 {
     if(bst->isEmpty()){
@@ -475,7 +468,11 @@ void MainWindow::bst_inorder()
     inorder->show();
     return;
 }
-
+/*
+------------------------------------------------------------------------------
+                            Show PREORDER TRAVERSAL WINDOWS
+------------------------------------------------------------------------------
+*/
 void MainWindow::bst_preorder()
 {
     if(bst->isEmpty()){
@@ -485,7 +482,11 @@ void MainWindow::bst_preorder()
     preorder->show();
     return;
 }
-
+/*
+------------------------------------------------------------------------------
+                            Show POSTORDER TRAVERSAL WINDOWS
+------------------------------------------------------------------------------
+*/
 void MainWindow::bst_postorder()
 {
     if(bst->isEmpty()){
@@ -495,6 +496,11 @@ void MainWindow::bst_postorder()
     postorder->show();
     return;
 }
+/*
+------------------------------------------------------------------------------
+                            Show PROPERTIES WINDOWS
+------------------------------------------------------------------------------
+*/
 void MainWindow::propertyClicked() const
 {
     // show and update the properties gui
@@ -502,8 +508,11 @@ void MainWindow::propertyClicked() const
     prop->update(this->bst);
     return;
 }
-
-// Slot for delete button
+/*
+------------------------------------------------------------------------------
+                            Slot for delete button
+------------------------------------------------------------------------------
+*/
 void MainWindow::deleteClicked() const {
     if(bst->isEmpty()){
         QMessageBox::information(NULL,"delete","Tree is empty");
@@ -580,9 +589,11 @@ void MainWindow::deleteClicked() const {
 
 }
 
-
-// Slot for insert button
-
+/*
+------------------------------------------------------------------------------
+                            Slot for insert button
+------------------------------------------------------------------------------
+*/
 void MainWindow::insertClicked() const
 {
     insertButton->setWindowIcon(QIcon(":/new/prefix1/Icon/add.png"));
@@ -652,11 +663,14 @@ void MainWindow::insertClicked() const
         }
     }
     else{
-        QMessageBox::information(NULL,"Insert Node","");
+        QMessageBox::information(NULL,"Confirm Value","No value...",QMessageBox::Ok);
     }
 }
-
-// Slot for search
+/*
+------------------------------------------------------------------------------
+                                Slot for search
+------------------------------------------------------------------------------
+*/
 void MainWindow::searchClicked() const{
     if(bst->isEmpty()){
         QMessageBox::information(NULL,"search","Tree is empty");
@@ -691,7 +705,6 @@ void MainWindow::searchClicked() const{
 
                 if(bst->find(value.toInt())){
                     QString traversal = this->bst->getNode(value.toInt());
-        //            QMessageBox::information(NULL,"Inorder",QString("inorder: "+traversal));
                     std::stringstream ss(traversal.toStdString());
                     std::string token=" ",token1=" ";
                     while (ss >> token)
@@ -705,7 +718,6 @@ void MainWindow::searchClicked() const{
         }
                 else{
                     QString traversal = this->bst->getNode(value.toInt());
-        //            QMessageBox::information(NULL,"Inorder",QString("traversal: "+traversal));
                     std::stringstream ss(traversal.toStdString());
                     std::string token=" ",token1=" ";
                     while (ss >> token)
@@ -727,7 +739,11 @@ void MainWindow::searchClicked() const{
         QMessageBox::information(NULL,"search","Input is number");
     }
 }
-//Slot for searchMin
+/*
+------------------------------------------------------------------------------
+                            Slot for searchMin
+------------------------------------------------------------------------------
+*/
 void MainWindow::searchMinClicked() const{
     if(bst->isEmpty()){
         QMessageBox::information(NULL,"search","Tree is empty");
@@ -752,7 +768,11 @@ void MainWindow::searchMinClicked() const{
     this->renderArea->InitColor();
     this->renderArea->repaint();
 }
-//Slot for searchMax
+/*
+------------------------------------------------------------------------------
+                            Slot for searchMax
+------------------------------------------------------------------------------
+*/
 void MainWindow::searchMaxClicked() const{
     if(bst->isEmpty()){
         QMessageBox::information(NULL,"search","Tree is empty");
@@ -778,7 +798,11 @@ void MainWindow::searchMaxClicked() const{
     this->renderArea->InitColor();
     this->renderArea->repaint();
 }
-
+/*
+------------------------------------------------------------------------------
+                            Slot for LEFT ROTATE
+------------------------------------------------------------------------------
+*/
 void MainWindow::leftRorateClicked() const{
     if(bst->isEmpty()){
         QMessageBox::information(NULL,"leftrorate","Tree is empty");
@@ -810,7 +834,11 @@ void MainWindow::leftRorateClicked() const{
     this->renderArea->repaint();
 
 }
-//Slot for right roarte()
+/*
+------------------------------------------------------------------------------
+                            SLOT FOR RIGHT ROTATE
+------------------------------------------------------------------------------
+*/
 
 void MainWindow::rightRorateClicked() const{
 
@@ -845,22 +873,31 @@ void MainWindow::rightRorateClicked() const{
 
 }
 
-
-// Slot for zoom in button
+/*
+------------------------------------------------------------------------------
+                            Slot for zoom in button
+------------------------------------------------------------------------------
+*/
 void MainWindow::zoomInClicked() const {
     this->statusLabel->setText("");
     renderArea->zoomIn();
     return;
 }
-
-// Slot for zoom out button
+/*
+------------------------------------------------------------------------------
+                            Slot for zoom out button
+------------------------------------------------------------------------------
+*/
 void MainWindow::zoomOutClicked() const {
     this->statusLabel->setText("");
     renderArea->zoomOut();
     return;
 }
-
-// Slot for load in the file menu
+/*
+------------------------------------------------------------------------------
+                            Slot for load in the file menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::loadFileMenu()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
@@ -871,7 +908,6 @@ void MainWindow::loadFileMenu()
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-//        this->statusLabel->setText("Could not open file!");
         QMessageBox::information(win,"Confirm Open File","Could not open file!",QMessageBox::Ok);
         return;
     }
@@ -890,12 +926,14 @@ void MainWindow::loadFileMenu()
 
     this->renderArea->repaint();
 
-//    this->statusLabel->setText("File successfully opened!");
     QMessageBox::information(win,"Confirm Open File","File successfully opened!",QMessageBox::Ok);
     return;
 }
-
-// Slot for save action in menu
+/*
+------------------------------------------------------------------------------
+                            Slot for save action in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::saveMenu()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
@@ -910,7 +948,6 @@ void MainWindow::saveMenu()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
-//            this->statusLabel->setText("File was not saved!");
             QMessageBox::information(win,"Confirm Save File","File was not saved!",QMessageBox::Ok);
             return;
         }
@@ -918,7 +955,6 @@ void MainWindow::saveMenu()
         writer << text;
         writer.flush();
         file.close();
-//        this->statusLabel->setText("File successfully saved!");
         QMessageBox::information(win,"Confirm Save File","File successfully saved!",QMessageBox::Ok);
         return;
     }
@@ -926,42 +962,51 @@ void MainWindow::saveMenu()
     // if not txt, save as image
     if(!this->renderArea->grab().save(fileName))
     {
-//        this->statusLabel->setText("Image was not saved...");
         QMessageBox::information(win,"Confirm Save File","Image was not saved...",QMessageBox::Ok);
         return;
     }
-//    this->statusLabel->setText("Image saved...");
      QMessageBox::information(win,"Confirm Save File","Image saved...",QMessageBox::Ok);
 
     return;
 }
-
-// Slot for exit action in menu
+/*
+------------------------------------------------------------------------------
+                            Slot for exit action in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::exitMenu()
 {
     this->close();
     return;
 }
-
-// Slot for reset action in menu
+/*
+------------------------------------------------------------------------------
+                            Slot for reset action in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::resetMenu() const
 {
     QMessageBox *win = new QMessageBox();
-    //this->statusLabel->setText("Reset tree...");
     QMessageBox::information(win,"Confirm Reset","Reset tree...");
     this->bst->resetTree();
     this->renderArea->repaint();
     return;
 }
-
-// Slot for about action in menu
+/*
+------------------------------------------------------------------------------
+                            Slot for about action in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::aboutMenu() const
 {
     about->show();
     return;
 }
-
-// Slot for changing node color in menu
+/*
+------------------------------------------------------------------------------
+                            Slot for changing node color in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::changeNodeColorMenu()
 {
     QColor color = QColorDialog::getColor(Qt::black, this);
@@ -973,8 +1018,11 @@ void MainWindow::changeNodeColorMenu()
     }
     return;
 }
-
-// Slot for changing background color in menu
+/*
+------------------------------------------------------------------------------
+                    Slot for changing background color in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::changeBackgroundColorMenu()
 {
     QColor color = QColorDialog::getColor(Qt::black, this);
@@ -988,9 +1036,11 @@ void MainWindow::changeBackgroundColorMenu()
     }
     return;
 }
-
-
-// Slot for changing background color in menu
+/*
+------------------------------------------------------------------------------
+                    Slot for changing background color in menu
+------------------------------------------------------------------------------
+*/
 void MainWindow::changeTextColorMenu()
 {
     QColor color = QColorDialog::getColor(Qt::black, this);

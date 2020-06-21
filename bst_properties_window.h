@@ -39,7 +39,6 @@ private:
     QTextEdit *inOrderTraversal;
     QTextEdit *preOrderTraversal;
     QTextEdit *postOrderTraversal;
-//    QTextEdit *breadthFirstTraversal;
     QPushButton *exitButton;
 
 private slots:

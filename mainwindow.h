@@ -56,6 +56,7 @@ private:
     QMenu *editMenu;
     QMenu *aboutmenu;
     QMenu *runMenu;
+
     QAction *aboutAction;
     QAction *loadAction;
     QAction *saveAction;
@@ -68,6 +69,7 @@ private:
     QAction *changeNodeColorAction;
     QAction *changeBackgroundColorAction;
     QAction *changeTextColorAction;
+
     BST_Properties_Window *prop;
     BST_About_Window *about;
     Bst_inorder_window *inorder;
@@ -80,6 +82,8 @@ private:
     void createMenu();
     void createToolbar();
     void createActions();
+
+
     QPushButton *searchButton;
     QPushButton *searchMinButton;
     QPushButton *searchMaxButton;
@@ -98,6 +102,7 @@ protected:
     virtual void resizeEvent(QResizeEvent* event);
 
 private slots:
+    //================================slot when button clicked============================
     void propertyClicked() const;
     void insertClicked() const;
     void deleteClicked() const;

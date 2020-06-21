@@ -22,7 +22,7 @@ public:
     void recursive_bst(BinarySearchTree<int> *bst);
     void show();
     void close();
-//    void getbst(BinarySearchTree<int> *bst);
+    //=========================SHOW CODE IN TEXTBOX============================
     QLineEdit *code1;
     QLineEdit *code2;
     QLineEdit *code3;

@@ -21,8 +21,7 @@ BST_About_Window::BST_About_Window()
     labelLayout->addWidget(new QLabel("Posts and Telecommunications Institute of Technology"));
     labelLayout->addWidget(new QLabel("Le Thi My Phung "
                                       "\nTran Thi Thanh Tam "
-                                      "\nNguyen Ngoc Quang "
-                                      "\nHuynh My Dung"));
+                                      "\nNguyen Ngoc Quang "));
 
     QVBoxLayout *textAreaLayout = new QVBoxLayout();
     QTextEdit *txtEdit = new QTextEdit("Binary Search Tree Visualization v1.0.0"
@@ -46,7 +45,6 @@ BST_About_Window::BST_About_Window()
     // Create the main layout and add all the widgets to it
     mainLayout = new QVBoxLayout;
     mainLayout->addWidget(container);
-    // mainLayout->addLayout(buttonLayout); // layout for ok/close button
 
     centralWidget = new QWidget(window);
     centralWidget->setLayout(mainLayout);
