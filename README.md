@@ -25,5 +25,5 @@ Khi bạn sử dụng Project này, vui lòng tôn trọng quyền tác giả:
 * Không copy, chỉnh sửa source
 * Project chỉ mang tính tham khảo  
 
-[download project to run](https://drive.google.com/file/d/177cz0M-Uh2730LMYLaJ8ezEOwWIZrx70/view?usp=sharing)  
+[download Binary Search Tree Visualization](https://drive.google.com/file/d/177cz0M-Uh2730LMYLaJ8ezEOwWIZrx70/view?usp=sharing)  
 Copyright © 2020 
