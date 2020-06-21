@@ -14,6 +14,7 @@ Sinh viên lớp **D18CQAT01-N** -  **Học viện Công nghệ Bưu chính Vi�
 
 Chương trình được build hoàn toàn trên Qt Creator bằng thư viện đồ hoạ Qt. Để chạy chương trình, trước tiên bạn phải cài đặt Qt phiên bản 5.14.2 trở lên và setup đầy đủ kit `Desktop (x86-windows-msvc2019-pe-32bit)`  
 >link cài đặt: [Qt Creator](https://www.qt.io/download-qt-installer)  
+  
 Chú ý: để có giao diện y như demo, bạn cần copy file trong folder Font vào thư mục `C:\Windows\Fonts` của hệ thống  
 
 
